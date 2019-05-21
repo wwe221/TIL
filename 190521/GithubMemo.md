@@ -13,7 +13,7 @@ https://opentutorials.org/course/2708
 
 git 과 typora 설치
 
-## Github을 통한 코드 관리
+## Github을 통한 코드 관리 
 
 1. *git* 설치
 
