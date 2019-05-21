@@ -46,11 +46,3 @@ public static void main(){
 
 
 
-## Git 시작하기
-
-원하는 디렉토리에 git init 을 통해서 .git 생성
-
-git add  통해 관리할 파일로 git 에 등록
-
-git check 로 바뀐파일 undo
-
