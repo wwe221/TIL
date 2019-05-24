@@ -4,8 +4,7 @@ import java.util.Arrays;
 
 public class User {
 	private String name;
-	private Car[] cars;
-	
+	private Car[] cars;	
 	public User(String name, Car[] car ) {
 		this.name = name;
 		this.cars = car;

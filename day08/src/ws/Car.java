@@ -5,20 +5,28 @@ public class Car {
 //	기능: 정보 출력
 	private String serial;
 	private String name;
-	private Engine eng;
+	private Engine engine;
 	private String color;
-	private static int cnt = 1000;
+	private static int cnt;
+	
+	//initialization block
+	{
+		
+	}
+	static {
+		cnt = 1000;		
+	}
 	
 	public Car(String serial, String name, Engine eng, String color) {
 		this.serial = serial + cnt++;
 		this.name = name;
-		this.eng = eng;
+		this.engine = eng;
 		this.color = color;
 	}
 
 	@Override
 	public String toString() {
-		return "Car [serial=" + serial + ", name=" + name + ", eng=" + eng + ", color=" + color + "]";
+		return "Car [serial=" + serial + ", name=" + name + ", eng=" + engine + ", color=" + color + "]";
 
 	}
 
@@ -31,7 +39,7 @@ public class Car {
 	}
 
 	public Engine getEng() {
-		return eng;
+		return engine;
 	}
 
 	public String getColor() {

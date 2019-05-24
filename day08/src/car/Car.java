@@ -8,7 +8,19 @@ public class Car {
 	private int cfSize;
 	private int speed;
 	private int maxSpeed;
-	
+	private static int a = 1;
+	private int serial;
+	private int defaultSize = 100;
+	//
+	{
+		cfSize = defaultSize / 2;
+		serial = a;
+		a++;
+	}
+	static {
+		a *= 1000;
+	}
+
 	// constructor
 	public Car() { // Default Cons
 		this.name = "K1";
@@ -42,7 +54,7 @@ public class Car {
 	@Override
 	public String toString() {
 		return "Car [name=" + name + ", color=" + color + ", fSize=" + fSize + ", cfSize=" + cfSize + ", speed=" + speed
-				+ "]";
+				+ "]" + serial;
 	}
 
 	public String getName() {
