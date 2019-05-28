@@ -1,5 +1,7 @@
 package shape;
 
+import company.Manager;
+
 public class ShapeTest {
 
 	public static void main(String[] args) {
@@ -23,6 +25,7 @@ public class ShapeTest {
 			System.out.println(sh.getArea());
 			System.out.println(sh.getCircume());
 		}
+
 		((Circle) s[0]).fillColor("niceBlue");
 		System.out.println(s[0]);
 
