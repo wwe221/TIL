@@ -49,3 +49,21 @@ Read - select(key)  ,   ?  select()
 Update -update
 
 Delete -delete
+
+
+
+## Catch Exception
+
+```java
+try{
+    dao.insert(v);
+} catch (Exception e) {
+    throw e;    
+}finally{
+    transactionEnd();
+}
+```
+
+insert() 함수가 Exception 을 가지고 온다면, 이 함수도 Exception 을 throw 하고,
+
+insert가 정상작동 했던 아니던 finally 안의 transcantionEnd를 실행한다.
