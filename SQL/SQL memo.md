@@ -71,7 +71,7 @@ DBMS 가 없는 데이터 관리 시스템의 단점
 
 - DML (Data Menipulation L)
 
-  - SELECT - 
+  - SELECT -
 
   - INSERT - 
 
@@ -87,6 +87,8 @@ DBMS 가 없는 데이터 관리 시스템의 단점
   - ROLLBACK - 데이터베이스 변경 내용을 취소한다.  - Transaction 에 사용
   - GRANT - 사용자에게 권한을 부여
   - REVOKE - 사용자에게 권한을 제거
+  
+- 
 
 ##### 코드
 
@@ -150,8 +152,9 @@ Select SAL,SAL*12 as ASAL from emp; /*계산후 출력도 가능*/
 SELECT ENAME || JOB FROM EMP; /*두개를 하나로 합칠 수도 있다.*/
 SELECT ENAME ||' '|| JOB FROM EMP; /* 합친 사이에 공백 추가*/
 SELECT DISTINCT JOB FROM EMP; /* 중복 제거*/
-Select * from emp where ENAME like 'B%'; -- B~ 로 시작하는 택스트 검색
+Select * from emp where ENAME like 'B%'; -- B~ 로 시작하는 값 검색
 Select (SAL*12)*0.87 + (NVL(COMM,0)*0.88)  as ASAL from emp; -- NVL(COMM,0) == if(COMM == null) COMM=0;
+SELECT * FROM EMP WHERE DEPTNO IN (20 , 30 ); -- ( )안의 값을 가진 것들만
 
 Select * from emp where sal <> 5000; /* not equal*/
 Select * from emp where sal != 5000; /* not equal*/
@@ -162,7 +165,39 @@ select ename , sal from emp order by sal DESC; -- SAL 내림차순 정렬 생략
 select ename ,SAL*12 from emp WHERE SAL > 1000 order by 2;-- 2번 쨰 컬럼을 기준으로...
 select ename , sal ,SAL*12 AS ASAL from emp WHERE SAL > 1000 order by ASAL, ENAME DESC; -- 다중 정렬 조건
 SELECT * FROM EMP ORDER BY NVL(COMM,0) DESC
+INSERT INTO AAA SELECT HIREDATE , JOB ,DEPTNO ,SAL 
+FROM EMP WHERE HIREDATE > '06/01/1981' AND (JOB = 'SALESMAN' OR JOB = 'CLERK') 
 
+-- SELECT 문을 통해 가져온 테이블을 다른 테이블에 INSERT 할 수 있다.
+/* FUNCTION 함수도 존재한다. 
+ABS( ) 절댓값, MOD (A,B) = A%B , ROUND(N , A) N의 소숫점 A자리수 표현
+LENGTH( ) 길이 , LOWER( ) / UPPER( ) , REPLACE(STR, B ,C) 문자열 STR 에서 B 를 C 로 바꾼다.
+SUBSTR(STR FROM N TO M) 문자열 STR의 N번째 부터 M개 추출
+CURRENT_DATE , CURRENT_TIME , CURRENT_TIMESTAMP
+DATE 타입은 모두 연산이 가능하다.
+TO_CHAR(CURRENT_TIMESTAMP, 'HH:MM:SS') // 원하는 형식으로 시간 표현
+TO_DATE(STR , 'YYYY/MM/DD')  STR 문자열을 DATE로 변환
+MONTHS_BETWEEN( A, B) A 와 B 사이의 MONTH 카운트
+CAST (X AS Y) X를 Y 타입으로 변환
+NVL(A , X)  A 가 NULL이면 X 로 치환
+NVL(A, X, Y ) A 가 NULL 이면 X, 아니면 Y 로 치환
+
+BETWEEN A AND B --  A <= X <= B
+IN(A , B, C , ...) --  A OR B OR C OR ...
+EXISTS
+
+*/
+SELECT ENAME , REPLACE(ENAME, SUBSTR(ENAME,2,LENGTH(ENAME)) , LOWER(SUBSTR(ENAME,2,LENGTH(ENAME)))) FROM EMP
+
+-- CASE - 분류 할 때 사용.
+SELECT ENAME, JOB , SAL , 
+CASE WHEN SAL >= 5000
+THEN '왕'
+WHEN SAL BETWEEN 3000 AND 5000
+THEN '관리자'
+ELSE '직원'
+END AS CLASS
+FROM EMP
 
 
 
@@ -176,7 +211,7 @@ SELECT * FROM EMP ORDER BY NVL(COMM,0) DESC
 
 외부 테이블의 PK를 참조하는 컬럼.
 
-RDBMS 의 Relation 덕분에 
+RDBMS 의 Relation 특징
 
 
 
