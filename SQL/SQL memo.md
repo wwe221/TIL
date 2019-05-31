@@ -71,13 +71,13 @@ DBMS 가 없는 데이터 관리 시스템의 단점
 
 - DML (Data Menipulation L)
 
-  - SELECT
+  - SELECT - 
 
-  - INSERT
+  - INSERT - 
 
-  - DELETE
+  - DELETE - 
 
-  - UPDATE
+  - UPDATE - 
 
     
 
@@ -88,7 +88,7 @@ DBMS 가 없는 데이터 관리 시스템의 단점
   - GRANT - 사용자에게 권한을 부여
   - REVOKE - 사용자에게 권한을 제거
 
-
+##### 코드
 
 ```sql
 /*테이블 생성*/
@@ -140,11 +140,43 @@ DELETE FROM T_PRODUCT;
 UPDATE T_USER SET PWD = '111' WHERE ID = 'ID01';
 UPDATE T_USER SET PWD = '111', NAME = '공말년' WHERE ID = 'ID01';
 
+/*데이터 검색 select 문*/
+Select ENAME , SAL , DEPTNO from emp; /*원하는 컬럼만 출력*/
+Select * from emp where job = 'MANAGER' and sal > 2500; /*해당 조건 검색*/
+Select ENAME AS "이름", SAL , DEPTNO from emp; /*컬럼에 별명 부여
+컬럼에 별명을 부여했으면 후에 jdbc로 get할때 그 별명을 이용한다. */
+
+Select SAL,SAL*12 as ASAL from emp; /*계산후 출력도 가능*/
+SELECT ENAME || JOB FROM EMP; /*두개를 하나로 합칠 수도 있다.*/
+SELECT ENAME ||' '|| JOB FROM EMP; /* 합친 사이에 공백 추가*/
+SELECT DISTINCT JOB FROM EMP; /* 중복 제거*/
+Select * from emp where ENAME like 'B%'; -- B~ 로 시작하는 택스트 검색
+Select (SAL*12)*0.87 + (NVL(COMM,0)*0.88)  as ASAL from emp; -- NVL(COMM,0) == if(COMM == null) COMM=0;
+
+Select * from emp where sal <> 5000; /* not equal*/
+Select * from emp where sal != 5000; /* not equal*/
+Select * from emp where comm IS NULL; -- null 은 비교연산이 불가하다.
+Select * from emp where comm IS NOT NULL;
+
+select ename , sal from emp order by sal DESC; -- SAL 내림차순 정렬 생략하면 기본인 오름차순(ASC)으로 된다
+select ename ,SAL*12 from emp WHERE SAL > 1000 order by 2;-- 2번 쨰 컬럼을 기준으로...
+select ename , sal ,SAL*12 AS ASAL from emp WHERE SAL > 1000 order by ASAL, ENAME DESC; -- 다중 정렬 조건
+SELECT * FROM EMP ORDER BY NVL(COMM,0) DESC
+
+
+
+
 ```
 
+###### Primary Key
 
+테이블 내에서 unique 하게 각 객체들을 구별할수 있을 만한 값. (ID)
 
+###### Foriegn key
 
+외부 테이블의 PK를 참조하는 컬럼.
+
+RDBMS 의 Relation 덕분에 
 
 
 
