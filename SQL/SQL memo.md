@@ -281,7 +281,13 @@ SELECT  -> FROM  ->  WHERE -> HAVING 순.
 
 HAVING 과 WHERE 양쪽 모두 사용가능한 조건일 경우 WHERE 절에 쓰는것이 처리 속도 면에서 유리하다.
 
-###### 
+## VIEW
+
+테이블과 동일하지만, 일반 테이블의 값들을 참조하고 있는 가상의 테이블이다.
+
+실제 데이터가 저장되어 있지는 않다.
+
+VIEW는 참조될 때 마다 SELECT문을 실행하여 가상테이블을 만든다.
 
 
 
@@ -296,6 +302,73 @@ HAVING 과 WHERE 양쪽 모두 사용가능한 조건일 경우 WHERE 절에 쓰
 외부 테이블의 PK를 참조하는 컬럼.
 
 RDBMS 의 Relation 특징
+
+```SQL
+ALTER TABLE ITEM ADD FOREIGN KEY (CATE)
+REFERENCES CATEGORY (NO)
+```
+
+##### 서브 쿼리 
+
+쿼리문 안에 쿼리문이 들어가 있는 형태
+
+###### 스칼라 서브쿼리
+
+서브쿼리 문의 결과 값이 한가지인 것
+
+따라서 결과값을 비교연산에 사용할 수 있다.
+
+- 반드시 FOREIGN KEY 로 연결되어 있어야 한다.
+
+```SQL
+SELECT ENAME , SAL FROM EMP
+WHERE SAL > (SELECT AVG(SAL) FROM EMP)
+AND 
+(DEPTNO IN (SELECT DEPTNO FROM DEPT WHERE LOC IN ('DALLAS','CHICAGO')))
+-- 스칼라의 리턴 값은 한번에 한개니 여러개인 경우 = 을 쓰는 대신에 IN을 써주는게 적절하다.
+SELECT ENAME , SAL , (SELECT AVG(SAL) FROM EMP) FROM EMP
+
+```
+
+###### 상관 서브커리
+
+
+
+```SQL
+
+SELECT JOB , ENAME , SAL ,
+(SELECT AVG(SAL) FROM EMP S2 WHERE S1.JOB = S2.JOB GROUP BY JOB) AS AVGJOBSAL
+FROM EMP S1
+WHERE SAL > 
+(SELECT AVG(SAL) FROM EMP S2 WHERE S1.JOB = S2.JOB GROUP BY JOB)
+
+/*ACCOUNTING 부서를 제외한 부서별 월급을 가장 많이 받는 사람을 조회하라.*/
+SELECT DEPTNO , ENAME ,SAL FROM EMP S1
+WHERE SAL = 
+(SELECT MAX(SAL) FROM EMP S2
+WHERE S1.DEPTNO = S2.DEPTNO AND S2.DEPTNO NOT IN (SELECT DEPTNO FROM DEPT WHERE DNAME = 'ACCOUNTING')
+GROUP BY DEPTNO)
+
+SELECT EMPNO , ENAME , (SELECT DNAME FROM DEPT S2 WHERE S1.DEPTNO = S2.DEPTNO)AS DNAME FROM EMP S1
+```
+
+###### JOIN
+
+두개이상의 테이블을 합친다. 완전한 통합을 위해서는 PK와 FK의 연결(일치) 가 필요하다
+
+만약 연결이 없다면 모든 경우의 수를 통합한 결과가 출력된다.
+
+```SQL
+SELECT E.EMPNO , E.ENAME ,D.DNAME , D.LOC FROM EMP E, DEPT D
+WHERE E.DEPTNO = D.DEPTNO
+
+/* DALLAS를 제외한 지역별 월급의 평균보다 많이받는 사람 출력*/
+SELECT D.LOC , E.ENAME , E.SAL FROM EMP E, DEPT D
+WHERE E.DEPTNO = D.DEPTNO AND D.LOC NOT IN ('DALLAS') AND SAL >
+(SELECT AVG(E1.SAL) FROM EMP E1, DEPT D1
+WHERE E1.DEPTNO = D1.DEPTNO AND D.LOC = D1.LOC
+GROUP BY D1.LOC)
+```
 
 
 
