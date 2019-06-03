@@ -90,9 +90,11 @@ DBMS 가 없는 데이터 관리 시스템의 단점
   
 - 
 
-##### 코드
+#### 코드
 
-```sql
+###### 테이블 생성 및 기본 명령어
+
+```SQL
 /*테이블 생성*/
 CREATE TABLE T_USER(
     ID VARCHAR2(10), 
@@ -116,6 +118,12 @@ NAME VARCHAR2(10) NOT NULL,
 PRICE NUMBER(10,1) NOT NULL
 );
 
+```
+
+##### ALTER TABLE
+
+```SQL
+
 ALTER TABLE T_PRODUCT ADD (REGDATE DATE); /*컬럼 추가*/
 
 ALTER TABLE T_PRODUCT DROP (REGDATE); /*컬럼 삭제*/
@@ -126,22 +134,37 @@ ALTER TABLE T_PRODUCT TO N_PRODUCT;/*테이블 이름 변경*/
 
 ALTER TABLE T_PRODUCT ADD PRIMARY KEY(ID); /*Primary Key 추가*/
 
-/*데이터베이스에 입력 insert*/
-INSERT INTO T_USER( ID , PWD) VALUES( 'ID01' , 'PWD01');
-INSERT INTO T_USER VALUES( 'ID01' , 'PWD01','이말년');
-
 /*데이타 타입 변경 modify*/
 ALTER TABLE T_PRODUCT MODIFY (NAME CHAR (10)); 
 ALTER TABLE T_USER MODIFY (PWD NOT NULL);
 ALTER TABLE T_PRODUCT MODIFY PRICE NUMBER  NULL;
 ALTER TABLE T_PRODUCT MODIFY (PRICE DEFAULT 1000); /* 기본 값 설정( NOT NULL 인 것에 사용하면 좋음*/
+
+```
+
+##### INSERT
+
+```SQL
+/*데이터베이스에 입력 insert*/
+INSERT INTO T_USER VALUES( 'ID01' , 'PWD01','이말년');
+INSERT INTO T_USER( ID , PWD) VALUES( 'ID01' , 'PWD01');
+
+```
+
+##### DELETE & UPDATE
+
+```SQL
 /*데이터 삭제 delete */
 DELETE FROM T_PRODUCT WHERE ID = 'ID02';
 DELETE FROM T_PRODUCT;
 /*데이터 갱신 update*/
 UPDATE T_USER SET PWD = '111' WHERE ID = 'ID01';
 UPDATE T_USER SET PWD = '111', NAME = '공말년' WHERE ID = 'ID01';
+```
 
+##### SELECT
+
+```SQL
 /*데이터 검색 select 문*/
 Select ENAME , SAL , DEPTNO from emp; /*원하는 컬럼만 출력*/
 Select * from emp where job = 'MANAGER' and sal > 2500; /*해당 조건 검색*/
@@ -166,8 +189,12 @@ select ename ,SAL*12 from emp WHERE SAL > 1000 order by 2;-- 2번 쨰 컬럼을 
 select ename , sal ,SAL*12 AS ASAL from emp WHERE SAL > 1000 order by ASAL, ENAME DESC; -- 다중 정렬 조건
 SELECT * FROM EMP ORDER BY NVL(COMM,0) DESC
 INSERT INTO AAA SELECT HIREDATE , JOB ,DEPTNO ,SAL 
-FROM EMP WHERE HIREDATE > '06/01/1981' AND (JOB = 'SALESMAN' OR JOB = 'CLERK') 
+FROM EMP WHERE HIREDATE > '06/01/1981' AND (JOB = 'SALESMAN' OR JOB = 'CLERK')
+```
 
+###### FUNCTIONS
+
+```SQL
 -- SELECT 문을 통해 가져온 테이블을 다른 테이블에 INSERT 할 수 있다.
 /* FUNCTION 함수도 존재한다. 
 ABS( ) 절댓값, MOD (A,B) = A%B , ROUND(N , A) N의 소숫점 A자리수 표현
@@ -180,7 +207,7 @@ TO_DATE(STR , 'YYYY/MM/DD')  STR 문자열을 DATE로 변환
 MONTHS_BETWEEN( A, B) A 와 B 사이의 MONTH 카운트
 CAST (X AS Y) X를 Y 타입으로 변환
 NVL(A , X)  A 가 NULL이면 X 로 치환
-NVL(A, X, Y ) A 가 NULL 이면 X, 아니면 Y 로 치환
+NVL2(A, X, Y ) A 가 NULL 이면 X, 아니면 Y 로 치환
 
 BETWEEN A AND B --  A <= X <= B
 IN(A , B, C , ...) --  A OR B OR C OR ...
@@ -189,7 +216,14 @@ EXISTS
 */
 SELECT ENAME , REPLACE(ENAME, SUBSTR(ENAME,2,LENGTH(ENAME)) , LOWER(SUBSTR(ENAME,2,LENGTH(ENAME)))) FROM EMP
 
--- CASE - 분류 할 때 사용.
+```
+
+
+
+###### CASE
+
+```SQL
+-- CASE 각 조건에 대해 분류 할 때 사용.
 SELECT ENAME, JOB , SAL , 
 CASE WHEN SAL >= 5000
 THEN '왕'
@@ -198,16 +232,66 @@ THEN '관리자'
 ELSE '직원'
 END AS CLASS
 FROM EMP
+```
 
 
+
+###### GROUP 함수
+
+​	모든 그룹함수는 NULL값을 제외하고 계산한다.
+
+​	결과 값이 항상 1행이기 때문에 다른 컬럼들과 함께 사용되는 것이 제한된다.
+
+​	COUNT 
+
+​	SUM , AVG - 숫자만 계산가능
+
+​	MAX , MIN - 문자 ,날짜 또한 계산가능
+
+```SQL
+SELECT COUNT(*) AS CNT FROM EMP
+SELECT SUM(SAL) AS SUM , AVG(SAL) AS AVG FROM EMP
+SELECT MAX(SAL) AS MAX , MIN(SAL) AS MIN FROM EMP
 
 ```
 
-###### Primary Key
+###### GROUP BY (        )  ~ 를 기준으로 나누어 출력
+
+```SQL
+SELECT JOB , SUM(SAL) FROM EMP GROUP BY JOB -- JOB이 같은 녀석들의 SAL 합 출력
+SELECT DEPTNO , JOB FROM EMP GROUP BY DEPTNO , JOB ORDER BY DEPTNO --DEPTNO 와 JOB 조합 별로 구분
+
+```
+
+###### HAVING
+
+```SQL
+SELECT DEPTNO , JOB FROM EMP GROUP BY DEPTNO , JOB HAVING DEPTNO = 10 ORDER BY DEPTNO -- GROUP BY 의 조건을 HAVING 을 통해 준다.
+-- HAVING 조건을 줄수 있는건 출력을 하는 COLUMN만 가능하다.
+
+SELECT JOB , AVG(SAL) FROM EMP WHERE DEPTNO = 10 GROUP BY JOB HAVING JOB LIKE '%E%'
+-- GROUP 되어진 것들의 조건은 HAVING , ~중에서 고를때 는 WHERE
+-- DEPTNO 가 10 인 것들 중, E가 들어간 직업별 AVG(SAL)을 출력
+
+SELECT DEPTNO , JOB , AVG(SAL) FROM EMP WHERE ENAME LIKE '%A%' AND COMM IS NULL GROUP BY DEPTNO, JOB HAVING DEPTNO IN (20,30) AND AVG(SAL) > 1100
+
+```
+
+SELECT  -> FROM  ->  WHERE -> HAVING 순.
+
+HAVING 과 WHERE 양쪽 모두 사용가능한 조건일 경우 WHERE 절에 쓰는것이 처리 속도 면에서 유리하다.
+
+###### 
+
+
+
+
+
+#### Primary Key
 
 테이블 내에서 unique 하게 각 객체들을 구별할수 있을 만한 값. (ID)
 
-###### Foriegn key
+#### Foriegn key
 
 외부 테이블의 PK를 참조하는 컬럼.
 
