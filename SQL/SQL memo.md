@@ -211,9 +211,16 @@ NVL2(A, X, Y ) A 가 NULL 이면 X, 아니면 Y 로 치환
 
 BETWEEN A AND B --  A <= X <= B
 IN(A , B, C , ...) --  A OR B OR C OR ...
-EXISTS
-
+EXISTS ( A )  A조건이 참이라면 TRUE 리턴
 */
+
+SELECT ENAME, JOB FROM EMP 
+WHERE JOB IN ( SELECT JOB FROM EMP  WHERE ENAME = 'JONES' )
+SELECT ENAME, JOB FROM EMP E 
+WHERE EXISTS ( SELECT JOB FROM EMP E2 WHERE ENAME = 'JONES'
+              AND E.JOB = E2.JOB )
+-- 두 구문은 같다.
+
 SELECT ENAME , REPLACE(ENAME, SUBSTR(ENAME,2,LENGTH(ENAME)) , LOWER(SUBSTR(ENAME,2,LENGTH(ENAME)))) FROM EMP
 
 ```
@@ -223,7 +230,7 @@ SELECT ENAME , REPLACE(ENAME, SUBSTR(ENAME,2,LENGTH(ENAME)) , LOWER(SUBSTR(ENAME
 ###### CASE
 
 ```SQL
--- CASE 각 조건에 대해 분류 할 때 사용.
+-- CASE 각 조건에 대해 새로운 컬럼을 만들어 분류 할 때 사용.
 SELECT ENAME, JOB , SAL , 
 CASE WHEN SAL >= 5000
 THEN '왕'
@@ -281,7 +288,7 @@ SELECT  -> FROM  ->  WHERE -> HAVING 순.
 
 HAVING 과 WHERE 양쪽 모두 사용가능한 조건일 경우 WHERE 절에 쓰는것이 처리 속도 면에서 유리하다.
 
-## VIEW
+#### VIEW
 
 테이블과 동일하지만, 일반 테이블의 값들을 참조하고 있는 가상의 테이블이다.
 
@@ -289,7 +296,12 @@ HAVING 과 WHERE 양쪽 모두 사용가능한 조건일 경우 WHERE 절에 쓰
 
 VIEW는 참조될 때 마다 SELECT문을 실행하여 가상테이블을 만든다.
 
-
+```SQL
+CREATE VIEW T_EMP (ENO,EN,SAL,DNO)
+AS(
+SELECT EMPNO ,ENAME,SAL, DEPTNO FROM EMP
+)
+```
 
 
 
@@ -332,8 +344,6 @@ SELECT ENAME , SAL , (SELECT AVG(SAL) FROM EMP) FROM EMP
 
 ###### 상관 서브커리
 
-
-
 ```SQL
 
 SELECT JOB , ENAME , SAL ,
@@ -352,7 +362,7 @@ GROUP BY DEPTNO)
 SELECT EMPNO , ENAME , (SELECT DNAME FROM DEPT S2 WHERE S1.DEPTNO = S2.DEPTNO)AS DNAME FROM EMP S1
 ```
 
-###### JOIN
+##### 결합 (JOIN)
 
 두개이상의 테이블을 합친다. 완전한 통합을 위해서는 PK와 FK의 연결(일치) 가 필요하다
 
@@ -370,9 +380,141 @@ WHERE E1.DEPTNO = D1.DEPTNO AND D.LOC = D1.LOC
 GROUP BY D1.LOC)
 ```
 
+###### INNER JOIN 
+
+```SQL
+SELECT E.ENO , E.EN , E.SAL , S.ASAL , D.DN, D.LOC 
+FROM T_EMP E , T_SAL S, T_DEPT D
+WHERE E.ENO = S.ENO AND E.DNO = D.DNO
+
+SELECT E.ENO , E.EN , E.SAL , S.ASAL , D.DN, D.LOC 
+FROM T_EMP E INNER JOIN T_SAL S ON (E.ENO = S.ENO) 
+INNER JOIN T_DEPT D USING(DNO)
+--ANCI 표준.
+```
+
+###### SELF JOIN
+
+```SQL
+SELECT E1.ENAME, E1.EMPNO ,E2.ENAME AS MNAME 
+FROM EMP E1,EMP E2
+WHERE E1.MGR = E2.EMPNO
+```
+
+
+
+###### OUTTER JOIN
+
+```SQL
+SELECT E.ENAME, E.JOB , D.DNAME, D.LOC FROM EMP E, DEPT D
+WHERE E.DEPTNO = D.DEPTNO(+)
+-- (+)의 반대쪽의 값을 갖고 있지 않은 녀석들도 모두 출력한다.( DEPTNO 가 없는 EMP도 출력~)
+SELECT E.ENAME, E.JOB , D.DNAME, D.LOC FROM EMP E LEFT OUTER JOIN DEPT D
+USING (DEPTNO)
+-- ANCI 표준 LEFT OR RIGHT 기준. 만약 FULL OUTER JOIN 을 한다면 모두 출력이 된다.
+
+```
+
+## 집합연산
+
+##### UNION
+
+두 구문의 결과를 합친다 
+
+단, 출력하는 Column의 수와 데이터 형이 일치해야한다.
+
+기본적으로 중복행을 제거한다.
+
+```sql
+SELECT ENAME,  JOB FROM EMP
+WHERE JOB = 'MANAGER'
+UNION
+SELECT ENAME,  JOB FROM EMP
+WHERE JOB = 'SALESMAN'
+```
+
+중복허용을 위해선 UNION ALL 을 사용한다.
+
+```SQL
+UNION ALL
+```
+
+INTERSECT - 테이블간 공통부분 선택
+
+EXCEPT - 레코드 뺄셈
+
+
+
+## 윈도우 함수
+
+###### RANK()
+
+​	같은 값을 갖고 있으면 동위, 다음 순위를 밀어낸다
+
+```SQL
+SELECT RANK() OVER (ORDER BY SAL DESC)  AS RANKING, ENAME ,SAL
+FROM EMP ORDER BY SAL DESC
+```
+
+###### DENSE_RANK()
+
+​	다음 순위를 밀어내지 않는다.
+
+```SQL
+SELECT DENSE_RANK() OVER (ORDER BY SAL DESC)  AS RANKING, ENAME ,SAL
+FROM EMP ORDER BY SAL DESC
+```
+
+###### ROW_NUMBER()
+
+​	동위 없이 순서만 센다.
+
+```SQL
+SELECT ROW_NUMBER() OVER (ORDER BY SAL DESC)  AS RANKING, ENAME ,SAL
+FROM EMP ORDER BY SAL DESC
+
+SELECT RANKING , ENAME,SAL ,TOTAL FROM(
+	SELECT ROW_NUMBER() OVER (ORDER BY SAL DESC)  AS RANKING, ENAME ,SAL ,
+    (SELECT COUNT(*) FROM EMP ) AS TOTAL
+	FROM EMP ORDER BY SAL DESC , ENAME
+)
+WHERE RANKING <= 5
+```
+
+###### ROLLUP()
+
+```sql
+SELECT JOB , SUM(SAL) FROM EMP
+GROUP BY ROLLUP(JOB)
+-- 총 합계를 나타내는행을 하나 더 추가한다.
+```
 
 
 
 
 
+20190605_Team6
+
+```SQL
+SELECT RANK() OVER  (ORDER BY S.ASAL DESC ) AS RANKING , E.EN , S.ASAL FROM T_EMP E INNER JOIN T_SAL S
+USING (ENO)
+WHERE S.ASAL >
+(SELECT AVG(S2.ASAL) FROM T_SAL S2)
+
+
+SELECT * FROM EMP
+WHERE EMPNO IN(
+	SELECT MGR FROM(
+		SELECT MGR , AVG(SAL) AS AVG , ROW_NUMBER() OVER(ORDER BY AVG(SAL) DESC) AS RANK 
+        FROM EMP E
+        WHERE E.MGR IN (
+			SELECT EMPNO FROM EMP E2
+			WHERE E2.JOB = 'MANAGER'
+        )		
+        GROUP BY MGR
+	)
+	WHERE RANK = 1
+)
+
+```
 
