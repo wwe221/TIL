@@ -6,15 +6,13 @@ import frame.Biz;
 import vo.User;
 
 public class UserInsert {
-
-	public static void main(String[] args) {
-		User u = new User("id69","pwd77", "±è±â»ç");
-		User u2 = new User("id69","pwd99", "±èÃÑ¹«");
+	public static void main(String[] args) {		
 		Biz<String, User> biz = new UserBiz();
 		try {
-			biz.register(u);
-			biz.remove("id68");
-			biz.modify(u2);
+			//biz.register(u);
+			//biz.register(u);
+			//biz.remove("id69");
+			//biz.modify(u2);
 			for(User k :biz.get()){
 				System.out.println(k);
 			}
