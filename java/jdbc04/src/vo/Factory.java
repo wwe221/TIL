@@ -1,9 +1,9 @@
 package vo;
 
 public class Factory {
-	String factno;
-	String facname;
-	String facloc;
+	private String factno;
+	private String facname;
+	private String facloc;
 
 	public String getFactno() {
 		return factno;

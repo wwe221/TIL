@@ -3,10 +3,10 @@ package vo;
 import java.sql.Date;
 
 public class Products {
-	int pdno;
-	String pdname;
-	String pdsubname;
-	String factno;
+	private 	int pdno;
+	private String pdname;
+	private String pdsubname;
+	private 	String factno;
 	Date pddate;
 	public int getPdno() {
 		return pdno;

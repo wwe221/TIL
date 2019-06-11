@@ -1,9 +1,9 @@
 package vo;
 
 public class User {
-	String id;
-	String pwd;
-	String name;
+	private String id;
+	private String pwd;
+	private String name;
 	public User() {}
 	public User(String id, String pwd, String name) {
 		this.id = id;

@@ -9,7 +9,7 @@ import vo.Join;
 import vo.Products;
 
 public class ProductsBiz extends Biz<Integer, Products> {
-	Dao<Integer, Products> dao;
+	private Dao<Integer, Products> dao;
 
 	public ProductsBiz() {
 		dao = new ProductsDao();

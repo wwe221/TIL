@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import vo.Join;
 
 public abstract class Biz <K,V> {
-	String id;
-	String pwd;
-	String url;
+	private String id;
+	private String pwd;
+	private String url;
 
 	public Biz() {
 		try {
