@@ -10,7 +10,6 @@ import vo.Products;
 
 public class ProductsBiz extends Biz<Integer, Products> {
 	private Dao<Integer, Products> dao;
-
 	public ProductsBiz() {
 		dao = new ProductsDao();
 	}

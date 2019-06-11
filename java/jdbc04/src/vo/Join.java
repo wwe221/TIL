@@ -1,7 +1,6 @@
 package vo;
 
 import java.util.ArrayList;
-
 public class Join {
 	private ArrayList<Factory> f;
 	private ArrayList<Products> p;
@@ -9,7 +8,6 @@ public class Join {
 	private Products pp;
 	public Join() {
 	}
-
 	public Join(Factory ff, Products pp) {
 		super();
 		this.ff = ff;
