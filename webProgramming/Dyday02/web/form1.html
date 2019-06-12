@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<script >
+function login(f){
+	var c = confirm('Are You Login>?,.?');
+	if(c){
+		f.method = 'GET';
+		f.action='a';
+		f.submit();
+	};
+};
+</script>
+<title>Form</title>
+</head>
+<body>
+<h1>Form Test</h1>
+
+<form>
+ID <input type="text" name="nm">
+PWD <input type="password" name="pwd">
+<input type="button" onclick="login(this.form);" value ="Login">
+<input type="reset" value ="Reset">
+
+
+</form>
+</body>
+</html>

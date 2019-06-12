@@ -67,3 +67,128 @@ attribute  속성 -  tag 안에 들어가서 태그를 꾸미는 녀석
 <!-- 여러가지의 것들을 묶어서 관리하는 list -->
 ```
 
+a link
+
+마우스 포인터를 올려놓으면 손가락 모양으로 바뀐다!
+
+```html
+<a href= "http://www.naver.com"> goToNaver</a>
+<a href ="b2/b2.html" target="_blank">  b2 </a>
+<a href = "#h_target"> Move</a>
+<h1 id="h_target">header target</h1>
+```
+
+table
+
+```html
+<table border="1">
+		<caption>Number List</caption>
+		<thead>
+			<tr>
+				<th>one</th>
+				<th>two</th>
+				<th>three</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td colspan="2">1</td>
+				<td rowspan="3"><img src="img/img01.jpg"></td>
+			</tr>
+			<tr>
+				<td>4</td>
+				<td>5</td>
+			</tr>
+			<tr>
+				<td>7</td>
+				<td>8</td>
+			</tr>
+		</tbody>
+	</table>
+```
+
+media
+
+```html
+<audio src="file/Kalimba.mp3" controls="controls">
+</audio>
+<video src="http://media.w3.org/2010/05/bunny/movie.ogv" controls="controls"></video>
+```
+
+div , span
+
+```html
+<div>block <span>Area</span> Blue Zone..</div>
+```
+
+form
+
+​	화면에 입력된 값을 서버로 전송하기 위해 사용.
+
+```html
+<script >
+function login(f){
+	var c = confirm('Are You Login>?,.?');
+	if(c){
+		f.method = 'GET';
+		f.action='a';
+		f.submit();
+	};
+};
+</script>
+<form>
+ID <input type="text" name="nm">
+PWD <input type="password" name="pwd">
+<input type="button" onclick="login(this.form);" value ="Login">
+<input type="reset" value ="Reset">
+```
+
+```html
+<form>
+		<fieldset>
+		<legend>Employee Register</legend>
+		<input type="hidden" name="geo" value="fff">
+		Text <input type="text" name="tx"> <br> 
+		password <input
+		type="password" name="pwd"> <br> 
+		<label for="male">Male</label>
+		<input	type="radio" name="g" value="m" id="male"> 
+		Female <input type="radio"name="g" value="f"> 
+		Aze <input type="radio" name="g"value="a">
+		<hr>
+		Chicken <input type="checkbox" name="f" value="c"> <br>
+		Pizza <input type="checkbox" name="f" value="p"> <br>
+		Hamburger <input type="checkbox" name="f" value="H">
+        Level <input value="level1" type="text" name="nm" readonly="readonly"><br>
+		Date <input type="date" name="d"><br>
+		Color <input type="color" name="c"><br>
+		Email <input type="email" name = "e" required ="required"><br>
+		Tel<input type="tel" name = "t" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" title="###-####-####"><br>
+		Number<input type="Number" name = "num"><br>
+		Range<input type="range" min="1" max="10" name="range"><br>
+
+<input type="submit" value= "register">
+		<hr>
+		<select name="car">
+			<option value="h">Hyundai</option>
+			<option value="k">Kia</option>
+			<option value="c">Chevolet</option>
+			<option value="b">BMW</option>
+		</select>
+			<hr>
+			file <input type="file" name="ff">
+			<hr>
+			<input type="button" value="Button"> <input type="submit"
+				value="Submit">
+		</fieldset>
+	</form>
+```
+
+input 의 형식에 제한사항을 걸어 둘 수 있다.
+
+```html
+<td><input type="password" name="pwd" required="required" placeholder ="Password" 
+				pattern="(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}">
+				<!-- 숫자와 특수문자 각각 1개이상, 영문 2자이상, 총8글자 이상 -->
+```
+
