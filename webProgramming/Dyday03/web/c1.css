@@ -1,0 +1,18 @@
+@charset "EUC-KR";
+*{
+}
+h1 {
+	color: red;
+	background: black;
+}
+#h1{
+	color:yellow;
+	background-color: blue;
+}
+.cc{
+	color : white;
+	background: pink;
+}
+input[type="text"]{
+	background: gray;
+}

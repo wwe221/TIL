@@ -1,0 +1,105 @@
+@charset "EUC-KR";
+@import
+	url('https://fonts.googleapis.com/css?family=Dokdo|Holtwood+One+SC|Nanum+Pen+Script|Swanky+and+Moo+Moo|Vampiro+One&display=swap')
+	;
+#search{
+	width:500px;
+	margin:0 auto;
+}
+body{
+	background-image:url('img/bg01.jpg');	
+	background-attachment:fixed;	
+	
+}
+#home {
+	text-decoration: underline;
+}
+
+.u1>ul>li>a {
+	font-family: 'Swanky and Moo Moo', cursive;
+	font-size: 2em; text-decoration : none;
+	color: black;
+	text-decoration: none;
+}
+
+.u1>ol, ul {
+	list-style: none;
+}
+
+.u1>ul {
+	margin: 0 auto;
+	width: 700px;
+	height: 30px;
+	padding: 10px 0 10px 0;
+	border-top: 3px solid black;
+	border-bottom: 3px solid black;
+}
+
+.u1>ul>li {
+	display: inline;
+}
+
+.u1>ul>li>a {
+	font-weight: bold;
+	margin-right: 20px;
+}
+
+.u1>ul>li>a:hover {
+	color: navy;
+}
+
+.t1>thead>tr>th {
+	border: 1px solid black;
+	border-radius: 15px 15px 15px 15px;
+	background: appworkspace;
+}
+.t1>tbody{
+	border-radius: 15px 15px 15px 15px;
+	box-shadow: 10px 10px 10px black;
+}
+.t1 {
+	border-collapse: collapse;
+	margin: 10px auto;
+	width: 500px;	
+	color: #4d79ff;		
+	font-family: 'Nanum Pen Script', cursive;
+	font-size:1.5em;
+	
+}
+
+.t1 tr:nth-child(2n) {
+	background: #b3ffff;
+}
+
+.t1 tr:nth-child(2n+1) {
+	background: #e6ffe6;
+}
+
+.t1 td:nth-child(2n+1) {
+	text-align: center;
+}
+
+.t1 td:nth-child(2) {
+	text-align: left;
+}
+
+.t1 td:nth-child(4) {
+	text-align: right;
+}
+
+.t1 td:nth-child(4):hover {
+	background: black;
+}
+
+.t1>thead>tr>th>a {
+	text-decoration: none;
+	color: black;
+}
+.t1 tr{
+	border-radius: 15px 15px 30px 25px;
+	margin-bottom: 10;	
+}
+.t1 tr:hover {	
+	color: white;
+	background: #ff9999;
+}

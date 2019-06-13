@@ -1,0 +1,37 @@
+@charset "EUC-KR";
+@import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
+h1{
+font-family: 'Oswald', sans-serif;
+text-shadow: 3px 3px 3px #FF0000
+}
+h3{
+	font-size:1.5em;
+	border:1px solid red;
+	height: 100px;
+	line-height:100px;
+	text-align:center;
+	font-family: 'Oswald', sans-serif;
+}
+a {
+	color: scrollbar;
+	text-decoration: none;
+	line-height:100px;
+}
+a:hover {
+	line-height:150px;
+	background: blue;
+	color: red;
+	font-size: 2em;
+	
+}
+input:focus{
+	backgournd:gray;
+	border:1px solid black;
+}
+div > h3:nth-child(4){
+	color:blue;
+}
+div> :not(.a){
+	color:#CC3D2D;	
+	font-family: 'Roboto', sans-serif;
+}

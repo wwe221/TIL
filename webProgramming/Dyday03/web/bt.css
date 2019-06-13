@@ -1,0 +1,21 @@
+@charset "EUC-KR";
+
+.bt>a {
+	display: block;
+	width:150px;
+	height:80px;
+	
+	font-size: 2em;
+	border: 15px solid black;
+	background:yellow;
+	line-height:80px;
+	text-align:center;
+	font-size:2.3em;
+	font-weight: bold;
+	font-family: 'Rancho', cursive;
+	
+	margin: 10px auto;
+}
+.bt>a:hover{
+	background: red;
+}

@@ -50,6 +50,8 @@ attribute  속성 -  tag 안에 들어가서 태그를 꾸미는 녀석
 
 추가적인 공부 html www.w3schools.com
 
+###### codes
+
 ```html
 <p>this is paragraph</p>
 &nbsp;
@@ -190,5 +192,30 @@ input 의 형식에 제한사항을 걸어 둘 수 있다.
 <td><input type="password" name="pwd" required="required" placeholder ="Password" 
 				pattern="(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}">
 				<!-- 숫자와 특수문자 각각 1개이상, 영문 2자이상, 총8글자 이상 -->
+```
+
+## CSS
+
+```css
+p  {  backgroun-color   :   yellow  ;   }
+/*선태자(selector) { 속성(attribute) : 값 (value); }*/
+*{ } /*전체 선택자*/
+.className{ }/*클래스 선택자*/
+#idName{}/* 아이디 선택자 */
+selectorName [attribute="value"]{ }/* 속성 선택자*/
+```
+
+###### 외부 스타일 시트 링크
+
+```html
+<link type="text/css" rel="stylesheet" href="c1.css">
+```
+
+
+
+```css
+.classname > tag {} /*클래스 안의 태그*/
+.classname tag{} /*클래스 안의 모든 태그 */
+tag > tag > tag:nth-child(n){} /* 경로를 타고 들어간 태그의 n번째 마다*/
 ```
 
