@@ -1,0 +1,264 @@
+@charset "EUC-KR";
+
+@import
+	url('https://fonts.googleapis.com/css?family=Dokdo|Holtwood+One+SC|Nanum+Pen+Script|Swanky+and+Moo+Moo|Vampiro+One&display=swap')
+	;
+/*Global*/
+* {
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+ul, ol {
+	list-style: none;
+}
+
+li {
+	
+}
+
+header, section, footer {
+	margin: 0 auto;
+}
+
+/* Header */
+header {
+	width: 800px;
+	height: 150px;
+	background: white;
+	position: relative;
+	background-image: url('img/hbg.jpg');
+	background-repeat: no-repeat;
+	background-position: right;
+}
+
+header>#top_nav {
+	position: absolute;
+	height: 30px;
+	font-size: 0.7em;
+	right: 1px;
+	top: 1px;
+}
+
+header>#top_nav>ul>li {
+	float: left;
+	margin: 0 5px;
+}
+
+#title {
+	
+	padding-top: 40px;
+	text-align: center;
+	height: 80px;
+}
+
+header>#top_nav>ul {
+	
+}
+
+header>#main_nav {
+	margin: 0 auto;
+	width: 500px;
+}
+
+header>#main_nav>ul>li {
+	float: left;
+	margin: 0 20px;	
+}
+header>#main_nav>ul>li>a:hover {
+		color:navy;
+}
+/* Section */
+section {
+	width: 800px;
+	height: 500px;
+	background: gray;
+}
+
+#left_a {
+	position:relative;
+	float: left;
+	height: 500px;
+	width: 100px;
+	background: #cdfcfe;
+}
+
+#center_a {
+	float: left;
+	width: 600px;
+	height: 500px;
+	background-image: url('img/bg02.jpg');
+}
+
+#right_a {
+	float: left;
+	width: 100px;
+	height: 500px;
+	background-image: url('img/bg03.jpg');
+}
+
+#right_a>img {
+	margin: 5px 10px;
+}
+/* Footer  */
+footer {
+	width: 800px;
+	height: 20px;
+	background: black;
+}
+
+#search {
+	width: 500px;
+	margin: 0 auto;
+}
+
+#home {
+	text-decoration: underline;
+}
+
+body {
+	background: white;
+}
+
+.u1>ul>li>a {
+	font-family: 'Swanky and Moo Moo', cursive;
+	font-size: 2em;
+	text-decoration: none;
+	color: black;
+	text-decoration: none;
+}
+
+.u1>ol, ul {
+	list-style: none;
+}
+
+.u1>ul {
+	margin: 0 auto;
+	width: 700px;
+	height: 30px;
+	padding: 10px 0 10px 0;
+	border-top: 3px solid black;
+	border-bottom: 3px solid black;
+}
+
+.u1>ul>li {
+	display: inline;
+}
+
+.u1>ul>li>a {
+	font-weight: bold;
+	margin-right: 20px;
+}
+
+.u1>ul>li>a:hover {
+	color: navy;
+}
+
+.t1>thead>tr>th {
+	border: 1px solid black;
+	border-radius: 15px 15px 15px 15px;
+	background: appworkspace;
+}
+
+.t1>tbody {
+	border-radius: 15px 15px 15px 15px;
+	box-shadow: 10px 10px 10px black;
+}
+
+.t1 {
+	border-collapse: collapse;
+	margin: 10px auto;
+	width: 550px;
+	color: #4d79ff;
+	font-family: 'Nanum Pen Script', cursive;
+	font-size: 1.5em;
+}
+
+.t1 tr:nth-child(2n) {
+	background: #b3ffff;
+}
+
+.t1 tr:nth-child(2n+1) {
+	background: #e6ffe6;
+}
+
+.t1 td:nth-child(2n+1) {
+	text-align: center;
+}
+
+.t1 td:nth-child(2) {
+	text-align: left;
+}
+
+.t1 td:nth-child(4) {
+	text-align: right;
+}
+
+.t1 td:nth-child(4):hover {
+	background: black;
+}
+
+.t1>thead>tr>th>a {
+	text-decoration: none;
+	color: black;
+}
+
+.t1 tr {
+	border-radius: 15px 15px 30px 25px;
+	margin-bottom: 10;
+}
+
+.t1 tr:hover {
+	color: white;
+	background: #ff9999;
+}
+#out{	
+}
+#out>div{
+	float:left;
+	margin-left:5px;
+}
+.dimg{
+	width:100px;
+	height:100px;
+	opacity: 0.9;
+	margin:5px;
+}
+.limg{
+	position: absolute;
+	z-index:10;
+}
+.limg:hover{
+	z-index:30;
+}
+.limg >img{
+	z-index: 10;
+	width:100px;
+	height:100px;
+	opacity: 0.7;
+}
+.limg>img:hover{
+	z-index:30;
+	opacity: 1.0;
+}
+#l1{
+	top:240px;	
+}
+#l2{
+	top:160px;
+}
+#l3{
+	top:80px;
+}
+#footer{
+	float:right;
+}
+#footer>span{
+	color:white;
+	float:right;
+}

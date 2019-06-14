@@ -149,7 +149,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-      <Context docBase="Dyday01" path="/Dyday01" reloadable="true" source="org.eclipse.jst.jee.server:Dyday01"/><Context docBase="Dyday02" path="/Dyday02" reloadable="true" source="org.eclipse.jst.jee.server:Dyday02"/><Context docBase="day022" path="/day022" reloadable="true" source="org.eclipse.jst.jee.server:day022"/><Context docBase="Dyday03" path="/Dyday03" reloadable="true" source="org.eclipse.jst.jee.server:Dyday03"/></Host>
+      <Context docBase="Dyday01" path="/Dyday01" reloadable="true" source="org.eclipse.jst.jee.server:Dyday01"/><Context docBase="Dyday02" path="/Dyday02" reloadable="true" source="org.eclipse.jst.jee.server:Dyday02"/><Context docBase="day022" path="/day022" reloadable="true" source="org.eclipse.jst.jee.server:day022"/><Context docBase="Dyday03" path="/Dyday03" reloadable="true" source="org.eclipse.jst.jee.server:Dyday03"/><Context docBase="Dyday04" path="/Dyday04" reloadable="true" source="org.eclipse.jst.jee.server:Dyday04"/></Host>
     </Engine>
   </Service>
 </Server>

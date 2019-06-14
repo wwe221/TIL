@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style>
+#out{
+	border:1px solid black;
+	width:200px;
+	height:200px;
+	overflow: auto;
+}
+#d1,#d2,#d3,#d4{	
+	width:100px;
+	height:100px;	
+	opacity: 0.8;	
+}
+#d1{
+	background: red;
+	z-index: 100;		
+}
+#d2{
+	background: blue;
+	left:20px;
+	top:20px;
+	z-index: 50;
+}
+#d3{	
+	background: green;
+	left:50px;
+	top:50px;
+	z-index: 1;
+}
+#d4{
+	background:aqua;
+	left:100px;
+	top:100px;
+	z-index: 10;
+}
+</style>
+</head>
+<body>
+<div id="out">
+<div id="d1">div1</div>
+<div id="d2">div2</div>
+<div id="d3">div3</div>
+<div id="d4">div4</div>
+</div>
+
+
+</body>
+</html>
