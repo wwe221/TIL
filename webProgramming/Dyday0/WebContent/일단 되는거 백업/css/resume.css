@@ -3,23 +3,18 @@
  * Copyright 2013-2019 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-resume/blob/master/LICENSE)
  */
-@import url('https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap');
-
-  :root{
- 	myColor:#87CEFA;
- }
 body {
-	font-family: Muli, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-		'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji',
+	font-family: 'Muli', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+		Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji',
 		'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 	padding-top: 54px;
-	color: #596066
+	color: #868e96;
 }
 
-@media ( min-width :992px) {
+@media ( min-width : 992px) {
 	body {
 		padding-top: 0;
-		padding-left: 17rem
+		padding-left: 17rem;
 	}
 }
 
@@ -27,35 +22,30 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: 'Saira Extra Condensed', -apple-system, BlinkMacSystemFont,
 		'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif,
 		'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-		'Noto Color Emoji',
-		'Do Hyeon', sans-serif
-		;
+		'Noto Color Emoji';
 	font-weight: 700;
-	color: #343a40	
+	text-transform: uppercase;
+	color: #343a40;
 }
 
 h1 {
 	font-size: 6rem;
-	line-height: 5.5rem;	
-	text-transform: uppercase;
+	line-height: 5.5rem;
 }
 
 h2 {
 	font-size: 3.5rem;
-	text-transform: uppercase;
 }
 
 h3 {
-	font-size: 2rem
+	font-size: 2rem;
 }
 
 p.lead {
 	font-size: 1.15rem;
-	font-weight: 400
+	font-weight: 400;
 }
-p{
-	font-family: 'Do Hyeon', sans-serif;
-}
+
 .subheading {
 	text-transform: uppercase;
 	font-weight: 500;
@@ -63,7 +53,7 @@ p{
 		'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif,
 		'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
 		'Noto Color Emoji';
-	font-size: 1.5rem
+	font-size: 1.5rem;
 }
 
 .social-icons a {
@@ -76,60 +66,36 @@ p{
 	text-align: center;
 	font-size: 1.5rem;
 	line-height: 3.5rem;
-	margin-right: 1rem
+	margin-right: 1rem;
 }
-.social-icons > .yet-social-icons{
-	background-color:#bcc0c5;
-}
+
 .social-icons a:last-child {
-	margin-right: 0
+	margin-right: 0;
 }
 
 .social-icons a:hover {
-	background-color: #87CEFA
+	background-color: #BD5D38;
 }
 
 .dev-icons {
 	font-size: 3rem;
-	
 }
-.list-inline-item{
-	color:#0a95e9;
-}
+
 .dev-icons .list-inline-item i:hover {
-	color: #87CEFA
+	color: #BD5D38;
 }
 
 #sideNav .navbar-nav .nav-item .nav-link {
 	font-weight: 800;
-	letter-spacing: .05rem;
-	text-transform: uppercase;	
-}
-.lnag-item{
-	font-weight: 800;
-	letter-spacing: .05rem;
+	letter-spacing: 0.05rem;
 	text-transform: uppercase;
-	list-style: none;
 }
 
-.lang-item >li{
-	font-weight: 800;
-	letter-spacing: .05rem;
-	text-transform: uppercase;
-	
-	list-style: none;
-}
-.lang-item >li> a{
-	font-weight: 800;
-	letter-spacing: .05rem;
-	text-transform: uppercase;
-	color:#fff;
-}
 #sideNav .navbar-toggler:focus {
-	outline-color: #87CEFA
+	outline-color: #87CEFA;
 }
 
-@media ( min-width :992px) {
+@media ( min-width : 992px) {
 	#sideNav {
 		text-align: center;
 		position: fixed;
@@ -143,19 +109,19 @@ p{
 		-ms-flex-direction: column;
 		flex-direction: column;
 		width: 17rem;
-		height: 100vh
+		height: 100vh;
 	}
 	#sideNav .navbar-brand {
 		display: -webkit-box;
 		display: -ms-flexbox;
 		display: flex;
 		margin: auto auto 0;
-		padding: .5rem
+		padding: 0.5rem;
 	}
 	#sideNav .navbar-brand .img-profile {
 		max-width: 10rem;
 		max-height: 10rem;
-		border: .5rem solid rgba(255, 255, 255, .2)
+		border: 0.5rem solid rgba(255, 255, 255, 0.2);
 	}
 	#sideNav .navbar-collapse {
 		display: -webkit-box;
@@ -168,61 +134,61 @@ p{
 		-ms-flex-positive: 0;
 		flex-grow: 0;
 		width: 100%;
-		margin-bottom: auto
+		margin-bottom: auto;
 	}
 	#sideNav .navbar-collapse .navbar-nav {
 		-webkit-box-orient: vertical;
 		-webkit-box-direction: normal;
 		-ms-flex-direction: column;
 		flex-direction: column;
-		width: 100%
+		width: 100%;
 	}
 	#sideNav .navbar-collapse .navbar-nav .nav-item {
-		display: block
+		display: block;
 	}
 	#sideNav .navbar-collapse .navbar-nav .nav-item .nav-link {
-		display: block
+		display: block;
 	}
 }
 
 section.resume-section {
 	padding-top: 5rem !important;
 	padding-bottom: 5rem !important;
-	max-width: 75rem
+	max-width: 75rem;
 }
 
 section.resume-section .resume-item .resume-date {
-	min-width: none
+	min-width: none;
 }
 
-@media ( min-width :768px) {
+@media ( min-width : 768px) {
 	section.resume-section {
-		min-height: 100vh
+		min-height: 100vh;
 	}
 	section.resume-section .resume-item .resume-date {
-		min-width: 18rem
+		min-width: 18rem;
 	}
 }
 
-@media ( min-width :992px) {
+@media ( min-width : 992px) {
 	section.resume-section {
 		padding-top: 3rem !important;
-		padding-bottom: 3rem !important
+		padding-bottom: 3rem !important;
 	}
 }
 
 .bg-primary {
-	background-color: myColor !important
+	background-color: #87CEFA !important;
 }
 
 .text-primary {
-	color: myColor !important
+	color: #BD5D38 !important;
 }
 
 a {
-	color: #0a95e9
+	color: #BD5D38;
 }
 
-a:active, a:focus, a:hover {
-	color: #87CEFA
+a:hover, a:focus, a:active {
+	color: #824027;
 }
