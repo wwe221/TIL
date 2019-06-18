@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style>
+input[type="text"]:focus {
+	/* background: red; */
+}
+span{
+color:red;
+}
+</style>
+<script>
+	function login(f) {
+		var id = f.id.value;
+		var pwd = f.pwd.value;
+		var pwd2 = f.pwd2.value;
+		var anw = f.anw.value;
+		var hob = f.hob.value;
+		var age = f.age.value;
+		if (id == null || id == '') {
+			document.getElementById('idspan').innerHTML='아이디는 Mandatory';
+			f.id.focus();
+			return;
+		}
+		else{
+			document.getElementById('idspan').innerHTML='';
+		}
+		if (pwd == null || pwd == '') {
+			document.getElementById('pwdspan').innerHTML='비번은 Mandatory';
+			f.pwd.focus();
+			return;
+		}
+		else{
+			document.getElementById('pwdspan').innerHTML='';
+		}
+		if(!(pwd2 ==pwd)){
+				document.getElementById('pwd2span').innerHTML='plz make it equals with origin';
+		}
+		else{
+			document.getElementById('pwd2span').innerHTML='';
+		}
+		if (anw == null || anw == '') {
+			document.getElementById('anwspan').innerHTML='답은 Mandatory';			
+			return;
+		}
+		else{
+			document.getElementById('anwspan').innerHTML='';
+		}
+		if (hob == null || hob== '') {
+			document.getElementById('hobspan').innerHTML='취미 Mandatory';			
+			return;
+		}
+		else{
+			document.getElementById('hobspan').innerHTML='';
+		}
+		if (age == null || age == '') {
+			document.getElementById('agespan').innerHTML='나이 Mandatory';			
+			return;
+		}
+		else{
+			document.getElementById('agespan').innerHTML='';
+		}
+		/* var c = confirm('Are you login ?');
+		if (c) {
+			f.submit();
+		} */
+	};
+</script>
+</head>
+<body>
+	<form action="login" method="get">
+		<input type="text" name="id" placeholder="ID"> <span id='idspan'></span><br> 
+		<input type="text" name="pwd" placeholder="PWD"> <span id='pwdspan'></span><br> 
+		<input type="text" name="pwd2" placeholder="PWD Check"> <span id='pwd2span'></span><br> 
+			<select name="Hint">
+			<option value="a">학창시절 별명은 ?</option>
+			<option value="b">첫 애완동물의 이름은?</option>
+			<option value="c">나의 고향은 ?</option>
+			<option value="d">가장 좋아하는 음식은 ?</option>
+			</select> <br>
+			<input type="text" name="anw" placeholder="Answer"> <span id='anwspan'></span><br>
+			Train<input type="radio" name="hob" value="tr">
+			Study<input type="radio" name="hob" value="std">
+			Music<input type="radio" name="hob" value="mus"> <span id='hobspan'></span><br>
+		<input type="number" name="age" placeholder="AGE"> <span id='agespan'></span><br> 	
+		<input onclick="login(this.form);" type="button" value="login"><br><br>
+		
+
+	</form>
+
+</body>
+</html>

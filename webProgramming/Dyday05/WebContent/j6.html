@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style>
+</style>
+<script>
+var cnum = Math.round(Math.random()*100);
+var cnt = 0;
+function guess(){
+	var my = document.getElementById('myn').value;
+	if(my>cnum){
+		document.getElementById('hint').value='Down!';
+	}else if(my<cnum){
+		document.getElementById('hint').value='Up!';
+	}else if (my==cnum){
+		document.getElementById('hint').value='정답입니다';
+		document.getElementById('myn').style.readonly="readonly";		
+	}
+	document.getElementById('cnt').value=++cnt;
+	document.getElementById('mynumbs').innerHTML+= my+"<br>";
+	
+};
+	
+	
+</script>
+</head>
+<body>
+<h1>Number Guessssssss Game</h1>
+<p>숫자 1부터 100사이에 있습니다. 맞춰보세요</p>
+숫자:<input type="number" id="myn" placeholder="숫자를 맞춰보세요"> 
+<input type="button" onclick="guess();" value="확인">
+<br>
+추측횟수:<input readonly="readonly" type="number" id="cnt"> 
+힌트:<input readonly="readonly" type="text" id="hint"><br>
+<span id="mynumbs"></span>
+
+</body>
+</html>

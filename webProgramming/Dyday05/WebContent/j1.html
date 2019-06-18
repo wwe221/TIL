@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script type="text/javascript" src="j1.js"></script>
+<style>
+#panel{
+	display:none;
+}
+</style>
+<script>
+	//number
+	var v1 = 10;
+	var v2 = 1.13;
+	//boolean
+	v1 = true;
+	//string
+	v1 = '"abc"';
+	v1 = "abc";
+	//JavaSciptObject
+	//== JSON (javascript object notation)
+	var v3 = {
+		name : 'k1',
+		size : 1000,
+		go : function() {
+		},
+		stop : function() {
+		}
+	};
+	//alert(typeof (v3));
+	//function
+	var v7 = function() {
+	};
+	//array
+	var v8 = [ 1, 2, 3, 'a', v3 ];
+	//alert(typeof (v8));
+	//undefined
+	var v9;
+	//null
+	var v10 = null;
+</script>
+</head>
+<body>
+	<h1 onclick="alert('hi')">JavaScript Test</h1>
+	<p class="flip" href="#" onclick="myShowFunction()">Click to show panel</p>
+	<div id="panel">
+		<p>
+			This panel contains a &lt;div&gt; element, which is hidden by default
+			(
+			<code class="w3-codespan">display: none</code>
+			).
+		</p>
+		<p>
+			It is styled with CSS, and we use JavaScript to show it (change it to
+			(
+			<code class="w3-codespan">display: block</code>
+			).
+		</p>
+	</div>
+
+
+</body>
+</html>
