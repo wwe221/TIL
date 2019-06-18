@@ -3,11 +3,13 @@
  * Copyright 2013-2019 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-resume/blob/master/LICENSE)
  */
-@import url('https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap');
+@import
+	url('https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap');
 
-  :root{
- 	myColor:#87CEFA;
- }
+:root {
+	myColor: #87CEFA;
+}
+
 body {
 	font-family: Muli, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
 		'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji',
@@ -27,16 +29,14 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: 'Saira Extra Condensed', -apple-system, BlinkMacSystemFont,
 		'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif,
 		'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-		'Noto Color Emoji',
-		'Do Hyeon', sans-serif
-		;
+		'Noto Color Emoji', 'Do Hyeon', sans-serif;
 	font-weight: 700;
-	color: #343a40	
+	color: #343a40
 }
 
 h1 {
 	font-size: 6rem;
-	line-height: 5.5rem;	
+	line-height: 5.5rem;
 	text-transform: uppercase;
 }
 
@@ -53,9 +53,11 @@ p.lead {
 	font-size: 1.15rem;
 	font-weight: 400
 }
-p{
+
+p {
 	font-family: 'Do Hyeon', sans-serif;
 }
+
 .subheading {
 	text-transform: uppercase;
 	font-weight: 500;
@@ -70,7 +72,7 @@ p{
 	display: inline-block;
 	height: 3.5rem;
 	width: 3.5rem;
-	background-color: #495057;
+	background-color: #000000;
 	color: #fff !important;
 	border-radius: 100%;
 	text-align: center;
@@ -78,24 +80,31 @@ p{
 	line-height: 3.5rem;
 	margin-right: 1rem
 }
-.social-icons > .yet-social-icons{
-	background-color:#bcc0c5;
+
+.ex-social-icon:hover {
+	background-color: #0a95e9;
 }
+
+.social-icons>.yet-social-icons {
+	background-color: #bcc0c5;
+}
+
 .social-icons a:last-child {
 	margin-right: 0
 }
 
 .social-icons a:hover {
-	background-color: #87CEFA
+	
 }
 
 .dev-icons {
 	font-size: 3rem;
-	
 }
-.list-inline-item{
-	color:#0a95e9;
+
+.list-inline-item {
+	color: #0a95e9;
 }
+
 .dev-icons .list-inline-item i:hover {
 	color: #87CEFA
 }
@@ -103,28 +112,30 @@ p{
 #sideNav .navbar-nav .nav-item .nav-link {
 	font-weight: 800;
 	letter-spacing: .05rem;
-	text-transform: uppercase;	
+	text-transform: uppercase;
 }
-.lnag-item{
+
+.lnag-item {
 	font-weight: 800;
 	letter-spacing: .05rem;
 	text-transform: uppercase;
 	list-style: none;
 }
 
-.lang-item >li{
+.lang-item>li {
 	font-weight: 800;
 	letter-spacing: .05rem;
 	text-transform: uppercase;
-	
 	list-style: none;
 }
-.lang-item >li> a{
+
+.lang-item>li>a {
 	font-weight: 800;
 	letter-spacing: .05rem;
 	text-transform: uppercase;
-	color:#fff;
+	color: #fff;
 }
+
 #sideNav .navbar-toggler:focus {
 	outline-color: #87CEFA
 }
@@ -142,7 +153,7 @@ p{
 		-webkit-box-direction: normal;
 		-ms-flex-direction: column;
 		flex-direction: column;
-		width: 17rem;
+		width: 16rem;
 		height: 100vh
 	}
 	#sideNav .navbar-brand {
@@ -210,7 +221,9 @@ section.resume-section .resume-item .resume-date {
 		padding-bottom: 3rem !important
 	}
 }
-
+hr.title-line{
+	border:1px solid #46b5f7;	
+}
 .bg-primary {
 	background-color: myColor !important
 }

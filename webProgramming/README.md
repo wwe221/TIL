@@ -219,3 +219,92 @@ selectorName [attribute="value"]{ }/* 속성 선택자*/
 tag > tag > tag:nth-child(n){} /* 경로를 타고 들어간 태그의 n번째 마다*/
 ```
 
+
+
+## JavaScript
+
+기존의 정적인 웹페이지를 Dynamic 하고 사용자에 의해 Interactive 하게 만들수 있도록 해준다.
+
+Script 언어 이기 때문에 컴파일이 필요가 없다. 하지만 그렇기 때문에 코드 작성과정에서 에러를 찾아내기가 까다롭다. 
+
+기본적으로 Server가 아닌 Browser에서 동작을 한다.
+
+###### 특징
+
+- 인터프리트 언어 - 컴파일을 거치지 않고 바로 실행시킬 수 있다.
+- 동적 타이핑 - 변수의 자료형을 선언하지 않아도 된다.
+- 구조적 프로그래밍 - if, else while for 등의 구조적 프로그래밍을 지원한다.
+- 객체 기반
+- 함수형 프로그래밍 - 함수는 일급객체로서, 속성과 메서드를 가진다.
+- 프로토타입 기반 - 상속을 위해 클래스 개념 대신에 프로토타입을 사용한다.
+
+
+
+###### 용도별 확장언어
+
+- Node.js
+
+  자바스크립트를 서버프로그래밍 언어로 변화 시킨 서버사이드 소프트웨어 시스템이다.
+
+- jQuery
+
+  자바스크립트를 보다 편하고 보기 쉽게 사용할 수 있도록 변환시킨 언어이다.
+
+- JSON
+
+  JavaScript Object Notation
+
+  개발언어에 독립적인 데이터 형식으로  XML을 대체하고 있다. 또한, 문서 데이터베이스의 표준 저장 형식으로도 사용된다.
+
+
+
+
+
+```javascript
+	//number
+	var v1 = 10;
+	var v2 = 1.13;
+	//boolean
+	v1 = true;
+	//string
+	v1 = '"abc"';
+	v1 = "abc";
+	//JavaSciptObject
+	//== JSON (javascript object notation)
+	var v3 = {
+		name : 'k1',
+		size : 1000,
+		go : function() {
+		},
+		stop : function() {
+		}
+	};
+	//function
+	var v7 = function() {
+	};
+	//array
+	var v8 = [ 1, 2, 3, 'a', v3 ];
+	alert(typeof (v8));
+	//undefined
+	var v9;
+	//null
+	var v10 = null;
+```
+
+```javascript
+function calc(){
+		var v1 = document.getElementById('n1').value;
+		var v2 = document.getElementById('n2').value;
+		var sum= Number(v1) +Number(v2);
+		var r = document.getElementById('result');
+		var r2 = document.getElementById('r1');
+		if(isNaN(sum))
+		r.innerHTML = '<a href = "">'+0+'</a>';			
+		else
+		r.innerHTML = '<a href = "">'+sum+'</a>';
+
+		r.style.color='blue';
+		r2.value = sum;
+	};
+```
+
