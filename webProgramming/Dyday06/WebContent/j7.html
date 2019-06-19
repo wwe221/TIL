@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style>
+
+</style>
+<script>
+var c=null;
+try{
+	c= new ddate();
+}catch(error){
+	alert(error.message);
+
+}
+function test(){
+	var a = prompt('숫자입력');
+	try{
+	if(a>10) throw "10보다 크다";
+	}catch(error){
+		alert(error);
+	}
+}
+</script>
+</head>
+<body>
+<h1>Exception</h1>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style>
+
+</style>
+<script>
+var Car={
+	name:'k1',
+	size:1000,
+	go:function(){
+	return this.name+ ' Go';
+	},
+	stop:function(){
+	return this.name+ ' Stop';
+	}	
+};
+alert(Car.go());
+function Person(name,age){
+	this.name = name;
+	this.age = age;	
+};
+Person.prototype.print= function(){
+	return this.name +' ' + this.age;
+};
+var p1 = new Person('Kim',20);
+var p2 = new Person('Lee',30);
+var d= new Date();
+alert(p1.print());
+</script>
+</head>
+<body>
+
+</body>
+</html>

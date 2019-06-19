@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="EUC-KR">
+	<title>Insert title here</title>
+	<style>
+		table {
+			border: 1px solid gray;
+			width: 300px;
+		}
+		tr {
+			background: white;
+		}
+
+		tr>* {
+			color: blue;
+		}
+	</style>
+	<script>
+		function choi() {
+			var s = document.myform.barb;
+			var bars = '';
+			for (var i in s) {
+				if (s[i].checked) {
+					if (s[i].value == 'p') {
+						bars += "포카리 ";
+					}
+					else if (s[i].value == 'g') {
+						bars += "게토레이 ";
+					}
+					else if (s[i].value == 't') {
+						bars += "2프로 ";
+					}
+				}
+			}
+			var cash;
+			if (document.myform.cash.value == "cash")
+				cash = "현금";
+			else
+				cash = "카드";
+			document.myform.outBa.value = bars;
+			document.myform.redit.value = cash;
+
+		};
+	</script>
+</head>
+
+<body>
+	<table>
+		<tbody>
+			<form action="" name="myform">
+				<tr>
+					<td>
+						포카리 <input type="checkbox" name="barb" value="p">
+					</td>
+					<td>
+						게토레이 <input type="checkbox" name="barb" value="g">
+					</td>
+					<td>
+						2% <input type="checkbox" name="barb" value="t">
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						지불방법<select name="cash" id="cash" style="width:150px">
+							<option value="card">카드</option>
+							<option value="cash">현금</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="button" value="선택" onclick="choi();"></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<input type="text" name="outBa"><br>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<input type="text" name="redit"><br>
+					</td>
+
+				</tr>
+			</form>
+		</tbody>
+	</table>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="EUC-KR">
+	<title>Insert title here</title>
+	<style>
+
+	</style>
+	<script>
+		var person = [
+			{ id: "id01", name: "이 말 숙" },
+			{ id: "id02", name: "정 말 숙" },
+			{ id: "id03", name: "김 말 숙" },
+			{ id: "id04", name: "박 말 숙" },
+			{ id: "id05", name: "최 말 숙" },
+			{ id: "id06", name: "장 말 숙" }
+		];
+		function getdata() {
+			var result = '';
+			var div = document.getElementById('data');
+			for (var i in person) {
+				person[i].print = function () {
+					return ('<h2>' + this.id + ' ' + this.name + '</h2>')
+				};
+				result += person[i].print();
+			}
+			div.innerHTML = result;
+		};
+	</script>
+</head>
+
+<body>
+	<h1 onclick="getdata();">Click</h1>
+	<div id="data"></div>
+</body>
+
+</html>

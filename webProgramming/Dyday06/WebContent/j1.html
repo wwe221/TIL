@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="EUC-KR">
+	<title>Insert title here</title>
+	<style>
+
+	</style>
+	<script>
+		var person = [
+			{ id: "id01", name: "이 말 숙" },
+			{ id: "id02", name: "정 말 숙" },
+			{ id: "id03", name: "김 말 숙" },
+			{ id: "id04", name: "박 말 숙" },
+			{ id: "id05", name: "최 말 숙" },
+			{ id: "id06", name: "장 말 숙" }
+		];
+		function getData() {
+			var data = document.getElementById('data');
+			var result = '<table border="1">';
+			result += '<tbody>';
+			for (var i in person) {
+				result += '<tr>' +
+					'<td>' + person[i].id + '</td>' +
+					'<td >' + person[i].name + '</td>'
+					+ '</tr>';
+			};
+			result += '</tbody>';
+			result += '</table>';
+			data.innerHTML = result;
+		};
+		function Person(name,age){
+	this.name = name;
+	this.age = age;	
+};
+Person.prototype.print= function(){
+	return this.name +' ' + this.age;
+};
+	</script>
+</head>
+
+<body>
+	<h1>hello</h1>
+	<p onclick="getData();"> hi</p>
+	<div id="data">
+		<table>
+			<tr>
+				<td>
+
+				</td>
+			</tr>
+		</table>
+	</div>
+</body>
+
+</html>

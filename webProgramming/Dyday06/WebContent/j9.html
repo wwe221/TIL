@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="EUC-KR">
+	<title>Insert title here</title>
+	<style>
+
+	</style>
+	<script>
+		function c1() {
+			var h1 = document.getElementById('h1').innerText;
+			document.getElementById('h1').innerText = h1 + 'AddText';
+			var id = document.getElementById('id').value;
+			document.getElementById('id').value = id + 'Add id';
+
+		};
+		function add() {
+			var id = document.myform.id.value;
+			var s = document.myform.hobby;
+			var h = '';
+			for (var i in s) {
+				if (s[i].checked)
+				alert(s[i].value);
+			}
+		};
+
+	</script>
+</head>
+
+<body>
+
+
+	<h1 id="h1">Header</h1>
+	id <inpt id="id" type="text" name="id">
+		<button onclick="c1();">Click1</button>
+		<br><br><br>
+		<hr>
+		<form action="" name="myform">
+			id <input type="text" name="id"><br>
+			study <input type="checkbox" name="hobby" value="s">
+			Music <input type="checkbox" name="hobby" value="m">
+			Train <input type="checkbox" name="hobby" value="t">
+			<input type="button" value="ADD" onclick="add();">
+		</form>
+</body>
+
+</html>

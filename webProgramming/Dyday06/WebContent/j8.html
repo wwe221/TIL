@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style>
+div>*{
+	border:1px solid #18beff;
+}
+.bigB{
+	width:400px;
+	height:50px;
+}
+.calc>td>button{
+	width:100px;
+	height:50px;
+	border:1px solid #18beff;
+	
+}
+.calc>td>#equals{
+	width:100px;
+	height:100px;
+	border:1px solid #ff0075;
+}
+</style>
+<script>
+var output ='';
+var result=0;
+var fun =null;
+var a=null;
+var b='';
+
+
+var input = function(put){
+	var out = document.getElementById('ini');
+	output+=put;	
+	out.value = output;
+	
+};
+var calc = function(){
+	result = eval(output);
+	var out = document.getElementById('out');		
+	out.value = result;
+	reset();
+};
+var reset = function(){
+	output='';
+	result=0;
+	fun=null;
+	a=null;
+	b=null;
+	var out = document.getElementById('ini');	
+	out.value = result;
+}
+</script>
+</head>
+<body>
+<div >	
+	<input type="text" id="ini" class="bigB"><br>
+	<input type="text" id="out" class="bigB"><br>
+	<button onclick="reset();"class="bigB">C</button>
+	<table>
+		<tbody>
+			<tr class="calc">
+				<td >
+					<button onclick="input('+');">+</button>
+				</td>
+				<td>
+					<button onclick="input('-');">-</button>
+				</td>
+				<td>
+					<button onclick="input('*');">x</button>
+				</td>
+				<td>
+					<button onclick="input('/');">/</button>
+				</td>
+			</tr>
+			<tr class="calc">
+				<td >
+					<button onclick="input(1);">1</button>
+				</td>
+				<td>
+					<button onclick="input(2);">2</button>
+				</td>
+				<td>
+					<button onclick="input(3);">3</button>
+				</td>
+				<td>
+					<button onclick="input(0);">0</button>
+				</td>
+			</tr>
+			<tr class="calc">
+				<td >
+					<button onclick="input(4);">4</button>
+				</td>
+				<td>
+					<button onclick="input(5);">5</button>
+				</td>
+				<td>
+					<button onclick="input(6);">6</button>
+				</td>
+				<td rowspan="2">
+					<button onclick="calc();" id="equals">=</button>
+				</td>
+			</tr>
+			<tr class="calc">
+				<td >
+					<button onclick="input(7);">7</button>
+				</td>
+				<td>
+					<button onclick="input(8);">8</button>
+				</td>
+				<td>
+					<button onclick="input(9);">9</button>
+				</td>
+			</tr>
+	</tbody>
+</table>
+	
+
+</div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="EUC-KR">
+	<title>Insert title here</title>
+	<style>
+
+	</style>
+	<script>
+		a();
+		function a() {
+			alert('a');
+		};
+		var b = function () {
+			alert('b');
+		}
+		b.call();
+		function c(a, b) {
+			alert(a + b);
+		};
+		function d() {
+			return 100;
+		};
+		var num = d();
+		alaert(num);
+	</script>
+
+</head>
+
+<body>
+	<button onclick="c('A','b');">Click</button>
+
+</body>
+
+</html>
