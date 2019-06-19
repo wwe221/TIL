@@ -308,3 +308,30 @@ function calc(){
 	};
 ```
 
+###### 객체 와 프로토타입
+
+```javascript
+function Person(name,age){
+	this.name = name;
+	this.age = age;	
+};
+Person.prototype.print= function(){
+	return this.name +' ' + this.age;
+};
+var p1 = new Person('Kim',20);
+var p2 = new Person('Lee',30);
+var d= new Date();
+alert(p1.print());
+
+
+var Sk= {
+	a:function(){alert('a');}
+};
+var Hb= {
+    a:function(){alert('bbb');}
+};
+Sk.a();
+```
+
+
+
