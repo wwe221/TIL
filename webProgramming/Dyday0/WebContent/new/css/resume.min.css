@@ -239,3 +239,174 @@ a {
 a:active, a:focus, a:hover {
 	color: #87CEFA
 }
+
+/*  */
+@keyframes p-5{from{width:0}to{width:5%}}@keyframes p-10{from{width:0}to{width:10%}}@keyframes p-15{from{width:0}to{width:15%}}@keyframes p-20{from{width:0}to{width:20%}}@keyframes p-25{from{width:0}to{width:25%}}@keyframes p-30{from{width:0}to{width:30%}}@keyframes p-35{from{width:0}to{width:35%}}@keyframes p-40{from{width:0}to{width:40%}}@keyframes p-45{from{width:0}to{width:45%}}@keyframes p-50{from{width:0}to{width:50%}}@keyframes p-55{from{width:0}to{width:55%}}@keyframes p-60{from{width:0}to{width:60%}}@keyframes p-65{from{width:0}to{width:65%}}@keyframes p-70{from{width:0}to{width:70%}}@keyframes p-75{from{width:0}to{width:75%}}@keyframes p-80{from{width:0}to{width:80%}}@keyframes p-85{from{width:0}to{width:85%}}@keyframes p-90{from{width:0}to{width:90%}}@keyframes p-95{from{width:0}to{width:95%}}
+@keyframes p-100{from{width:0}to{width:100%}}
+
+li.p-5{width:5%;animation:p-5 .1s}
+li.p-10{width:10%;animation:p-10 .2s}li.p-15{width:15%;animation:p-15 .3s}li.p-20{width:20%;animation:p-20 .4s}li.p-25{width:25%;animation:p-25 .5s}li.p-30{width:30%;animation:p-30 .6s}li.p-35{width:35%;animation:p-35 .7s}li.p-40{width:40%;animation:p-40 .8s}li.p-45{width:45%;animation:p-45 .9s}li.p-50{width:50%;animation:p-50 1s}li.p-55{width:55%;animation:p-55 1.1s}li.p-60{width:60%;animation:p-60 1.2s}li.p-65{width:65%;animation:p-65 1.3s}li.p-70{width:70%;animation:p-70 1.4s}li.p-75{width:75%;animation:p-75 1.5s}li.p-80{width:80%;animation:p-80 1.6s}li.p-85{width:85%;animation:p-85 1.7s}li.p-90{width:90%;animation:p-90 1.8s}li.p-95{width:95%;animation:p-95 1.9s}li.p-100{width:100%;animation:p-100 2s}
+
+/* li.p-5::before{content:"5%"}li.p-10::before{content:"10%"}li.p-15::before{content:"15%"}li.p-20::before{content:"20%"}li.p-25::before{content:"25%"}li.p-30::before{content:"30%"}li.p-35::before{content:"35%"}li.p-40::before{content:"40%"}li.p-45::before{content:"45%"}li.p-50::before{content:"50%"}li.p-55::before{content:"55%"}li.p-60::before{content:"60%"}li.p-65::before{content:"65%"}li.p-70::before{content:"70%"}li.p-75::before{content:"75%"}li.p-80::before{content:"80%"}li.p-85::before{content:"85%"}li.p-90::before{content:"90%"}li.p-95::before{content:"95%"}
+li.p-100::before{content:"100%"} */
+
+
+.percent-indicator .per-0::before{content:'0%'}
+.percent-indicator .per-20::before{content:'20%'}
+.percent-indicator .per-40::before{content:'40%'}
+.percent-indicator .per-60::before{content:'60%'}
+.percent-indicator .per-80::before{content:'80%'}
+.percent-indicator .per-100::before{content:'100%'}
+
+.graph-wrapper>*{
+	padding: 0 0 0 0;
+}
+
+.graph-wrapper {
+  position: relative;  
+  border:1px solid #aaa;
+  max-width:800px;
+  margin:auto;
+}
+
+.graph-wrapper h1 {
+  position: absolute;
+  left:50%;
+  transform: translateX(-50%);
+  top:-15px;
+  margin:0;
+  margin-bottom:15px;
+  padding:0 10px;
+  font-size:30px;
+  background:#fff;
+  line-height:30px
+}
+
+.percent-indicator {
+  position:absolute;
+  top:0;
+  right:25px;
+  left:25px;
+  bottom:0;
+  display:flex;
+  justify-content: space-between;
+  width:calc(100% - 50px);
+  padding:50px 20px
+}
+
+.percent-indicator div {
+  position:relative;
+  width:0;
+  margin-left:-1px;
+  border-left:1px dashed #aaa
+}
+
+.percent-indicator .per-0 {
+  transform: translateX(1px)
+}
+
+.percent-indicator div::before, .percent-indicator div::after {
+  position: absolute;
+  left:50%;
+  transform: translateX(-50%);
+  padding-bottom:5px;
+  font-size:16px;
+  line-height:16px;
+  background:#fff
+}
+
+.graph {
+  position: relative;
+  margin:100px auto;
+  padding:0 20px;
+  list-style:none;
+  z-index: 2
+}
+
+.graph>li {
+  margin-bottom:7px;
+  padding:8px 5px;
+  background:black;
+  color:white;
+  text-align: left;
+  border-radius: 10px 10px 10px 10px;
+}
+/* 
+.graph>li::before,.graph>li:hover::after {
+  display:none
+} */
+.graph>li::after,
+.graph>li:hover::before {
+  display:block
+}
+.graph-wrapper>.graph>.bar1{
+	background:#f69439;
+}
+.graph-wrapper>.graph>.bar2{
+	background:#ff3f3f;
+}
+.graph-wrapper>.graph>.bar3{
+	background:red;
+}
+.graph-wrapper>.graph>.bar4{
+	background:red;
+}
+.graph-wrapper>.graph>.bar5{
+	background:red;
+}
+li.bar1::after {
+  content:"java";
+}
+li.bar1:hover::after {
+  content:"100%";
+}
+li.bar2::after {
+  content: "SQL";
+}
+
+li.bar3::after {
+  content:"item3"
+}
+
+li.bar4::after {
+  content:"item4";
+  
+}
+
+li.bar5::after {
+  content:"item5"
+}
+
+.percent-indicator div::after {
+  top:21px
+}
+
+.percent-indicator .per-0::after {
+  content:'Bronze'
+}
+
+.percent-indicator .per-20::after {
+  content:'Silver'
+}
+
+.percent-indicator .per-40::after {
+  content:'Gold'
+}
+
+.percent-indicator .per-60::after {
+  content:'Platinum'
+}
+
+.percent-indicator .per-80::after {
+  content:'Diamond'
+}
+
+.percent-indicator .per-100::after {
+  content:'Challenger'
+}
+
+@media screen and (max-width:640px) {
+  .percent-indicator div::after {
+    display:none
+  }
+}

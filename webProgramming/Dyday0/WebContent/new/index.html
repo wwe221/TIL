@@ -2,24 +2,20 @@
 <html lang="en">
 
 <head>
-
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-
   <title>Portfolio - KyungHeonLee</title>
-
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template -->
   <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet">
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-
   <!-- Custom styles for this template -->
   <link href="css/resume.min.css" rel="stylesheet">
-
+<script type="text/javascript" src="js/myjs.js"></script>
 </head>
 
 <body id="page-top">
@@ -61,26 +57,26 @@
         <li class="nav-item">
           <a class="nav-link js-scroll-trigger" href="#hobby"><i class="far fa-play-circle"></i> Hobby</a>
         </li>        
-      </ul>  
-          
+      </ul>
     </div>
-    
   </nav>
+  
 
   <div class="container-fluid p-0">
  	<a class="nav-link js-scroll-trigger" href="kor.html">KOR</a>
+ 	<hr class="title-line">   
     <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="about">
       <div class="w-100">
+      
         <h1 class="mb-0">KyungHeon
           <span class="text-primary">Lee</span>
         </h1>
-        <div class="subheading mb-5"> KOREA\SEOUL\GangnamGu\SamsungDong · (+82)1045418276
-          <a href="mailto:name@email.com">wwe22123@gmail.com</a>
+        <div class="subheading mb-5"> KOREA\SEOUL\GangnamGu\SamsungDong 쨌 (+82)1045418276
+          <a href="mailto:wwe22123@gmail.com"> wwe22123@gmail.com</a>
         </div>
         <p class="lead mb-5">
         I am a Junior level Developer yet. I'm still studying for being more Smarter and Powerful Dev.
-       
-        </p>
+       </p>
         <div class="social-icons">        
           <a href="https://github.com/wwe221" class="ex-social-icon">
             <i class="fab fa-github" ></i>
@@ -97,10 +93,10 @@
           </a>
         </div>
       </div>
-    </section>   
-
+    </section>
     <hr class="m-0">
-
+    
+    
     <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="education">
       <div class="w-100">
         <h2 class="mb-5">Education</h2>
@@ -110,13 +106,20 @@
             <h3 class="mb-0">SangMyung Univ</h3>
             <div class="subheading mb-3">Bachelor of Science</div>
             <div>Computer Science</div>
-            <p>GPA: 3.31</p>
+            <p>GPA: 3.31</p>           
+            <span class="panel">
+          		<p class="panel-Button" onclick="myShowFunction('univpan');" >What I Learned</p>
+				<div id="univpan">
+					<p>
+					<img src="img/spring.png">		
+					</p>
+				</div>
+			</span> 
           </div>
           <div class="resume-date text-md-right">
             <span class="text-primary">March 2013 - February 2019</span>
           </div>
         </div>
-
         <div class="resume-item d-flex flex-column flex-md-row justify-content-between">
           <div class="resume-content">
             <h3 class="mb-0">KyungKi High School</h3>
@@ -128,9 +131,9 @@
           </div>
         </div>
       </div>
-    </section>
-    
+    </section>    
     <hr class="m-0">
+    
 
     <section class="resume-section p-3 p-lg-5 d-flex justify-content-center" id="experience">
       <div class="w-100">
@@ -138,12 +141,26 @@
         <hr class="title-line">      
         <div class="resume-item d-flex flex-column flex-md-row justify-content-between">
           <div class="resume-content">
-            <h3 class="mb-0">SomeThing title</h3>
-            <div class="subheading mb-3">IoT System Develop</div>
-            <p>BigData IoT System Development (Connected Car)</p>
+          <h3 class="mb-0">SomeThing title</h3>
+          <div class="subheading mb-3">IoT System Develop</div>
+          <p>BigData IoT System Development (Connected Car)</p>
+          
+          <span class="panel">
+          <p class="panel-Button" onclick="myShowFunction('iotpan');" >What I Learned</p>
+		<div id="iotpan">
+		<p>
+			Java , MySQL , HTML+CSS+JavaScript			
+		</p>
+		</div>
+		</span>
           </div>
           <div class="resume-date text-md-right">
             <span class="text-primary">June 2019 - December 2019</span>
+            <h3>
+            <a href="#experience" onclick="window.open('file:curri.pdf')" >
+            <i class="fas fa-file"></i></a>
+            <a href="#experience" onclick="window.open('https://github.com/wwe221/TIL')" >
+            <i class="fab fa-github"></i></a></h3>
           </div>
         </div>
 
@@ -159,14 +176,14 @@
             <h3 class="mb-0">My_Busstop</h3>
             <div class="subheading mb-3">android</div>
             <div>Providing BusStop's information that i want</div>
-             <a href="#" onclick="window.open('img/mybus.jpg','window_name','width=800,height=450,location=no,status=no,scrollbars=yes');">
+             <a href="#projects" onclick="window.open('img/mybus.jpg','window_name','width=800,height=450,location=no,status=no,scrollbars=yes');">
              <img class="img-fluid" src="img/mybus.jpg" alt="">
              </a>
             
           </div>
           <div class="resume-date text-md-right"> 
             <span class="text-primary">December 2017</span>
-           <h3><a href="#" onclick="window.open('https://github.com/wwe221/PJs')" >
+           <h3><a href="#projects" onclick="window.open('https://github.com/wwe221/PJs')" >
             <i class="fab fa-github"></i></a></h3>
           </div>
         </div>
@@ -181,7 +198,7 @@
           </div>
           <div class="resume-date text-md-right"> 
             <span class="text-primary">July 2017 - August 2017</span>
-          <h3><a href="#" onclick="window.open('https://github.com/wwe221/PJs')" >
+          <h3><a href="#projects" onclick="window.open('https://github.com/wwe221/PJs')" >
             <i class="fab fa-github"></i></a></h3>
           </div>
         </div>        
@@ -212,7 +229,7 @@
       <div class="w-100">
         <h2 class="mb-5">Skills</h2>
         <hr class="title-line">
-	<!-- 아이콘 : https://fontawesome.com/icons 에서 html 코드를 통해 가져온다 -->
+	<!-- �븘�씠肄� : https://fontawesome.com/icons �뿉�꽌 html 肄붾뱶瑜� �넻�빐 媛��졇�삩�떎 -->
         <div class="subheading mb-3">Programming Languages &amp; Tools</div>
         <ul class="list-inline dev-icons">
           <li class="list-inline-item">
@@ -235,7 +252,6 @@
           </li>
          
         </ul>
-
         <div class="subheading mb-3">Workflow</div>
         <ul class="fa-ul mb-0">
           <li>
@@ -260,8 +276,9 @@
       <div class="w-100">
         <h2 class="mb-5">Interests</h2>
         <hr class="title-line">
-        <p>Apart from being a web developer, I enjoy most of my time being outdoors. In the winter, I am an avid skier and novice ice climber. During the warmer months here in Colorado, I enjoy mountain biking, free climbing, and kayaking.</p>
-        <p class="mb-0">When forced indoors, I follow a number of sci-fi and fantasy genre movies and television shows, I am an aspiring chef, and I spend a large amount of my free time exploring the latest technology advancements in the front-end web development world.</p>
+        <p> I usually participated in Android native application development.
+        Actually, i'm not interested in a particular field. I'm interested in any kind of SW development yet.</p>
+        <p class="mb-0"></p>
       </div>
     </section>
 
