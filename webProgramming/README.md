@@ -333,5 +333,22 @@ var Hb= {
 Sk.a();
 ```
 
+window navigator
 
+사용자가 어떤 환경에서 접속을 하는지에 대해 접근할 수 있다. 
+
+```javascript
+for(var key in navigarot){
+    value= navigator[key];
+    document.write(key+":"+value+"<br>");
+}
+```
+
+window.onload
+
+html 이 모두 load 됐을 때에 기능을 실행하려 할때 사용한다.
+
+```javascript
+window.onload = function () {};
+```
 
