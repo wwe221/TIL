@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="EUC-KR">
+	<title>Insert title here</title>
+	<style>
+		.screen {
+			width: 55vw;
+			height: 110vh;
+			border: 1px solid black;
+			margin: 0 auto;
+
+		}
+
+		.main {
+			display: block;
+		}
+
+		.pay {
+			display: none;
+		}
+
+		.menuss {
+			margin-left: 1vw;
+			width: 55vw;
+		}
+
+		.menu {
+			float: left;
+			border: 1px solid black;
+			margin: 5px 5px;
+			width: 17vw;
+			height: 24vh;
+		}
+
+		.menuimg {
+			width: 17vw;
+			height: 20vh;
+		}
+
+		.desc {
+			margin: 0;
+		}
+
+		.cartBox {
+			border: 1px solid black;
+			margin-top: 55vh;
+			margin-left: 1vw;
+			width: 53vw;
+			height: 38vh;
+			max-height: 38vh;
+			overflow:scroll;
+		}
+
+		.cart {
+			margin: 4px 3px 1px 5px;
+			position: relative;
+			
+		}
+		.nextBox{
+			 float:left;
+			 margin-left:45vw;
+		}
+		.next {
+			height: 7vh;
+			width: 7vh;			
+		}
+
+		.payC {
+			height: 10vh;
+			width: 40vw;
+			border: 1px solid black;
+			text-align: center;
+			margin: 10px auto;
+		}
+
+		.payC>p {
+			text-align: center;
+			line-height: 8vh;
+		}
+
+		.payb {
+			margin: 0 auto;
+		}
+
+		.finpay {
+			display: none;
+			width: 500px;
+			height: 500px;
+		}
+	</style>
+	<script>
+		var val = 0;
+
+		function add(b) {
+			var q = document.getElementById(b).value;
+			var p;
+			switch (b) {
+				case 'menu1':
+					val += 16000;
+					p = "16000"
+					break;
+				case 'menu2':
+					val += 17000;
+					p = "17000"
+					break;
+				case 'menu3':
+					val += 18000;
+					p = "18000"
+					break;
+				case 'menu4':
+					val += 19000;
+					p = "19000"
+					break;
+				case 'menu5':
+					val += 19000;
+					p = "19000"
+					break;
+				case 'menu6':
+					val += 19000;
+					p = "19000"
+					break;
+				default:
+					break;
+			}
+			document.getElementById('cart').innerHTML += '<p>' + q + '  ' + p + '$' + '</p>';
+			document.getElementById('total').value = val;
+		};
+		function next() {
+			if (val > 0) {
+				document.getElementById('main').style.display = "none";
+				document.getElementById('pay').style.display = "block";
+				document.getElementById('val').innerHTML = '<p>' + 'Total price :' + val + '</p>';
+			}
+		};
+		function pay(a) {
+			document.getElementById('finpay').style.display = 'block';
+			document.getElementById('pay').style.display = 'none';
+			document.getElementById('outval').innerHTML = '<p>' + 'Total price :' + val + '</p>';
+			var cnt = 0;
+			var repeat = setInterval(() => {
+				document.getElementById('outval').innerHTML += ' . ';
+				cnt++;
+				if (cnt > 4) {
+					clearInterval(repeat);
+					recipt();
+					setTimeout(function () {
+						resetScreen();
+					}, 2000);
+				}
+			}, 500);
+		}
+
+		function reset() {
+			document.getElementById('cart').innerHTML = '';
+			val = 0;
+			document.getElementById('total').value = val;
+		}
+		function back() {
+			document.getElementById('main').style.display = 'block';
+			document.getElementById('pay').style.display = 'none';
+		}
+		function recipt() {
+			var r = Math.floor(Math.random() * 100);
+			document.getElementById('recipt').innerHTML = 'OrderNumber<br>' + r;
+
+
+		}
+		function resetScreen() {
+			reset();
+			document.getElementById('main').style.display = 'block';
+			document.getElementById('finpay').style.display = 'none';
+			document.getElementById('pay').style.display = 'none';
+		}
+	</script>
+</head>
+
+<body>
+	<div class="screen main" id="main">
+		<h1 class="title">JJangJJang Chicken</h1>
+		<div class="menuss">
+			<div class="menu" name="menu1">
+				<input type="image" name="fri" id="menu1" class="menuimg" src="img/fried.jpg" value="Fried"
+					onclick="add('menu1');">
+				<p class="desc">Fried Chicken</p>
+			</div>
+			<div class="menu" name="menu2">
+				<input type="image" class="menuimg" id="menu2" src="img/garlic.jpg" value="Garlic"
+					onclick="add('menu2');">
+				<p class="desc">Garlic</p>
+			</div>
+			<div class="menu" name="menu3">
+				<input type="image" class="menuimg" id="menu3" src="img/pa.jpg" value="Padark" onclick="add('menu3');">
+				<p class="desc">Pa Dark</p>
+			</div>
+			<div class="menu" name="menu4">
+				<input type="image" class="menuimg" id="menu4" src="img/swking.jpg" value="SuWon KingGB"
+					onclick="add('menu4');">
+				<p class="desc">SuWon KingGalbi</p>
+			</div>
+			<div class="menu" name="menu5">
+				<input type="image" class="menuimg" id="menu5" src="img/soy.jpg" value="Soy" onclick="add('menu5');">
+				<p class="desc">Soy</p>
+			</div>
+			<div class="menu" name="menu6">
+				<input type="image" class="menuimg" id="menu6" src="img/frink.jpg" value="Frinkle"
+					onclick="add('menu6');">
+				<p class="desc">Frinkle</p>
+			</div>
+
+		</div>
+		<div class="cartBox">
+			<legend>Total Cost:<input readonly="readonly" type="number" id="total"></legend>
+			<div class="cart" id="cart">
+
+			</div>
+		</div><div class="nextBox">
+			<button class="next" onclick="reset();">reset</button>
+			<button class="next" onclick="next();">Next</button>
+		</div>
+		<div>
+
+		</div>
+	</div>
+
+	<div class="screen pay" id="pay">
+		<div id="val"></div>
+		<div class="payb">
+			<button class="payC" onclick="pay('s');">
+				<p>Samsung Pay</p>
+			</button>
+		</div>
+		<div class="payb">
+			<button class="payC" onclick="pay('c');">
+				<p>Credit Card</p>
+			</button>
+		</div>
+		<div class="payb">
+			<button class="payC" onclick="pay('k');">
+				<p>New Pay</p>
+			</button>
+		</div>
+		<div class="nextBox">
+			<button class="next" onclick="back();">Cancle</button>
+		</div>
+	</div>
+	<div class="screen finpay" id="finpay">
+		<div id="outval"></div><br>
+		<h1> plz put your card in correctly</h1>
+		<br>
+		<h2 id="recipt"></h2>
+	</div>
+	
+</body>
+
+</html>
