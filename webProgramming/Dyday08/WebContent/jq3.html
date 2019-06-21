@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<style>
+
+</style>
+<script>
+$(document).ready(function(){
+	$('h1').css('color','red');
+	$('h1:nth-child(2n)').css('color','blue');
+	$('h1').eq(0).css('color','yellow');
+	$('h1:not(h1:eq(4))').css('font-size','3em');
+});
+</script>
+</head>
+<body>
+<h1>header1</h1>
+<h1>header2</h1>
+<h1>header3</h1>
+<h1>header4</h1>
+<h1>header5</h1>
+</body>
+</html>

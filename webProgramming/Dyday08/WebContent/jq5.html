@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<style>
+
+	</style>
+	<script>
+		$(document).ready(function () {
+			$('a:first-child').click(function () {
+				$('button').hide();
+			});
+			$('a').eq(1).click(function () {
+				$('button').show();
+			});
+			$('a').hover(function () {
+				$('h1').text('In');
+			}, function () {
+				$('h1').text('out');
+
+			}
+			);
+			$('input').on(
+				{
+					focus:function(){
+						$(this).css('background','gray');
+					},
+					keyup:function(){
+						alert($(this).val());
+					},
+					blur:function(){
+						$(this).css('background','white');
+						
+					}
+
+				}
+			);
+		});//ready end
+	</script>
+</head>
+
+<body>
+	ID<input type="text" name="id"><br>
+	PWD<input type="password" name="pwd"><br>
+	<a herf="#">Hide</a><br>
+	<a herf="#">Show</a><br>
+	<button>Click1</button>
+	<button>Click2</button>
+	<button>Click3</button>
+	<button>Click4</button>
+	<h1></h1>
+</body>
+
+</html>

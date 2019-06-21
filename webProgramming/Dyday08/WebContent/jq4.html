@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<style>
+
+	</style>
+	<script>
+		$(document).ready(function () {
+			$('h1').css('color', 'red');
+			$('h1:nth-child(2n)').css('color', 'blue');
+			$('h1').eq(0).css('color', 'yellow');
+			$('h1:not(h1:eq(4))').css('font-size', '3em');
+			$('table').css({
+				'border':'1px solid black',
+				'width':'250px',
+				'height':'400px'
+				
+			});
+			$('td, th').css({
+				'border':'1px solid black',
+				'text-align':'center'
+			});
+			$('td:nth-child(2)').css('color','red');
+			$('tr:nth-child(2n)').css('background','aqua');
+			$('tr>td:nth-child(4n)').css('background','blue');
+
+		});
+	</script>
+</head>
+
+<body>
+	<table>
+		<thead>
+			<tr>
+				<th>Firstname</th>
+				<th>Lastname</th>
+				<th>Age</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Jill</td>
+				<td>Smith</td>
+				<td>50</td>
+			</tr>
+			<tr>
+				<td>Eve</td>
+				<td>Jackson</td>
+				<td>94</td>
+			</tr>
+			<tr>
+				<td>Kim</td>
+				<td>haneul</td>
+				<td>12</td>
+			</tr>
+			<tr>
+				<td>Park</td>
+				<td>jisung</td>
+				<td>32</td>
+			</tr>
+			<tr>
+				<td>Kang</td>
+				<td>Sky</td>
+				<td>20</td>
+			</tr>
+			<tr>
+				<td>Jimmy</td>
+				<td>Newtron</td>
+				<td>11</td>
+			</tr>
+		</tbody>
+	</table>
+
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<style>
+
+	</style>
+	<script>
+		var person = [
+			{ img: "img01.jpg", id: "id01", name: "이 말 숙" },
+			{ img: "img02.jpg", id: "id02", name: "정 말 숙" },
+			{ img: "img03.jpg", id: "id03", name: "김 말 숙" },
+			{ img: "m2.jpg", id: "id04", name: "박 말 숙" },
+			{ img: "m3.jpg", id: "id05", name: "최 말 숙" },
+		];
+		var d = [4, 3, 1, 2, 5, 9, 7];
+		$(document).ready(function () {
+			var result = '';
+			$(person).each(function (idx, item) {
+				result = '<img src= "'+item.img+'">' ;
+				result += (item.id + ' ' + item.name)+'<br>';
+				$('div').append(result);
+			});
+		});
+	</script>
+</head>
+
+<body>
+	<div></div>
+</body>
+
+</html>

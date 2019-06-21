@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<style>
+		.screen {
+			width: 55vw;
+			height: 100vh;
+			border: 1px solid black;
+			margin: 0 auto;
+		}
+
+		h3 {
+			margin-top: 20vh;
+			margin-left: 20vw;
+		}
+
+		p {
+			margin: 0;
+		}
+
+		.main {
+			display: block;
+		}
+
+		.pay {
+			display: none;
+		}
+
+		.menuss {
+			margin-left: 1vw;
+			width: 55vw;
+		}
+
+		.menu {
+			float: left;
+			border: 1px solid red;
+			margin: 5px 5px;
+			width: 17vw;
+			height: 27vh;
+		}
+
+		.menuimg {
+			width: 17vw;
+			height: 20vh;
+		}
+
+		.desc {
+			margin: 0;
+		}
+
+		.cartBox {
+			border: 1px solid black;
+			margin-top: 55vh;
+			margin-left: 1vw;
+			width: 53vw;
+			height: 30vh;
+			max-height: 38vh;
+			overflow: scroll;
+		}
+
+		.cart {
+			margin: 4px 3px 1px 5px;
+			position: relative;
+
+		}
+
+		.nextBox {
+			float: left;
+			margin-left: 45vw;
+		}
+
+		.next,
+		.reset,
+		.back {
+			height: 7vh;
+			width: 7vh;
+		}
+
+		.cardin {
+			height: 7vh;
+			width: 14vh;
+			margin: 100px 100px;
+		}
+
+		.payC {
+			background: gray;
+			height: 10vh;
+			width: 40vw;
+			border: 1px solid black;
+			text-align: center;
+			margin: 10px auto;
+		}
+
+		.payC>p {
+			text-align: center;
+			line-height: 8vh;
+		}
+
+		.payb {
+			margin: 0 auto;
+		}
+
+		.finpay {
+			display: none;
+			width: 500px;
+			height: 500px;
+		}
+	</style>
+
+	<script>
+		var total = 0;
+		var screen = 0;
+		var cnt = 0;
+		var chi = [
+			{ img: "img/fried.jpg", name: "Fried", cost: 17000 },
+			{ img: "img/garlic.jpg", name: "Garlic", cost: 18000 },
+			{ img: "img/pa.jpg", name: "PaDark", cost: 18000 },
+			{ img: "img/frink.jpg", name: "Frinkle", cost: 19000 },
+			{ img: "img/soy.jpg", name: "Soy", cost: 18000 },
+			{ img: "img/swking.jpg", name: "SuWon KingGalBi", cost: 20000 },
+		];
+		var payC = [
+			{ name: 'SamsungPay', color: 'blue' },
+			{ name: 'KakaoPay', color: 'gold' },
+			{ name: 'CreditCard', color: 'black' },
+		];
+		$(document).ready(function () {
+			var result = '';
+			$(chi).each(function (idx, item) {
+				result = '<div class="menu"> <img src="' + item.img + '"class="menuimg">'
+					+ '<p class="chiN">' + item.name + '</p>'
+					+ '<p class="chiC">' + item.cost + '</p>'
+					+ '</div>';
+				$('.menuss').prepend(result);
+			});// end each
+			
+			$(payC).each(function (idx, item) {
+				result = '<div class="payb"><button class="payC next" style="color:' + item.color + '"><p>'
+					+ item.name + '</p></button></div>';
+				$('#cards').prepend(result);
+
+			});
+
+			$('.menu').click(function () {
+				var b = $(this).children(':eq(2)').html();
+				var a = $(this).children(':eq(1)').html();
+				total += Number(b);
+				var c = '<div >'
+					+ '<span>' + a + ' </span>'
+					+ '<span>' + b + ' </span>'
+					+ '<button class="canclea" >X</button>'
+					+ '<br></div>';
+				$('.cart').append(c);
+				$('#total').val(total);
+			});//end menu click
+
+			$(document).on("click", ".canclea", function () {
+				var a = $(this).closest('div').children(':eq(1)').html();
+				total -= Number(a);
+				$('#total').val(total);
+				$(this).closest('div').remove();
+			}); // end canclea click
+
+			$('.reset').click(function () {
+				total = 0;
+				$('#total').val(total);
+				$('.cart').html("");
+			});// end reset click
+
+			$('.next').click(function () {
+				if (total == 0) {
+					return;
+				}
+				else {
+					switch (screen++ % 3) {
+						case 0: {
+							$('#main').css('display', 'none');
+							$('#pay').css('display', 'block');
+							$('#val').html('Total Cost: ' + $('#total').val());
+
+							break;
+						}
+						case 1: {
+							$('#pay').css('display', 'none');
+							$('#finpay').css('display', 'block');
+							$('#val2').html('Total Cost: ' + $('#total').val());
+							break;
+						}
+						case 2: {
+							$('#finpay').css('display', 'none');
+							$('#pay').css('display', 'block');
+
+							screen = 1;
+							break;
+						}
+					}
+				}
+			});
+			$('.back').click(function () {
+				switch (screen-- % 2) {
+					case 1: {
+						$('#main').css('display', 'block');
+						$('#pay').css('display', 'none');
+						$('#finpay').css('display', 'none');
+						break;
+					}
+					case 0: {
+						$('#pay').css('display', 'block');
+						$('#main').css('display', 'none');
+						$('#finpay').css('display', 'none');
+						break;
+
+					}
+				}
+			});
+			$('.cardin').click(function () {
+				$('#recipt').show();
+				var r = Math.floor(Math.random() * 100);
+				var repeat = setInterval(() => {
+					cnt++;
+					$('#recipt').append('.');
+					if (cnt > 4) {
+						$('#recipt').append('<br><h2>Your Order Number :' + r);
+						$('#recipt').append('</h2><br>Return to the Home page after 3 seconds.');
+						clearInterval(repeat);
+						setTimeout(function () {
+							$('#recipt').html("Reading Card's info ");
+							resetAll();
+						}, 3000);
+					}
+				}, 500);
+			});
+		});
+		function resetAll() {
+			total = 0;
+			cnt = 0;
+			screen = 0;
+			$('#main').css('display', 'block');
+			$('#pay').css('display', 'none');
+			$('#finpay').css('display', 'none');
+			$('#cart').empty();
+			$('#total').val(total);
+
+		}
+	</script>
+</head>
+
+<body>
+	<div class="screen main" id="main">
+		<h1 class="title">JJangJJang Chicken</h1>
+		<div class="menuss"></div>
+		<div class="cartBox">
+			<legend>Total Cost:<input readonly="readonly" type="number" id="total"></legend>
+			<div class="cart" id="cart">
+
+			</div>
+		</div>
+		<div class="nextBox">
+			<button class="reset">reset</button>
+			<button class="next">Next</button>
+
+		</div>
+		<div>
+		</div>
+	</div>
+	<div class="screen pay" id="pay">
+		<h3 id="val"></h3>
+		<div id="cards"></div>
+		<button class="next">Next</button>
+		<button class="back">Back</button>
+	</div>
+	<div class="screen finpay" id="finpay">
+		<h3 id="val2"></h3>
+		<h1> plz put your card in correctly</h1>
+		<h2 id="recipt" style="display:none;">Reading Card's info </h2>
+		<button class="back">Back</button>
+		<button class="cardin">Card In Simul</button>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<style>
+
+	</style>
+	<script>
+		$(document).ready(function () {
+			$('#regi_form>input[name="id"]').blur(function(){
+					var id = $(this).val();
+					
+				});
+			$('a').click(function () {
+				var id = $('#regi_form>input[name="id"]').val();
+				var pwd = $('#regi_form>input[name="pwd"').val();
+				var name = $('#regi_form>input[name="name"').val();
+				
+
+
+				var c = confirm('Cool?');
+				if(c){
+					$('#regi_form').attr('method','GET');					
+					$('#regi_form').attr('action','a.jsp');
+					$('#regi_form').submit();
+				}//if c end
+			});
+		});//ready end
+	</script>
+</head>
+
+<body>
+	<form id="regi_form">
+		ID<input type="text" name="id"><br>
+		PWD<input type="password" name="pwd"><br>
+		Name<input type="text" name="name"><br>
+		<a href="#">Register</a>
+	</form>
+</body>
+
+</html>
