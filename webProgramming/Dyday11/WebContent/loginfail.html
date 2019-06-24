@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<style>
+
+	</style>
+	<script>
+		$(document).ready(function () {
+			$('#lgButton').click(function () {
+				$('#lg').attr('method', 'post');
+				$('#lg').attr('action', 'login');
+				$('#lg').submit();
+			});
+		});
+	</script>
+</head>
+
+<body>
+	<h1>Login</h1>
+	<h4>Try again</h4>
+	<form id="lg">
+		ID<input type="text" name="id"><span></span><br>
+		PWD<input type="password" name="pwd"><br>
+		NAME<input type="password" name="name"><br>
+		<button id="lgButton">Register</button><br>
+	</form>
+</body>
+
+</html>

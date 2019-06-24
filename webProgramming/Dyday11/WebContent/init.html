@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<style>
+		div {
+			width: 350px;
+			border: 2px solid red;
+		}
+
+		img {
+			
+			height: 300px;
+		}
+	</style>
+	<script>
+		$(document).ready(function () {
+			getData();
+			setInterval(getData, 3000);
+			function getData() {			
+				$.ajax({					
+					url: 'chart',
+					success: function (result) {
+						display(eval(result));
+					}
+				});
+			}
+		});
+		function display(data) {			
+			$('#rank').empty();
+			$(data).each(function (i, item) {
+				var str = '<h3>';
+				var rank = item.rank;
+				var img = item.img;
+				str += rank + " " + name + " " 
+				+'<img src="'+img+'">';
+				str += '</h3>';
+				$('div').append(str);
+			});
+		}
+	</script>
+</head>
+
+<body>
+	<h1>Welcome to Movie Chart</h1>
+	<div id="rank"></div>
+</body>
+
+</html>

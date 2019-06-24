@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<style>
+
+	</style>
+	<script>
+		$(document).ready(function () {
+			$('#lgButton').click(function () {
+				$('#lg').attr('method', 'get');
+				$('#lg').attr('action', 'register');
+				$('#lg').submit();
+			});
+			$('input[name="id"]').keyup(function () {
+				var id = $(this).val();
+				checkId(id);
+			});
+			$('#idCheck').click(function () {
+				var id = $('input[name="id"]').val();
+				$.ajax({
+					url: 'check',
+					method: 'post',
+					data: { 'id': id },
+					success: function (result) {
+						display(result);
+					}
+				});
+			});
+		});
+		function checkId(id) {
+			$.ajax({
+				url: 'check',
+				method: 'get',
+				data: { 'id': id },
+				success: function (result) {
+					display2(result);
+				}
+			});
+		};
+		function display(result) {
+			if (result == "1") {
+				alert('사용가능합니다');
+			} else {
+				alert('이미사용중 입니다');
+
+			}
+		};
+		function display2(result) {
+			if (result == "0") {
+				$('#idL').text('너무 짧습니다');
+			} else if (result == "2") {
+				$('#idL').text('너무 깁니다.');
+			}
+			else
+				$('#idL').text('사용가능 합니다.');
+		};
+	</script>
+</head>
+
+<body>
+	<form id="lg">
+		ID<input type="text" name="id"><span id="idL"></span><button id="idCheck">중복체크</button><br>
+		PWD<input type="password" name="pwd"><br>
+		NAME<input type="text" name="name"><br>
+		<button id="lgButton">Register</button><br>
+	</form>
+</body>
+
+</html>
