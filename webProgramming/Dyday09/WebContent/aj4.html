@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<style>
+	</style>
+	<script>
+		$(document).ready(function () {
+			$('#lgButton').click(function () {
+				$('#lg').attr('method', 'post');
+				$('#lg').attr('action', 'register');
+				$('#lg').submit();
+			});
+			$('input[name="id"]').keyup(function () {
+				var id = $(this).val();
+				checkId(id);
+			});
+		});
+		function checkId(id) {
+			$.ajax({
+				url: 'register',
+				method: 'get',
+				data: { 'id': id },
+				success: function (result) {
+					
+					display(result);
+				}
+			});
+		};
+		function display(result) {
+			if (result=="1") {
+				$('span').text('사용가능 합니다.');
+			} else {
+				$('span').text('이미 사용 중 입니다.');
+
+			}
+		};
+
+	</script>
+</head>
+
+<body>
+
+	<form id="lg">
+		ID<input type="text" name="id"><span></span><br>
+		PWD<input type="password" name="pwd"><br>
+		NAME<input type="password" name="name"><br>
+		<button id="lgButton">Register</button><br>
+	</form>
+</body>
+
+</html>

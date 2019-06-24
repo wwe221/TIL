@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<style>
+		div {
+			width: 300px;
+			border: 2px solid red;	
+		}
+		img{
+			width:20px;
+			height:20px;
+		}
+	</style>
+	<script>
+		function display(data) {
+			$('div').empty();
+			$(data).each(function (i, item) {
+				var str = '<h3>';
+				var rank = item.rank;
+				var keyword = item.keyword;
+				var type = item.type;
+				var typeImg;
+				if (type == "up")
+					typeImg = "up.png";
+				else
+					typeImg = "down.png";
+				var cnt = Number(item.cnt);
+
+				str += rank + " " + keyword + " " 
+				+'<img src="'+typeImg+'">'+
+				 + " " + cnt;
+				str += '</h3>';
+				$('div').append(str);
+			});
+		}
+		$(document).ready(function () {
+			getData();
+			setInterval(getData, 3000);
+
+
+		});
+		function getData() {
+			$.ajax({
+				url: 'chart',
+				success: function (result) {
+					display(eval(result));
+				}
+			});
+		}
+
+	</script>
+</head>
+
+<body>
+	<h1>KeyWord Chart</h1>
+	<div>
+
+	</div>
+</body>
+
+</html>

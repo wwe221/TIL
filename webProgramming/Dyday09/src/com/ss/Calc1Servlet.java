@@ -25,5 +25,17 @@ public class Calc1Servlet extends HttpServlet {
 		out.write("<h1>"+result+"</h1>");
 		out.close();
 	}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String num1 = req.getParameter("num1");
+		String num2 = req.getParameter("num2");
+		int n1= Integer.parseInt(num1);
+		int n2= Integer.parseInt(num2);
+		int result = n1 + n2 ;
+		Writer out = resp.getWriter();
+		out.write(result+"");
+		out.close();
+	}
+	
 
 }
