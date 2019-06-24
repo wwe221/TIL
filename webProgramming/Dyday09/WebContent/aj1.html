@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<style>
+
+	</style>
+	<script>
+		$(document).ready(function () {
+			$('#lgButton').click(function () {
+				$('#lg').attr('method','get');
+				$('#lg').attr('action','login');
+				$('#lg').submit();
+	});
+		});
+	</script>
+</head>
+
+<body>
+	<h1>기존 방식</h1>
+	<p>서버에서 html 파일을 받아온다.</p>
+	<form id="lg">
+		ID<input type="text" name="id"><br>
+		PWD<input type="password" name="pwd"><br>
+		<button value="LOGIN" id="lgButton">Login</button><br>
+	</form>
+</body>
+
+</html>
