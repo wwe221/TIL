@@ -25,3 +25,33 @@ $('div').addClass('dd');
 $('div').removeClass('dd');
 ```
 
+# Ajax
+
+(Asynchronous JavaScript and XML)
+
+서버와 데이터를 교환하는 기술 중 하나.
+
+클라이언트가 서버와 적은양의 데이터를 비동기적으로 교환한다.
+
+페이지를 리로딩 하지 않고 일부의 데이터를 업데이트 할 수 있다.
+
+따라서 빠르고 동적인 대화형 웹페이지를 구현하는 데에 유용하다.
+
+```javascript
+function sendData(n1, n2) {
+	var surl = 'calc1';
+	$.ajax({
+		url: surl,
+		method: "post",
+		data: { "num1": n1, "num2": n2 },
+		success: function (result) {
+// 서버에 전송을 성공하고, 서버에서 값을 보내오면 result로 받아온다.
+			display(result);
+		},
+		error:function(){
+			}
+	});
+}
+
+```
+
