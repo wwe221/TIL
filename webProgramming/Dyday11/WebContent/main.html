@@ -9,6 +9,8 @@
 
 	</style>
 	<script>
+		var a = '';
+		var b = '';
 		$(document).ready(function () {
 			$('#lgButton').click(function () {
 				$('#lg').attr('method', 'get');
@@ -18,17 +20,7 @@
 			$('input[name="id"]').keyup(function () {
 				var id = $(this).val();
 				checkId(id);
-			});
-			$('#idCheck').click(function () {
-				var id = $('input[name="id"]').val();
-				$.ajax({
-					url: 'check',
-					method: 'post',
-					data: { 'id': id },
-					success: function (result) {
-						display(result);
-					}
-				});
+				checkdupl(id);
 			});
 		});
 		function checkId(id) {
@@ -36,17 +28,37 @@
 				url: 'check',
 				method: 'get',
 				data: { 'id': id },
-				success: function (result) {
+				success: function (result) {					
 					display2(result);
 				}
 			});
+			$.ajax({
+				url: 'check',
+				method: 'post',
+				data: { 'id': id },
+				success: function (result) {					
+					display(result);
+				}
+			});
+
+
 		};
+		function checkdupl(id) {
+			$.ajax({
+				url: 'check',
+				method: 'post',
+				data: { 'id': id },
+				success: function (result) {
+					display(result);
+					return result;
+				}
+			});
+		}
 		function display(result) {
 			if (result == "1") {
-				alert('사용가능합니다');
+				$('#idC').text('사용가능합니다');
 			} else {
-				alert('이미사용중 입니다');
-
+				$('#idC').text('이미사용중 입니다');
 			}
 		};
 		function display2(result) {
@@ -62,8 +74,10 @@
 </head>
 
 <body>
+	<h1>Register</h1>
 	<form id="lg">
-		ID<input type="text" name="id"><span id="idL"></span><button id="idCheck">중복체크</button><br>
+		ID<input type="text" name="id"><span id="idL"></span>
+		<span id="idC"></span><br>
 		PWD<input type="password" name="pwd"><br>
 		NAME<input type="text" name="name"><br>
 		<button id="lgButton">Register</button><br>

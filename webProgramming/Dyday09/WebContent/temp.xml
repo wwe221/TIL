@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tems>
+<temp>
+	<name>Seoul></name>
+	<data>21</data>
+	<data>22</data>
+	<data>13</data>
+	<data>24</data>
+	<data>15</data>
+	<data>26</data>
+	<data>27</data>
+	<data>18</data>
+	<data>19</data>
+	<data>11</data>
+</temp>
+<temp>
+	<name>Daegu></name>
+	<data>13</data>
+	<data>22</data>
+	<data>15</data>
+	<data>21</data>
+	<data>11</data>
+	<data>24</data>
+	<data>27</data>
+	<data>18</data>
+	<data>19</data>
+	<data>26</data>
+</temp>
+<temp>
+	<name>Busan></name>
+	<data>22</data>
+	<data>15</data>
+	<data>13</data>
+	<data>18</data>
+	<data>24</data>
+	<data>21</data>
+	<data>27</data>
+	<data>11</data>
+	<data>19</data>
+	<data>26</data>
+</temp>
+</tems>

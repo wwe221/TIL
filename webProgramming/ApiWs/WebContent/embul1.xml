@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+  <row>
+    <sttemnt_rcept_dt>신고접수일시</sttemnt_rcept_dt>
+    <sttemnt_se_nm>신고구분명</sttemnt_se_nm>
+    <sttemnt_adres>신고주소</sttemnt_adres>
+    <data_colct_dt>수집일시</data_colct_dt>
+  </row>
+  <row>
+    <sttemnt_rcept_dt>2015/01/15 00:31:42</sttemnt_rcept_dt>
+    <sttemnt_se_nm>화재</sttemnt_se_nm>
+    <sttemnt_adres>경기 고양시 덕양구 행신1동</sttemnt_adres>
+    <data_colct_dt>2019-06-25 00:03:07.96</data_colct_dt>
+  </row>
+  <row>
+    <sttemnt_rcept_dt>2015/01/14 18:45:56</sttemnt_rcept_dt>
+    <sttemnt_se_nm>화재</sttemnt_se_nm>
+    <sttemnt_adres>경기 파주시 아동동</sttemnt_adres>
+    <data_colct_dt>2019-06-25 00:03:07.961</data_colct_dt>
+  </row>
+  
+</root>
+

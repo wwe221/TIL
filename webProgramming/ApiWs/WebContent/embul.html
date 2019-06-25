@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<style>
+
+	</style>
+	<script>
+		$(document).ready(function () {
+			getData();
+		});
+		function getData() {
+			$.ajax({
+				url: 'embul1.xml',
+				success: function (data) {
+					parsing(data);
+				}
+			});
+		};
+		function parsing(data) {
+			var ts = $(data).find('root');
+			alert(ts.length);
+
+		};
+	</script>
+</head>
+<div></div>
+
+<body>
+
+</body>
+
+</html>
