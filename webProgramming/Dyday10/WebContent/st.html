@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<style>
+
+	</style>
+	<script>
+		$(document).ready(function () {
+			$('button').eq(0).click(function () {
+				sessionStorage.m = 'ss01';
+				//alert(sessionStorage.m);
+			});// button1 click
+			$('button').eq(1).click(function () {
+				localStorage.m = 'ls01';
+				//alert(localStorage.m);
+			});//button2 click
+		});//end ready
+	</script>
+</head>
+
+<body>
+	<h1>Storage</h1>
+
+	<button>Session Storage</button>
+	<button>Local Storage</button>
+</body>
+
+</html>
