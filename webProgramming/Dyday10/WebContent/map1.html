@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e2d0984c1ed9402d92f092b6c05df25d"></script>
+	<style>
+		#map {
+			width: 500px;
+			height: 500px;
+			border: 2px solid red;
+		}
+	</style>
+	<script>
+		$(document).ready(function () {
+			var center = new google.maps.LatLng(34.0064032, -118.4883703);
+			var map = new google.maps.Map(document.querySelector('#map'), {
+				mapTypeId: google.maps.MapTypeId.ROADMAP,
+				zoom: 12,
+				center: center
+			}
+			);
+			//41.950422 , 12.466069
+			$('button').click(function(){
+				var cent = new google.maps.LatLng(41.950422,12.466069);
+				map.setCenter(cent);
+			})
+		});
+		//HTML5 GeoLocation API
+		//Wifi , 4G , GPS 등을 위용하여 GeoLocation을 알아낸다.
+		// var watch = window.navigator.geolocation.watchPosition(
+		// 	success,
+		// 	error,
+		// 	{
+		// 		enableHighAccuracy: true,// 모든방법으로 location 찾아
+		// 		timeout: 10000, //10초 못찾으면 끝
+		// 		maximumAge: 0  //역치값을 최소로, 움직일때 마다 요청을 보내라
+
+		// 	}
+		// );
+		// function success() {
+		// 	var center = new google.maps.LatLng(p.coords.latitude, p.coords.longtitue);
+		// 	map.setCenter(center);
+		// }
+		// function error() {
+		// 	alert('location err');
+		// };
+	</script>
+</head>
+
+<body>
+	<div id="map"></div>
+	<button id="italy">Italy</button>
+</body>
+
+</html>

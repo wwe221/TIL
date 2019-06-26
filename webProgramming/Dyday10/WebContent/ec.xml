@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="true"?>
+
+<items>
+<item>
+<addr>전라남도 나주시 전력로 55</addr>
+<chargeTp>2</chargeTp>
+<cpId>13</cpId>
+<cpNm>급속01</cpNm>
+<cpStat>1</cpStat>
+<cpTp>8</cpTp>
+<csId>9</csId>
+<csNm>본사(나주)</csNm>
+<lat>35.02636975</lat>
+<longi>126.7844551</longi>
+<statUpdateDatetime>2017-02-22 13:02:22</statUpdateDatetime>
+</item>
+
+<item>
+<addr>전라남도 나주시 전력로 55</addr>
+<chargeTp>2</chargeTp>
+<cpId>14</cpId>
+<cpNm>급속02</cpNm>
+<cpStat>1</cpStat>
+<cpTp>8</cpTp>
+<csId>9</csId>
+<csNm>본사(나주)</csNm>
+<lat>35.02636975</lat>
+<longi>126.7844551</longi>
+<statUpdateDatetime>2017-02-22 13:02:22</statUpdateDatetime>
+
+</item>
+</items>
+

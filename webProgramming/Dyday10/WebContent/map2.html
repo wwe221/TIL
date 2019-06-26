@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e2d0984c1ed9402d92f092b6c05df25d"></script>
+	<style>
+
+	</style>
+	<script>
+		var map;
+		$(document).ready(function () {
+			var container = document.getElementById('map');
+			var options = {
+				center: new daum.maps.LatLng(36.500701, 126.670667),
+				level: 12
+			};
+			map = new daum.maps.Map(container, options);
+			// 마커가 지도 위에 표시되도록 설정합니다
+			getData();
+		});
+		function getData() {
+			$.ajax({
+				url: 'https://openapi.gg.go.kr/Genrestrtcate?KEY=8e7d6b47a26a42659109342ac75c05da&Type=xml&pindex=1&pSize=250',
+				success: function (data) {
+					parsing(data);
+				}
+			});
+		};
+		function parsing(data) {
+			var ts = $(data).find('row');
+			var markerPosition3;
+			ts.each(function (index, item) {
+				var marker5;				
+				var name = $(this).find('BIZPLC_NM').text();
+				var lat = $(this).find('REFINE_WGS84_LAT').text();
+				var log = $(this).find('REFINE_WGS84_LOGT').text();				
+				markerPosition3 = new daum.maps.LatLng(lat, log);
+				marker5 = new daum.maps.Marker({
+					position: markerPosition3
+				});
+				marker5.setMap(map);
+				var moveLatLon = new kakao.maps.LatLng(lat, log);
+				map.setCenter(moveLatLon);
+				var iwContent = '<div style="padding:5px;">' + name + '</div>'; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+
+				// 인포윈도우를 생성합니다
+				var infowindow = new kakao.maps.InfoWindow({
+					content: iwContent
+				});
+
+				// 마커에 마우스오버 이벤트를 등록합니다
+				kakao.maps.event.addListener(marker5, 'mouseover', function () {
+					// 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+					infowindow.open(map, marker5);
+				});
+
+				// 마커에 마우스아웃 이벤트를 등록합니다
+				kakao.maps.event.addListener(marker5, 'mouseout', function () {
+					// 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+					infowindow.close();
+				});
+				kakao.maps.event.addListener(marker5, 'click', function () {
+					// 마커 위에 인포윈도우를 표시합니다
+					map.setCenter(moveLatLon);
+					map.setLevel(9);
+				});
+
+			});
+		}
+
+	</script>
+
+</head>
+
+<body>
+	<div id="map" style="width:900px;height:700px;"></div>
+	<button id="Home">Home</button>
+	<button id="MultiCampus">MulCam</button>
+	<button id="Jeju">Jeju</button>
+
+</body>
+
+</html>
