@@ -19,12 +19,12 @@ public class Swtest {
 		for (int i = 0; i < tw.length; i++) {
 			arr.add(tw[i]);
 		}
+		int index =0;
 		ArrayList<car> cars = new ArrayList<>(); // 다리위를 지나는 차
-		ArrayList<Integer> index = new ArrayList<>();
 		int answer = 0;
 		while(!arr.isEmpty()) {
-			car c = new car(arr.get(cnt),bw);
-			if(weight(cars)+c.weight < w) {
+			if(weight(cars)+arr.get(index) < w) {
+				car c = new car(arr.get(index),bw);
 				cars.add(c);				
 			}
 			for(int i=0;i<cars.size();i++) {
