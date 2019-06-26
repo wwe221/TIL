@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<style>
+		div {
+			width: 300px;
+			height: 80px;
+			border: 2px solid blue;
+		}
+
+		img {
+			width: 50px;
+		}
+
+		span {
+			margin-left: 20px;
+		}
+	</style>
+	<script>
+		var cnt = 0;
+		$(document).ready(function () {
+			sessionStorage.cnt=0;
+		});
+		function itemdrop(e) {
+			e.preventDefault();
+			var id = e.dataTransfer.getData('m');
+			$('#item').append($('#' + id));			
+			sessionStorage.cnt--;
+			$('span').text(sessionStorage.cnt);
+
+		};
+		function cartdrop(e) {
+			cnt++;
+			e.preventDefault();
+			var src = e.dataTransfer.getData('m');
+			$('#cart').append($('#' + src));
+			$('span').text(cnt + "개");
+			if (sessionStorage.cnt == null || sessionStorage.cnt == 0) {
+				sessionStorage.cnt = 1;				
+			} else {
+				sessionStorage.cnt++;
+			}
+			$('span').text(sessionStorage.cnt);
+			
+		}
+		function imgdrag(e) {
+			e.dataTransfer.effectAllowed = 'move';
+			e.dataTransfer.setData('m', e.target.id);
+			e.dataTransfer.setData('n', e.target.value);
+
+		};
+		function allowdrop(e) {
+			e.preventDefault();
+		};
+	</script>
+</head>
+
+<body>
+	<h1>Drag n Drop</h1>
+	<h3>Item</h3>
+	<div ondrop="itemdrop(event)" ondragover="allowdrop(event)" id="item">
+		<img src="img/m1.jpg" id="m1" draggable="true" ondragstart="imgdrag(event)" value="movie1">
+		<img src="img/m2.jpg" id="m2" draggable="true" ondragstart="imgdrag(event)" value="movie2">
+		<img src="img/m3.jpg" id="m3" draggable="true" ondragstart="imgdrag(event)" value="movie3">
+		<img src="img/m4.jpg" id="m4" draggable="true" ondragstart="imgdrag(event)" value="movie4">
+		<img src="img/m5.jpg" id="m5" draggable="true" ondragstart="imgdrag(event)" value="movie5">
+	</div>
+	<h3>Cart <span></span></h3>
+	<div ondrop="cartdrop(event)" ondragover="allowdrop(event)" id="cart">
+	</div>
+</body>
+
+</html>
