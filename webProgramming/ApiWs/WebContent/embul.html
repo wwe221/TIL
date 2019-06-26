@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<style>
-
 	</style>
 	<script>
+		var url;
+		var key;
+		var queryParams;
 		$(document).ready(function () {
-			getData();
+			getData2();
+			connect();
 		});
 		function getData() {
 			$.ajax({
@@ -20,10 +24,46 @@
 			});
 		};
 		function parsing(data) {
-			var ts = $(data).find('root');
-			alert(ts.length);
+			var ts = $(data).find('row').text();
+			var tx = $(data).find('sttemnt_adres').text();
+			alert(tx);
+			var tx = $(data).find('sttemnt_adres').text();
+			alert(tx);
+			//alert(tx.substring(0,2));
+			var tx = $(data).find('sttemnt_adres').text();
+			alert(tx);
+
 
 		};
+		function getData2() {
+			var xhr = new XMLHttpRequest();
+			url = 'https://cors.io/?http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastSpaceData'; /*URL*/
+			key = "MoUnr3xivYzi2xwm7CmPZgKOuTE%2FiAlu%2BjCAQvDNxCd8v4AXvpNgEFgytUGMBqV80jKakbUi4o2ERo0FA2noqA%3D%3D";
+			queryParams = '?' + encodeURIComponent('ServiceKey') + '=' + key; /*Service Key*/
+			queryParams += '&' + encodeURIComponent('base_date') + '=' + encodeURIComponent('20190626'); /*‘15년 12월 1일발표*/
+			queryParams += '&' + encodeURIComponent('base_time') + '=' + encodeURIComponent('0500'); /*05시 발표 * 기술문서 참조*/
+			queryParams += '&' + encodeURIComponent('nx') + '=' + encodeURIComponent('61'); /*예보지점의 X 좌표값*/
+			queryParams += '&' + encodeURIComponent('ny') + '=' + encodeURIComponent('125'); /*예보지점의 Y 좌표값*/
+			queryParams += '&' + encodeURIComponent('numOfRows') + '=' + encodeURIComponent('10'); /*한 페이지 결과 수*/
+			queryParams += '&' + encodeURIComponent('pageNo') + '=' + encodeURIComponent('1'); /*페이지 번호*/
+			queryParams += '&' + encodeURIComponent('_type') + '=' + encodeURIComponent('xml'); /*xml(기본값), json*/
+			xhr.open('GET', url + queryParams);
+			xhr.onreadystatechange = function () {
+				if (this.readyState == 4) {
+					alert('Status: ' + this.status + ' Headers: ' + JSON.stringify(this.getAllResponseHeaders()) + ' Body: ' + this.responseText);
+				}
+			};
+			xhr.send('');
+		}
+		function connect() {
+			$.ajax({
+				url: url + queryParams,
+				method: 'get',
+				success: function (result) {
+					alert(result);
+				}
+			});
+		}
 	</script>
 </head>
 <div></div>
