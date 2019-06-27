@@ -360,9 +360,18 @@ HTML이 직접 접속 하고 있는 SERVER 외에는 연결하면 안된다.
 
 하지만 그룹 NetWork 망 안에서 필요시, 직접 연결하고 있는 server 외의 서버를 신뢰할 수 있는 server 라면 두가지 이상의 server 에 연결이 가능하다.
 
+혹은 메인 Server 를 통해서 외부 서버에 접근해야 한다.
+
 ## WebSocket
 
 웹 애플리케이션을 위한 양방향 통신 기술.
 
 HTTP 의 한계(요청을 한 것들만 받을수 있는)를 벗어나 HTML5에서 JavaScript 를 통해 TCP/IP 가 제공하는 기능을 사용할 수 있다.
+
+
+
+Server Side 역할
+
+1. 입력을 받아 처리
+2. 데이터를 가져와서 Client 에게 뿌려준다.
 

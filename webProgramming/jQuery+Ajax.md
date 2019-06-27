@@ -55,3 +55,39 @@ function sendData(n1, n2) {
 
 ```
 
+
+
+Get
+
+- Default 로 설정 되어 있는 전송 방식.
+- 입력한 쿼리 값을 그대로 주소에서 읽을 수 있다.
+
+Post
+
+- 입력한 쿼리 값을 주소에서 볼 수 없다.
+
+# JSP
+
+서버 측에서 HTML을 뿌려줄때 생기는 번거로움을 줄이기 위해 만들어졌다.
+
+HTML 형식으로 출력을 하는 Servlet 이다.
+
+Servlet 에서 JSP로 연결을 하고 JSP가 작성된 html 결과를 출력 해준다.
+
+
+
+Servlet 에서 request에 전달을 원하는 값들을 setAttribute로 담아서 전달하고,
+
+jsp 에서는 ${ id } 로 값을 쓸 수 있다.
+
+```java
+request.setAttribute("id", id);
+		request.setAttribute("pwd", pwd);
+		RequestDispatcher rd = request.getRequestDispatcher("ok.jsp");
+		rd.forward(request, response);
+
+
+<h3>${id} 님 환영쓰</h3>
+```
+
+lib/cos , jstl , standard 파일은 모두 JSP의 작성을 도와주는 기능을 담고 있는 라이브러리 들이다.
