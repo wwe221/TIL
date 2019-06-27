@@ -1,7 +1,7 @@
 package com.product;
 import com.vo.Product;
 
-import frame.Biz;
+import com.frame.Biz;
 
 public class ProductTest {
 	public static void main(String[] args) {		

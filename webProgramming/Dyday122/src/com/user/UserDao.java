@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 import com.vo.User;
 
-import frame.Dao;
-import frame.Sql;
+import com.frame.Dao;
+import com.frame.Sql;
 
 public class UserDao extends Dao<String, User> {
 

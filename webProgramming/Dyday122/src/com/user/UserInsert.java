@@ -1,6 +1,6 @@
 package com.user;
 import com.vo.User;
-import frame.Biz;
+import com.frame.Biz;
 
 public class UserInsert {
 	public static void main(String[] args) {		

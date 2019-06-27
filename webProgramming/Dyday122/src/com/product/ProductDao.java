@@ -5,8 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import frame.Dao;
-import frame.Sql;
+import com.frame.Dao;
+import com.frame.Sql;
 import com.vo.Product;
 public class ProductDao extends Dao<String, Product> {
 
@@ -52,8 +52,9 @@ public class ProductDao extends Dao<String, Product> {
 		try {
 			pstmt.setString(1, v.getName());
 			pstmt.setDouble(2, v.getPrice());
-			pstmt.setString(3, v.getImgname());
-			pstmt.setString(4, v.getId());
+			pstmt.setDate(3, v.getRegdate());
+			pstmt.setString(4, v.getImgname());
+			pstmt.setString(5, v.getId());
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			throw e;

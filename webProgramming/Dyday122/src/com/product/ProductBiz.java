@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 import com.vo.Product;
 
-import frame.Biz;
-import frame.Dao;
+import com.frame.Biz;
+import com.frame.Dao;
 public class ProductBiz extends Biz<String, Product> {
 	Dao<String, Product> dao;
 	public ProductBiz() {

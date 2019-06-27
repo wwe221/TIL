@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 import com.vo.User;
 
-import frame.Biz;
-import frame.Dao;
+import com.frame.Biz;
+import com.frame.Dao;
 
 public class UserBiz extends Biz<String, User> {
 	Dao<String, User> dao;
