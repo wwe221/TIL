@@ -3,16 +3,23 @@ package com.vo;
 import java.sql.Date;
 
 public class Product {
-	String id;
+	int id;
 	String name;
 	double price;
 	Date regdate;
 	String imgname;
-	
+
 	public Product() {
 	}
 
-	public Product(String id, String name, double price, Date regdate, String imgname) {
+	public Product(int id, String name, double price, String imgname) {		
+		this.id = id;
+		this.name = name;
+		this.price = price;
+		this.imgname = imgname;
+	}
+
+	public Product(int id, String name, double price, Date regdate, String imgname) {	
 		this.id = id;
 		this.name = name;
 		this.price = price;
@@ -20,29 +27,17 @@ public class Product {
 		this.imgname = imgname;
 	}
 
-	public Product(String id, String name, double price,String imgname) {
-		this.id = id;
+	public Product(String name, double price, String imgname) {
 		this.name = name;
 		this.price = price;
 		this.imgname = imgname;
-		java.util.Date utilDate = new java.util.Date();
-	    java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-	  
-	    this.regdate=sqlDate;
-	    
 	}
 
-	@Override
-	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", price=" + price + ", regdate=" + regdate + ", imgname="
-				+ imgname + "]";
-	}
-
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -76,6 +71,12 @@ public class Product {
 
 	public void setImgname(String imgname) {
 		this.imgname = imgname;
+	}
+
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", price=" + price + ", regdate=" + regdate + ", imgname="
+				+ imgname + "]";
 	}
 
 }

@@ -12,8 +12,25 @@
 <style>
 </style>
 <script>
+$(document).ready(function (){
+	$('#button').click(function(){
+		var c = confirm('회원가입 할껴?');
+		if(c){
+			$('#r_form').attr('method','POST');
+			$('#r_form').attr('action','req?type=user&cmd=addimpl');
+			$('#r_form').submit();
+		}
+	});
+});
 </script>
 <body>
 <h1>User add page</h1>
+<form id="r_form">
+ID<input type="text" name="id"><br>
+PWD<input type="password" name="pwd"><br>
+NAME<input type="text" name="name"><br>
+<input type="button" id="button" value="REGISTER"><br>
+</form>
+
 </body>
 </html>

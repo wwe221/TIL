@@ -7,8 +7,8 @@ import com.vo.Product;
 
 import com.frame.Biz;
 import com.frame.Dao;
-public class ProductBiz extends Biz<String, Product> {
-	Dao<String, Product> dao;
+public class ProductBiz extends Biz<Integer, Product> {
+	Dao<Integer, Product> dao;
 	public ProductBiz() {
 		dao = new ProductDao();
 	}
@@ -32,7 +32,7 @@ public class ProductBiz extends Biz<String, Product> {
 	}
 
 	@Override
-	public void remove(String k) throws Exception {
+	public void remove(Integer k) throws Exception {
 		Connection con = null;
 		try {
 			con = getcon();
@@ -67,7 +67,7 @@ public class ProductBiz extends Biz<String, Product> {
 	}
 
 	@Override
-	public Product get(String k) throws Exception {
+	public Product get(Integer k) throws Exception {
 		Connection con = null;
 		Product u = null;
 		try {

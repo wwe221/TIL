@@ -8,18 +8,18 @@ import java.util.ArrayList;
 import com.frame.Dao;
 import com.frame.Sql;
 import com.vo.Product;
-public class ProductDao extends Dao<String, Product> {
+public class ProductDao extends Dao<Integer, Product> {
 
 	@Override
 	public void insert(Product v, Connection con) throws Exception {
 		PreparedStatement pstmt = null;
 		pstmt = con.prepareStatement(Sql.insertProduct);
 		try {
-			pstmt.setString(1, v.getId());			
-			pstmt.setString(2, v.getName());
-			pstmt.setDouble(3, v.getPrice());
-			pstmt.setDate(4, v.getRegdate());
-			pstmt.setString(5, v.getImgname());		
+			//pstmt.setString(1, v.getId());			
+			pstmt.setString(1, v.getName());
+			pstmt.setDouble(2, v.getPrice());
+			//pstmt.setDate(4, v.getRegdate());
+			pstmt.setString(3, v.getImgname());		
 			
 			pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -31,11 +31,11 @@ public class ProductDao extends Dao<String, Product> {
 	}
 
 	@Override
-	public void delete(String k, Connection con) throws Exception {
+	public void delete(Integer k, Connection con) throws Exception {
 		PreparedStatement pstmt = null;
 		pstmt = con.prepareStatement(Sql.deleteProduct);
 		try {
-			pstmt.setString(1, k);
+			pstmt.setInt(1, k);
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			throw e;
@@ -52,9 +52,8 @@ public class ProductDao extends Dao<String, Product> {
 		try {
 			pstmt.setString(1, v.getName());
 			pstmt.setDouble(2, v.getPrice());
-			pstmt.setDate(3, v.getRegdate());
-			pstmt.setString(4, v.getImgname());
-			pstmt.setString(5, v.getId());
+			pstmt.setString(3, v.getImgname());
+			pstmt.setInt(4, v.getId());
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			throw e;
@@ -65,17 +64,17 @@ public class ProductDao extends Dao<String, Product> {
 	}
 
 	@Override
-	public Product select(String k, Connection con) throws Exception {
+	public Product select(Integer k, Connection con) throws Exception {
 		PreparedStatement psm = null;
 		ResultSet rs = null;
 		Product result;
 		psm = con.prepareStatement(Sql.selectProduct);
 		try {
-			psm.setString(1, k);
+			psm.setInt(1, k);
 			psm.executeUpdate();
 			rs = psm.executeQuery();
 			rs.next();
-			result = new Product(rs.getString("ID"),rs.getString("NAME"), rs.getDouble("PRICE"), rs.getString("IMGNAME"));
+			result = new Product(rs.getInt("ID"),rs.getString("NAME"), rs.getDouble("PRICE"), rs.getDate("REGDATE"),rs.getString("IMGNAME"));
 		} catch (Exception e) {
 			throw e;
 		} finally {
@@ -96,7 +95,7 @@ public class ProductDao extends Dao<String, Product> {
 			psm.executeUpdate();
 			rs = psm.executeQuery();
 			while (rs.next()) {
-				u = new Product(rs.getString("ID"),rs.getString("NAME"), rs.getDouble("PRICE"), rs.getString("IMGNAME"));
+				u = new Product(rs.getInt("ID"),rs.getString("NAME"), rs.getDouble("PRICE"),rs.getDate("REGDATE"), rs.getString("IMGNAME"));
 				result.add(u);
 			}
 		} catch (Exception e) {

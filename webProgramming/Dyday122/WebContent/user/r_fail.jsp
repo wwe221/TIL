@@ -14,9 +14,6 @@
 <script>
 </script>
 <body>
-<h1>Product List page</h1>
-<c:forEach var="p" items="${plist}">
-<h5><a href = "req?type=product&cmd=detail&id=${p.id}">${p.id}</a> ${p.name} ${p.price} ${p.regdate} ${p.imgname}</h5>
-</c:forEach>
+<h1>Register Fail</h1>
 </body>
 </html>

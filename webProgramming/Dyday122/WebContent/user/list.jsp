@@ -15,5 +15,10 @@
 </script>
 <body>
 <h1>User List page</h1>
+<c:forEach var="u" items="${ulist}">
+<h5><a href = "req?type=user&cmd=detail&id=${u.id}">
+${u.id}</a> ${u.name} ${u.pwd}
+</h5>
+</c:forEach>
 </body>
 </html>
