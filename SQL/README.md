@@ -518,3 +518,19 @@ WHERE EMPNO IN(
 
 ```
 
+###### SEQUENCE
+
+자동적으로 값이 변화하도록 해준다.
+
+```SQL
+create sequence pseq
+increment by 1 start with 100
+/* 100 부터 시작하여 1씩 증가하는 시퀀스를 만든다.*/
+
+insert into t_product values(PSEQ.NEXTVAL,'K1',1000, SYSDATE,'a.jpg')
+/*1씩 증가하는 값을 넣는다.*/
+
+Drop sequence pseq
+/*drop 을 이용해 시퀀스를 삭제한다. */
+```
+
