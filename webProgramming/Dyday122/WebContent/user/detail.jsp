@@ -35,6 +35,5 @@
 	<h5>${ud.id} ${ud.name} ${ud.pwd}</h5>
 	<button>DELETE</button>
 	<button>UPDATE</button>
-
 </body>
 </html>

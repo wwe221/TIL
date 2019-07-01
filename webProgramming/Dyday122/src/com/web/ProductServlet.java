@@ -40,7 +40,7 @@ public class ProductServlet extends HttpServlet {
 				request.setAttribute("plist", list);
 			} catch (Exception e) {
 				e.printStackTrace();
-			}
+			} 
 			next = "product/list";
 		} else if (cmd.equals("addimpl")) {
 			MultipartRequest mr = new MultipartRequest(request,
@@ -50,6 +50,7 @@ public class ProductServlet extends HttpServlet {
 			double price = Double.parseDouble(mr.getParameter("price"));
 			String imgname = mr.getOriginalFileName("imgname");
 			try {
+				
 				biz.register(new Product(name, price, imgname));
 				next = "product/r_ok";
 			} catch (Exception e) {
