@@ -3,91 +3,31 @@ package solution;
 import java.util.*;
 
 public class Prac {
-	public static class number implements Comparable<number> {
-		int getin; // ë“¤ì–´ì˜¤ëŠ” ì‹œê°„
-		int time; // ê±¸ë¦¬ëŠ” ì‹œê°„
-
-		public number(int getin, int time) {
-			this.getin = getin;
-			this.time = time;
-		}
-
-		public int getGetin() {
-			return getin;
-		}
-
-		public int getTime() {
-			return time;
-		}
-		@Override
-		public int compareTo(number target) {
-	        return this.time >= target.time ? 1 : - 1;
-	    }
-
-		@Override
-		public String toString() {
-			return "number [getin=" + getin + ", time=" + time + "]";
-		}
-	}
-
 	public static void main(String[] args) {
-		int[][] jobs = { { 4, 8 }, { 2, 7 }, { 2, 3 }};
-		int l = jobs.length;
-		PriorityQueue<number> wait = new PriorityQueue<>();
-		// ìˆ˜í–‰ ì‹œê°„ ìˆœìœ¼ë¡œ ì •ë ¬í•œ í
-		PriorityQueue<number> allq = new PriorityQueue<>(l, new Comparator<number>() {
-			// ìš”ì²­ ì‹œê°„ ìˆœìœ¼ë¡œ ì •ë ¬í•œ í
-			@Override
-			public int compare(number p1, number p2) {
-				return p1.getin >= p2.getin ? 1 : -1;
-			}
-		});
-		number going = null; // ì§€ê¸ˆ ì‹¤í–‰ì¤‘ì¸ ì‘ì—….
-		int ttime = 0; // ì§€ë‚˜ê°„ ì‹œê°„
-		int answer = 0;
-		int ind = 0;
-		for (int i = 0; i < l; i++) { // ëª¨ë“  ì‘ì—…ë“¤ì„ ìš”ì²­ì‹œê°„ ìˆœìœ¼ë¡œ ì •ë ¬ í•´ì„œ ë„£ëŠ”ë‹¤.
-			wait.offer(new number(jobs[i][0], jobs[i][1]));
-		}
-		System.out.println(wait);
-		
-		// ìˆ˜í–‰ ìš”ì²­ ì‹œê°„ì´ ì§€ë‚¬ë‹¤ë©´ ê·¸ê²ƒì„ ìˆ˜í–‰ì‹œê°„ ìˆœìœ¼ë¡œ waitì— ë„£ëŠ”ë‹¤.
-		while (!allq.isEmpty() || !wait.isEmpty()) {
-			for (int i = 0; i < allq.size(); i++) {
-				if (ttime >= allq.peek().getin) {
-					wait.add(allq.poll());
-					
-				}				
-			}
-			going = wait.poll(); // ë‹¤ìŒ ìˆœì„œ ë…€ì„ì„ ë„£ëŠ”ë‹¹.
-			int tmp = going.time + ttime - going.getin;
-			ttime += going.time;
-			answer += tmp;
-			going = null;
-		}
-		System.out.println(wait);
-		System.out.println(answer/3);
-
-// 		while (ind < l) {
-//			for (int i = ind; i < l; i++) {
-//				if (ttime >= jobs[ind][0]) {
-//					wait.add(new number(jobs[ind][0], jobs[ind][1]));
-//					ind++;
-//				}
-//			}
-//			going = wait.poll(); // ë‹¤ìŒ ìˆœì„œ ë…€ì„ì„ ë„£ëŠ”ë‹¹.
-//			int tmp = going.time + ttime - going.getin;
-//			ttime += going.time;
-//			answer += tmp;
-//			going = null;
-//
-//		}
-//		System.out.println(wait);
-//		going = wait.poll();
-//		int tmp = going.time + ttime - going.getin;
-//		answer += tmp;
-//		System.out.println(answer / l);
-
+		String name = "JEROEN";
+		System.out.println(solution(name));
 	}
 
+	public static int solution(String name) {
+		int answer = 0;
+		int l = name.length();
+		char[] n = new char[l];
+		n = name.toCharArray();
+		// i ¹øÂ° ÀÚ¸®ÀÇ ±ÛÀÚ¸¦ °¡Á®¿Í¼­ Z¿¡¼­ »©´Â°Ô ºü¸¥Áö A¿¡¼­ °¡´Â°Ô ºü¸¥Áö ±¸ÇÏ°í ´õ ºü¸¥ ¸¸Å­ °ªÀ» ´õÇÑ´Ù.
+		int fromz = 0;
+		int toa = 0;
+		int cnt = 0; // ¿À¸¥ÂÊÀ¸·Î ¿òÁ÷ÀÏ¶§
+		int cnt2 = 0; // ¿ŞÂÊÀ¸·Î ¿òÁ÷ÀÏ¶§
+		int tmp = 0;
+		fromz = 'Z' - n[0] + 1;
+		toa = n[0] - 'A';
+		tmp = fromz < toa ? toa : fromz;
+		cnt += tmp;
+		cnt++;
+		cnt2 += tmp;
+		cnt2++;
+		
+
+		return answer;
+	}
 }

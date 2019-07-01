@@ -44,7 +44,7 @@ public class ProductServlet extends HttpServlet {
 			next = "product/list";
 		} else if (cmd.equals("addimpl")) {
 			MultipartRequest mr = new MultipartRequest(request,
-					"C:\\Users\\student\\kh\\TIL\\webProgramming\\Dyday122\\WebContent\\img", 1024 * 1024 * 100,
+					"C:\\Users\\student\\KH\\TIL\\webProgramming\\Dyday122\\WebContent\\img", 1024 * 1024 * 100,
 					"UTF-8");
 			String name = mr.getParameter("name");
 			double price = Double.parseDouble(mr.getParameter("price"));

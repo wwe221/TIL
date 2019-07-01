@@ -18,7 +18,7 @@ public abstract class Biz <K,V> {
 		}
 		id = "db";
 		pwd = "db";
-		url = "jdbc:oracle:thin:@" + "70.12.50.240" + ":" + "1521" + ":xe";
+		url = "jdbc:oracle:thin:@" + "70.12.114.55" + ":" + "1521" + ":xe";
 	}
 
 	public Connection getcon() {
