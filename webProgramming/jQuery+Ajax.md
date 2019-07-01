@@ -91,3 +91,42 @@ request.setAttribute("id", id);
 ```
 
 lib/cos , jstl , standard 파일은 모두 JSP의 작성을 도와주는 기능을 담고 있는 라이브러리 들이다.
+
+#### Dispatcher
+
+url 의 패턴에 따라 원하는 작업을 설정할 수 있도록 해준다.
+
+ex) *.do 로 끝나는 명령어 라면
+
+web.xml 파일에서
+
+```xml
+<servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>web.dispatcher.DispatcherServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+
+```
+
+을 통해서 패턴에 따라 이를 핸들링 해줄 파일을 설정하고
+
+해당 Dispatcher 에서 url을 읽어 원하는 부분을 핸들링 해준다.
+
+```java
+String path = uri.substring(uri.lastIndexOf("/"));
+		path = path.substring(1, path.lastIndexOf("."));
+if(path.equals("main")){}
+```
+
+```html
+	<jsp:include page="${center}.jsp"></jsp:include>
+<!-- 해당 영역에 center 라는 이름을 가진 jsp 파일을 삽입한다.
+그 결과로 한개의 페이지 안의 또 다른 페이지를 로드할 수 있게 된다.-->
+```
+
+
+
