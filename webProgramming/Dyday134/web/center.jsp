@@ -9,10 +9,9 @@
 <meta charset="EUC-KR">
 </head>
 <body>
-<div class="center_page">
 <h1>
 User & Product
 </h1>
-</div>
+
 </body>
 </html>

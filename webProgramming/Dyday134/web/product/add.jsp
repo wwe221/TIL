@@ -27,11 +27,10 @@
 <body>
 	<h1>Product add page</h1>
 	<form id="r_form" enctype="multipart/form-data">
-		NAME<input type="text" name="name"><br> PRICE<input
-			type="number" name="price"><br> IMGNAME<input
-			type="file" name="imgname"><br> 
-			
-			<input type="button"id="button" value="REGISTER"><br>
+		NAME<input type="text" name="name" class="form-control-user newform"><br> PRICE<input
+			type="number" name="price" class="form-control-user newform"><br><input
+			type="file" name="imgname" class="btn-primary btn-user newform"><br> 
+			<input type="button"id="button"  class="btn-primary btn-user newform" value="REGISTER"><br>
 	</form>
 </body>
 </html>

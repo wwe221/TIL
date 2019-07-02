@@ -32,7 +32,7 @@
 <body>
 	<div class="center_page">
 		<h1>User Detail Page</h1>
-		<img src="img/${ud.id}.jpg">
+		<img src="img/${ud.id}.jpg" class = "newimg">
 		<h5>${ud.id}${ud.name} ${ud.pwd}</h5>
 		<button id="delBut">DELETE</button>
 		<button id="upBut"">UPDATE</button>

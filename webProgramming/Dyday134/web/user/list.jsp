@@ -16,40 +16,36 @@
 	
 </script>
 <body>
-	<div class="center_page">
-		<h1>User List page</h1>
+	<h1>User List page</h1>
+	<div class="card-body center_page">
+		<div class="table-responsive">
+			<table class="table table-bordered" id="dataTable" width="100%"
+				cellspacing="0">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Name</th>
+						<th>Password</th>
 
-
-		<div class="card-body">
-			<div class="table-responsive">
-				<table class="table table-bordered" id="dataTable" width="100%"
-					cellspacing="0">
-					<thead>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<th>Id</th>
+						<th>Name</th>
+						<th>Password</th>
+					</tr>
+				</tfoot>
+				<tbody>
+					<c:forEach var="u" items="${ulist}">
 						<tr>
-							<th>Id</th>
-							<th>Name</th>
-							<th>Password</th>
-
+							<td><a href="user.do?cmd=userdetail&id=${u.id}">${u.id}</a></td>
+							<td>${u.name}</td>
+							<td>${u.pwd}</td>
 						</tr>
-					</thead>
-					<tfoot>
-						<tr>
-							<th>Id</th>
-							<th>Name</th>
-							<th>Password</th>
-						</tr>
-					</tfoot>
-					<tbody>
-						<c:forEach var="u" items="${ulist}">
-							<tr>
-								<td><a href="user.do?cmd=userdetail&id=${u.id}">${u.id}</a></td>
-								<td>${u.name}</td>
-								<td>${u.pwd}</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
+					</c:forEach>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </body>

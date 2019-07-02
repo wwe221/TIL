@@ -26,10 +26,10 @@ $(document).ready(function (){
 <body>
 <h1>User add page</h1>
 <form id="r_form">
-ID<input type="text" name="id"><br>
-PWD<input type="password" name="pwd"><br>
-NAME<input type="text" name="name"><br>
-<input type="button" id="button" value="REGISTER"><br>
+ID<input type="text" name="id"  class="form-control-user newform"><br>
+PWD<input type="password" name="pwd"  class="form-control-user newform" ><br>
+NAME<input type="text" name="name"  class="form-control-user newform"><br>
+<input type="button" id="button"  class="btn-primary btn-user newform" value="REGISTER"><br>
 </form>
 
 </body>

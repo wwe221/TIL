@@ -31,7 +31,7 @@
 </script>
 <body>
 	<h1>User Detail Page</h1>
-	<img src="img/${pd.imgname}">
+	<img src="img/${pd.imgname}" class = "newimg">
 	<h5>${pd.id} ${pd.name} ${pd.price} ${pd.regdate}</h5>
 	<button id="delBut">DELETE</button>
 		<button id="upBut"">UPDATE</button>
