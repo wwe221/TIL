@@ -9,7 +9,8 @@ public class App {
 		AbstractApplicationContext factory
 		= new GenericXmlApplicationContext("myspring.xml");
 		Biz b = (Biz)factory.getBean("uBiz");
-		Biz c = (Biz)factory.getBean("uBiz2");
+		Biz c = (Biz)factory.getBean("uBiz2");		
+		
 		b.register();
 		c.register();
 	}

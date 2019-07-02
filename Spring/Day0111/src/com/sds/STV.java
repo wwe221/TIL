@@ -6,7 +6,7 @@ public class STV implements TV {
 	public STV() {
 		System.out.println("STV Construct");
 	}
-	public STV(int size) {	
+	public STV(int size) {
 		this.size = size;
 	}
 	public STV(int size, Speaker spk) {		
