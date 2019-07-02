@@ -37,7 +37,6 @@ public class UserServlet extends HttpServlet {
 				try {
 					list = biz.get();
 					request.setAttribute("ulist", list);
-					System.out.println(list.get(0));
 					UI.build(request, cmd);					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block

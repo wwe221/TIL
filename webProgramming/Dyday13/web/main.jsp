@@ -46,10 +46,11 @@ footer {
 	height: 30px;
 	background: blue;
 }
-.center_page{
+
+.center_page {
 	width: 880px;
 	height: 580px;
-	margin:0 auto;
+	margin: 0 auto;
 	background: white;
 }
 </style>
@@ -57,34 +58,43 @@ footer {
 <body>
 	<header>
 		<h3>
-			<a href="main.do?view=login">LOGIN</a> 
-			<a href="main.do?view=register">REGISTER</a> 
-			<a href="main.do?view=about">ABOUTUS </a>
+			<c:choose>
+				<c:when test="${loginuser!=null}">
+					<a href="#">${loginuser.id}</a>
+					<a href="login.do">logout</a>
+					<a href="main.do?view=about">ABOUTUS </a>
+				</c:when>
+				<c:otherwise>
+					<a href="main.do?view=login">LOGIN</a>
+					<a href="main.do?view=register">REGISTER</a>
+					<a href="main.do?view=about">ABOUTUS </a>
+				</c:otherwise>
+			</c:choose>
 		</h3>
 		<h1>
-			<a href="user.do?view=useradd">USERADD </a> 
-			<a href="user.do?cmd=userlist">USERLIST</a> 
-			<a href="product.do?view=productadd">PRODUCTADD</a> 
-			<a href="product.do?cmd=productlist">PRODUCTLIST</a>
+			<a href="user.do?view=useradd">USERADD </a> <a
+				href="user.do?cmd=userlist">USERLIST</a> <a
+				href="product.do?view=productadd">PRODUCTADD</a> <a
+				href="product.do?cmd=productlist">PRODUCTLIST</a>
 		</h1>
 	</header>
 	<nav>
-	<c:choose>
-	<c:when test="${navi==null}">
-	 <a href="main.do">Home</a>	 
-	</c:when>
-	<c:otherwise>
+		<c:choose>
+			<c:when test="${navi==null}">
+				<a href="main.do">Home</a>
+			</c:when>
+			<c:otherwise>
 	${navi}
 	</c:otherwise>
-	</c:choose>
+		</c:choose>
 	</nav>
 	<section>
 		<c:choose>
 			<c:when test="${center==null}">
-			<jsp:include page="center.jsp"></jsp:include>
+				<jsp:include page="center.jsp"></jsp:include>
 			</c:when>
 			<c:otherwise>
-			<jsp:include page="${center}.jsp"></jsp:include>			
+				<jsp:include page="${center}.jsp"></jsp:include>
 			</c:otherwise>
 		</c:choose>
 	</section>
