@@ -1,3 +1,5 @@
+
+
 ## Framework
 
 뼈대, 골격
@@ -187,7 +189,7 @@ public class STV{
 모든리턴타입, com.user 패키지의 Biz로 끝나는 모든 클래스의 모든메소드.
 
 * com..Biz+.*(..)
-com 패키지 안의, Biz를 implementation 한 자식 패키지들의 모든 매개변수를 가지는 모든 메소드
+com 패키지 안의, Biz를 implementation 한 자식 패키지들의 모든 매개변수를 가지는 모든 메소드	
 * com..Biz+.*(com.user.User)
 매개변수로 User를 가지는 메소드만 해당함.
 ```
@@ -286,6 +288,198 @@ public class Logadvice {
 	public Object aroundlog(ProceedingJoinPoint pjp) throws Throwable {}
         
 }
+```
+
+
+
+### Mybatis
+
+Settings
+
+myspring.xml
+
+```xml
+<!-- 1. Database Setting -->
+<!-- 데이터 베이스를 연결한다 -->
+ 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+ 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+ 		<property name="url" value="jdbc:oracle:thin:@70.12.114.55:1521:xe"/>
+ 		<property name="username" value="db"/>
+ 		<property name="password" value="db"/>
+ 	</bean>
+
+ 	<!-- 2. Transaction Setting -->
+	<!-- 트랜잭션이 생길경우의 처리할 매니저를 생성한다? -->
+ 	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+ 		<property name="dataSource" ref="dataSource"/>
+ 	</bean>
+ 	<!-- 3. MyBatis Setting -->
+	<!-- mybatis.xml 을 연결하여 어떤 클래스를 가지고 수행할지 설정한다. -->
+ 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+ 		<property name="dataSource" ref="dataSource"/>
+ 		<property name="configLocation" value="classpath:com/mybatis/mybatis.xml"/>
+ 	</bean>	
+
+	<!-- 4. Spring Mybatis Connect -->
+	<!-- Spring Mybatis를 사용한다-->
+ 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+ 		<constructor-arg ref="sqlSessionFactory"/>
+ 	</bean>
+ 	
+ 	<!-- 5. Mapper Setting -->
+	<!-- Mapper 들의 기본 디렉토리를 설정한다.-->
+ 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+ 		<property name="basePackage" value="com.mapper"/>
+ 	</bean>
+```
+
+mybatis.xml
+
+```xml
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.vo.User" alias="user"/>
+	    <typeAlias type="com.vo.Product" alias="product"/>
+	   <!-- 해당 클래스들을 alias 로 줄여서 부르겠다.  -->
+	</typeAliases>	
+	<mappers>
+		<mapper resource="com/mybatis/usermapper.xml"/>
+		<mapper resource="com/mybatis/productmapper.xml"/>
+	</mappers>
+    <!-- Mapper 들을 쓰겠다.  -->
+</configuration>
+```
+
+usermapper.xml
+
+```xml
+<mapper namespace="com.mapper.UserMapper">
+	<!-- com.mapper.UserMapper Interface 와 연결하겠다.-->	
+	<insert id="insert" parameterType="user">
+		INSERT INTO T_USER VALUES
+		(#{id},#{pwd},#{name})
+	</insert>
+	<select id="select" parameterType="String" resultType="user">
+		SELCT *
+		FROM T_USER
+		WHERE ID=#{obj}
+        <!-- obj 는 UserMapper Interface 의 select 메소드의 Parameter다-->
+	</select>
+	<select id="selectall" resultType="user">
+		SELECT *
+		FROM T_USER
+		ORDER BY 1
+        <!--selectall 의 경우 리턴값이 배열이지만, object로 처리가 되기 때문에 문제 없이 수행이 가능하다.-->
+	</select>
+    <!-- xml 파일에는 특수문자 입력이 제한된다.
+'%L%' =  '%'||${L}||'%' 
+-->
+</mapper>
+```
+
+###### Transaction 처리
+
+Interface method 선언시 @Transactional 선언을 해준다.
+
+```java
+public interface Services<K,V> {
+	@Transactional
+	public void insert(V v) throws Exception;
+	@Transactional
+	public void update(V v) throws Exception;
+	@Transactional
+	public void delete(K k) throws Exception;
+	public V select(K k) throws Exception;
+	public ArrayList<V> select() throws Exception;
+}
+
+```
+
+
+
+### Spring MVC
+
+Settings
+
+-web.xml
+
+1. dispatcher
+2. filter
+
+```xml
+<servlet>
+		<servlet-name>action</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/config/spring.xml</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.mc</url-pattern>
+	</servlet-mapping>
+<!-- .mc 가 들어오면 Dispatcher를 연결할 것이라 선언 -->
+	<filter>
+		<filter-name>enc</filter-name>
+<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class><init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>enc</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+<!--한글이 이쁘게 나오게 설정-->
+```
+
+-spring.xml
+
+1. mvc:annotation-driven
+2. viewResolber
+
+```xml
+<bean id="viewResolver"		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/view/" />
+		<property name="suffix" value=".jsp" />
+		<property name="order" value="0" />
+	</bean>
+<!-- viewName  에 a가 들어오면 /view 폳더의 a.jsp 연결-->
+```
+
+```java
+@Controller
+public class MainController {
+	@RequestMapping("/main.mc")// main.mc가 요청되면 실행된다
+	public ModelAndView main() {
+		//데이터와 화면 모델 앤드 뷰 
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("main"); 
+        // spring.xml 에서 설정한 대로 /view/main.jsp 로 연결된다.
+		return mv;
+		//modelandview 를 return 하면  자동으로 forward 가 된다
+	}
+}
+```
+
+Servlet 과 Dispatcher를 구현하고 설정했던 POJO 와는 다르게 매우 간단하게 핸들링할 수 있게 되었다.
+
+##### 화면의 값 전달 받기
+
+```java
+// 화면에서 form 형식으로 action="loginmethod.mc" method="POST" 로 지정했다면
+@RequestMapping(value="/loginmethod.mc" ,method=RequestMethod.POST)	
+	public ModelAndView loginmethod(String id, String pwd) {
+        //Parameter 로, 화면의 input Name 들을 받을 수 있다.
+        //단, Parameter의 변수명과 input name이 일치해야한다.
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("center","login");
+		System.out.println(id +" "+ pwd);
+		mv.setViewName("main");
+		return mv;
+    }
+
 ```
 
 
