@@ -397,7 +397,7 @@ public interface Services<K,V> {
 
 
 
-### Spring MVC
+### Spring MVC ( Model , View , Controller)
 
 Settings
 
@@ -437,7 +437,7 @@ Settings
 -spring.xml
 
 1. mvc:annotation-driven
-2. viewResolber
+2. viewResolver
 
 ```xml
 <bean id="viewResolver"		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -480,6 +480,112 @@ Servlet 과 Dispatcher를 구현하고 설정했던 POJO 와는 다르게 매우
 		return mv;
     }
 
+```
+
+```java
+@RequestMapping("/useraddimpl.mc")
+	public ModelAndView uaddc(ModelAndView mv , User u) {
+        //만약 form 의 input name 들이 User의 변수 이름과 일치한다면, 자동으로 setter 에 의해 u가 만들어져 매개변수로 들어오게 된다.
+		System.out.println(u);		
+		mv.setViewName("main");
+		return mv;
+}
+```
+
+파일 전송받기
+
+```java
+MultipartFile mf;
+//파일을 받기 위해서는 객체의 변수에 MultipartFile 을 가지고 있어야 한다.
+
+```
+
+```html
+<form action="productaddimpl.mc" method="POST" enctype="multipart/form-data">
+NAME<input type="text" name="name"><br>
+PRICE<input type="number" name="price"><br>
+IMG<input type="file" name="mf"><br>
+<!--Product 의 mf 에 파일 저장해서 보낸다.-->
+<input type="submit" value="REGISTER"><br>
+</form>
+```
+
+Multi Language
+
+사용자 Browser의 기본 언어 세팅에 따라 다르게 표시
+
+```xml
+<!-- Multi language -->	
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">		
+			<list>
+				<value>messages/messages</value>
+				<!-- 이 파일들에 의해서 -->
+			</list>
+		</property>
+	</bean>
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+	</bean>	
+	<mvc:interceptors>
+	<!--사용자의 Browser 에서 접속할때 main Language 를 찾는다.  -->
+		<bean			class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="lang" />
+		</bean>
+	</mvc:interceptors>
+```
+
+messages_en.properties
+
+```
+welcome.txt = Welcome {0} {1}
+register.txt = Register OK {0}
+item.list=Item List
+코드 = 값{n}
+		n번째 파라미터
+```
+
+```html
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<spring:message code="welcome.txt" arguments="hi,mulcam"/>
+```
+
+```java
+class Product{
+MultipartFile mf;
+//product 의 변수 추가
+}
+
+@RequestMapping("/productaddimpl.mc")
+	public String paddc(ModelAndView mv, Product p) {    
+        //form 형식에서 보낸 mf 를 받아온다.
+		String imgname = p.getMf().getOriginalFilename();
+		p.setImgname(imgname);
+		try {
+			biz.insert(p);
+			Util.saveFile(p.getMf());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:productlist.mc";
+	}
+//util.java
+public class Util {
+	public static void saveFile(MultipartFile mf) {
+		byte [] data;
+		String imgname = mf.getOriginalFilename();
+		String dir="C:\\Users\\student\\KH\\TIL\\Spring\\smvc3\\web\\img\\";
+		try {
+			data = mf.getBytes();
+			FileOutputStream fout = new FileOutputStream(dir+imgname);
+			fout.write(data);
+			fout.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
 ```
 
 
