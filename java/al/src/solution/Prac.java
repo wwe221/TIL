@@ -1,56 +1,75 @@
 package solution;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class Prac {
 	public static void main(String[] args) {
-		String name = "JAZ";
-		solution(name);
+		int n = 4;
+		int[][] s = { { 0, 1, 1 }, { 0, 2, 2 }, { 1, 2, 5 }, { 1, 3, 1 }, { 2, 3, 8 } };
+		System.out.println(solution(n, s));
 	}
 
-	public static int solution(String name) {
+	public static int solution(int n, int[][] costs) {
 		int answer = 0;
-		int l = name.length();
-		char[] n = new char[l];
-		n = name.toCharArray();
-		// i 번째 자리의 글자를 가져와서 Z에서 빼는게 빠른지 A에서 가는게 빠른지 구하고 더 빠른 만큼 값을 더한다.
-		int fromz = 0;
-		int toa = 0;
-		int cnt = 0; // 오른쪽으로 움직일때
-		int cnt2 = 0; // 왼쪽으로 움직일때
-		int tmp = 0;
-		// 제일 첫 글자는 커서를 움직이기 전에 계산.
-		fromz = 'Z' - n[0] + 1;
-		toa = n[0] - 'A';
-		tmp = fromz < toa ? fromz : toa;
-		cnt += tmp;
-		cnt2 += tmp;
-		// ++ 로 다음 글자로 이동. 해당 글자에서 어느게 더 빠른지 계산하고 cnt에 더한뒤에 다음글자로 이동.
-		for (int i = 1, j = l - 1; i < l; i++, j--) {
-			{ // 오른쪽으로 갈때
-				cnt++;
-				fromz = 'Z' - n[i] + 1;
-				toa = n[i] - 'A';
-				tmp = fromz < toa ? fromz : toa;
-				cnt += tmp;
+		int l = costs.length;
+		ArrayList<isl> list = new ArrayList<>();
+		ArrayList<Integer> connected = new ArrayList<>(); // 연결된 섬들의 이름
+		int tmp;
+		for (int i = 0; i < l; i++) { // 낮은 숫자가 먼저 오게 바꿈
+			if (costs[i][0] > costs[i][1]) {
+				tmp = costs[i][0];
+				costs[i][0] = costs[i][1];
+				costs[i][1] = tmp;
 			}
-			{// 왼쪽으로 갈때
-				cnt2++;
-				fromz = 'Z' - n[j] + 1;
-				toa = n[j] - 'A';
-				tmp = fromz < toa ? fromz : toa;
-				cnt2 += tmp;
-				System.out.println(n[j] + " " + cnt2);
-			}
-			// 마지막으로 접근하는 녀석이 A 면 칸을 넘기지 않고 끝낸다.
-			
-			
 		}
-		System.out.println();
-		System.out.println();
-		System.out.println(cnt);
-		System.out.println(cnt2);
-
+		for (int i = 0; i < l; i++) { // l 번 돌면서 list 에 isl 들을 넣는다.
+			if (!list.contains(costs[i][0])) {// list 에 없는 출발섬이라면 새로 만든다
+				list.add(new isl(costs[i][0], costs[i][1], costs[i][2]));
+			} else {// list에 있으면 값들을 추가한다.
+				int a = list.indexOf(costs[i][0]);
+				list.get(a).other.add(costs[i][1]);
+				list.get(a).val.add(costs[i][2]);
+			}
+		}
+		
 		return answer;
+	}
+
+	public static class isl {
+		int my;
+		ArrayList<Integer> other = new ArrayList<>();
+		ArrayList<Integer> val = new ArrayList<>();
+
+		public isl(int my, int other, int val) {
+			this.my = my;
+			this.other.add(other);
+			this.val.add(val);
+		}
+
+		public boolean checkEmpty() {
+			if (other.isEmpty())
+				return true;
+			else
+				return false;
+		}
+
+		public int minval() {// 가장 작은놈을 리턴
+			int min = Integer.MAX_VALUE;
+			int tmp = 0;
+			for (int i = 0; i < val.size(); i++) {
+				if (val.get(i) < min) {
+					min = val.get(i);
+					tmp = i;
+				}
+			}
+			return tmp;
+		}
+
+		public void remove(int idx) {// 가진놈을 삭제
+			other.remove(idx);
+			val.remove(idx);
+		}
 	}
 }
