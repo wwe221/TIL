@@ -23,7 +23,7 @@ Presentation : Client
 
 Business 
 
-Persistence ; Data base
+Persistence : Data base
 
 ## 스프링 환경구축
 
@@ -34,7 +34,7 @@ Persistence ; Data base
    - Download Library (automatic)
    - maven -> update project
 
-
+4. Add external Library
 
 ## 스프링 프레임 워크
 
@@ -590,7 +590,13 @@ public class Util {
 
 
 
+###### 환경 재구축
 
+1. 기본 스프링 환경구축
+2. Biz,Dao 구현
+3. 테스트를 위한 src\myspring.xml
+4. Dispatcher 를 위한 web\web-inf\web.xml
+5. 웹 기능을 위한 web\web-inf\spring.xml
 
 
 
