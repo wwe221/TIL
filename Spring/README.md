@@ -600,6 +600,36 @@ public class Util {
 
 
 
+JSON 을 통한 값 전달하기
+
+```java
+@RequestMapping("/pchart.mc")
+@ResponseBody //값을 전달한다고 알림
+public void pdata(HttpServletResponse response) {
+	response.setCharacterEncoding("EUC-KR");
+	response.setContentType("text/json;charset=UTF-8");
+	ArrayList<Product> list = new ArrayList<Product>();
+	JSONArray ja = new JSONArray();
+	PrintWriter pt;
+	try {
+		list = pbiz.select();
+		int l = list.size();
+		for(int i=0;i<l;i++) {
+			JSONObject jo = new JSONObject();
+			jo.put("name",list.get(i).getName());
+			jo.put("y",list.get(i).getPrice());
+			ja.add(jo);
+		}
+		pt = response.getWriter();
+		pt.print(ja.toJSONString());
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+}
+```
+
+
+
 ###### 문제
 
 특정 객체에서만 사용하는 함수 specialization 이 불가능하다
