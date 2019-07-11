@@ -482,6 +482,8 @@ Servlet 과 Dispatcher를 구현하고 설정했던 POJO 와는 다르게 매우
 
 ```
 
+Controller
+
 ```java
 @RequestMapping("/useraddimpl.mc")
 	public ModelAndView uaddc(ModelAndView mv , User u) {
