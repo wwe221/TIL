@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.ProductMapper">	
+	<select id="select" parameterType="Integer" 
+	resultType="Post">
+		SELECT * FROM T_PRODUCT WHERE ID=#{obj}
+	</select>
+	<select id="selectall" resultType="Post">
+		SELECT * FROM T_PRODUCT
+	</select>
+	<insert id="insert" parameterType="Post">
+		INSERT INTO T_PRODUCT VALUES (PSEQ.NEXTVAL,#{name},#{price},SYSDATE,#{imgname})
+	</insert>
+	<update id="update" parameterType="Post">
+		UPDATE T_PRODUCT SET NAME=#{name},PRICE=#{price},IMGNAME=#{imgname} WHERE ID=#{id}
+	</update>
+	<delete id="delete" parameterType="INTEGER">
+		DELETE FROM T_PRODUCT WHERE ID=#{obj}
+	</delete>	
+</mapper>
+
+
+
+
+
+
