@@ -65,5 +65,13 @@ public class MainController {
 		mv.setViewName("main");
 		return mv;
 	}
+	@RequestMapping("/write.sh")
+	public ModelAndView write() {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("center", "addreview");
+		mv.addObject("navi", Navi.login);
+		mv.setViewName("main");
+		return mv;
+	}
 	
 }

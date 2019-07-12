@@ -5,15 +5,21 @@ PUBLIC "-//mybatis.org/DTD Config 3.0//EN"
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.vo.User" alias="user"/>
-	    <typeAlias type="com.vo.Post" alias="Post"/>
+	    <typeAlias type="com.vo.Post" alias="post"/>
+	    <typeAlias type="com.vo.Content" alias="cont"/>
+	    <typeAlias type="com.vo.Category" alias="cate"/>
+	    <typeAlias type="com.vo.Star" alias="star"/>
 	   <!-- I'm gonna add this classes and i'll call these these -->
 	</typeAliases>
-	
 	<mappers>
 		<mapper resource="com/config/usermapper.xml"/>
-		<mapper resource="com/config/productmapper.xml"/>
+		<mapper resource="com/config/postmapper.xml"/>
+		<mapper resource="com/config/contentmapper.xml"/>
+		<mapper resource="com/config/categorymapper.xml"/>
+		<mapper resource="com/config/starmapper.xml"/>
 	</mappers>
 </configuration>
+
 
 
 

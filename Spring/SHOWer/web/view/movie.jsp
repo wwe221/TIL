@@ -150,6 +150,5 @@
           </div>
           <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
         </div>
-
+        <button id="write" href="write.sh">글쓰기</button>
       </div>
-</div>

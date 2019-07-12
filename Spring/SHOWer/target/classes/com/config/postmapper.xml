@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.mapper.PostMapper">	
+
+	<insert id="insert" parameterType="post">
+		INSERT INTO POST VALUES (POST_SEQ.NEXTVAL,#{title},#{text},SYSDATE,#{category},
+		#{writer},#{img01},#{img02},#{img03},#{contents},#{reid})
+	</insert>
+	
+
+	<delete id="delete" parameterType="Integer">
+		DELETE FROM POST WHERE ID=#{obj}
+	</delete>	
+
+
+	<update id="update" parameterType="post">
+		UPDATE POST SET TITLE=#{title},TEXT=#{text},CATEGORY=#{category},
+		IMG01=#{img01},IMG02=#{img02},IMG03=#{img03},CONTENTS=#{contents},
+		REID=#{reid} WHERE ID=#{id}
+	</update>	
+		
+	<select id="select" parameterType="Integer" 
+	resultType="post">
+		SELECT * FROM POST WHERE ID=#{obj}
+	</select>
+	
+	<!-- 게시판에 게시글 출력 -->
+	<select id="selectall" resultType="post">
+		SELECT * FROM POST
+	</select>
+	
+</mapper>
+
+
+
+
+
+

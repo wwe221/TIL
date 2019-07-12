@@ -3,7 +3,6 @@ package com.vo;
 public class User {
 	private String id;
 	private String pwd;
-	private String name;
 	private String email;
 	private String nickname;
 	private String icon;
@@ -11,17 +10,25 @@ public class User {
 	
 	public User() {
 	}
-	public User(String id, String pwd, String name, String email, String nickname, String icon, int admin) {
-		super();
+	public User(String id, String pwd, String email, String nickname, String icon, int admin) {
+		//包府磊
 		this.id = id;
 		this.pwd = pwd;
-		this.name = name;
 		this.email = email;
 		this.nickname = nickname;
-		this.icon = icon;
+		this.icon="default";
 		this.admin = admin;
 	}
 
+	public User(String id, String pwd, String email, String nickname) {
+		//老馆蜡历
+		this.id = id;
+		this.pwd = pwd;
+		this.email = email;
+		this.nickname = nickname;
+		this.admin=0;
+		this.icon="default";
+	}
 	public String getId() {
 		return id;
 	}
@@ -38,13 +45,7 @@ public class User {
 		this.pwd = pwd;
 	}
 
-	public String getName() {
-		return name;
-	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	public String getEmail() {
 		return email;
@@ -77,13 +78,14 @@ public class User {
 	public void setAdmin(int admin) {
 		this.admin = admin;
 	}
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", pwd=" + pwd + ", email=" + email + ", nickname=" + nickname + ", icon=" + icon
+				+ ", admin=" + admin + "]";
+	}
 	
 
 	
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", pwd=" + pwd + ", name=" + name + ", email=" + email + ", nickname=" + nickname
-				+ ", icon=" + icon + ", admin=" + admin + "]";
-	}
+	
 	
 }

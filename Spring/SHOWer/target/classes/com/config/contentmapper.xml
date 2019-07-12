@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.ContentMapper">	
+
+	<insert id="insert" parameterType="cont">
+		INSERT INTO CONTENT VALUES (CONTENT_SEQ.NEXTVAL,#{category},#{title},#{open},
+		#{close},#{genre},#{poster},#{place},#{locx},#{locy},#{director},#{actor1},
+		#{actor2},#{actor3},#{time},#{contry},#{grade})
+	</insert>	
+
+	<delete id="delete" parameterType="Integer">
+		DELETE FROM CONTENT WHERE ID=#{obj}
+	</delete>	
+
+
+	<update id="update" parameterType="cont">
+		UPDATE CONTENT SET TITLE=#{title}, OPEN=#{open},
+		CLOSE=#{close},GENRE=#{genre},POSTER=#{poster},PLACE=#{place},
+		LOCX=#{locx},LOCY=#{locy},DIRECTOR=#{director},
+		ACTOR1=#{actor1},ACTOR2=#{actor2},ACTOR3=#{actor3},
+		TIME=#{time},COUNTRY=#{country},GRADE=#{grade} WHERE ID=#{id}
+	</update>	
+		
+	<select id="select" parameterType="Integer" 
+	resultType="cont">
+		SELECT * FROM CONTENT WHERE ID=#{obj}
+	</select>
+	
+	<!-- 게시판에 게시글 출력 -->
+	<select id="selectall" resultType="cont">
+		SELECT * FROM CONTENT
+	</select>
+	
+</mapper>
+
+
+
+
+
+
