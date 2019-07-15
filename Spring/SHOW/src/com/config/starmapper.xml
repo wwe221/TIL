@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.StarMapper">
+
+	<insert id="insert" parameterType="star">
+		INSERT INTO STAR VALUES (STAR_SEQ.NEXTVAL,#{userid},#{postid},#{score})
+	</insert>
+	<update id="update" parameterType="star">
+		UPDATE STAR SET USERID=#{userid},POSRID=#{postid},SCORE=#{score}  WHERE ID=#{id}
+	</update>
+	<delete id="delete" parameterType="String">
+		DELETE FROM STAR WHERE ID=#{obj}
+	</delete>
+	<select id="select" parameterType="String" 
+	resultType="star">
+	SELECT * FROM STAR WHERE ID=#{obj}		
+	</select>
+	<select id="selectall" resultType="star">
+	
+		SELECT * FROM STAR 
+	</select>
+</mapper>
+
+
+
+
+
+
