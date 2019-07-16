@@ -28,19 +28,19 @@
 
   <div class="container">
     <div class="card card-login mx-auto mt-5">
-      <div class="card-header">Loginfail</div>
+      <div class="card-header"><h1>LoginFail</h1></div>
       <div class="card-body">
         <form action="loginimpl.sh" method="POST">
           <div class="form-group">
             <div class="form-label-group">
-              <input type="text"  name="id" class="form-control"  required="required">
-            <label for="inputText">아이디를 다시 입력해주세요.</label>   
+              <input type="text"  name="id" class="form-control"  required="required" >
+              <label for="inputText">ID</label>
             </div>
           </div>
           <div class="form-group">
             <div class="form-label-group">
               <input type="password" name="pwd" class="form-control"  required="required">
-             <label for="inputPassword">비밀번호를 다시 입력해주세요.</label>
+              <label for="inputPassword">Password</label>
             </div>
           </div>
           <div class="form-group">
@@ -51,7 +51,7 @@
               </label>
             </div>
           </div>
-         <a class="btn btn-primary btn-block"  input type="submit" value="LOGIN">Login</a>
+        <input type="submit" class="btn btn-primary btn-block"value="LOGIN">
         </form>
         <div class="text-center">
           <a class="d-block small mt-3" href="register.html">Register an Account</a>

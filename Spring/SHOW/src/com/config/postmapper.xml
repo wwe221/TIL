@@ -8,10 +8,10 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 
 	<insert id="insert" parameterType="post">
 		INSERT INTO POST
-		(ID,TITLE,TEXT,PDATE,CATEGORY,IMG01,IMG02,IMG03,WRITER,CONTENTS,REID) 
+		(ID,TITLE,TEXT,PDATE,CATEGORY,IMG01,IMG02,IMG03,WRITER,CONTENTS,REID,STAR) 
 		VALUES 
 		(POST_SEQ.NEXTVAL,#{title},#{text},SYSDATE,#{cate},
-		#{img1},#{img2},#{img3},#{writer},#{contents},#{reid})
+		#{img1},#{img2},#{img3},#{writer},#{contents},#{reid},#{star})
 	</insert>
 	
 
@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<update id="update" parameterType="post">
 		UPDATE POST SET TITLE=#{title},TEXT=#{text},CATEGORY=#{category},
 		IMG01=#{img01},IMG02=#{img02},IMG03=#{img03},CONTENTS=#{contents},
-		REID=#{reid} WHERE ID=#{id}
+		REID=#{reid}, STAR=#{star} WHERE ID=#{id}
 	</update>	
 		
 	<select id="select" parameterType="Integer" 
@@ -35,7 +35,10 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<select id="selectall" resultType="post">
 		SELECT * FROM POST
 	</select>
-	
+	<select id="selectall2" parameterType="Integer" resultType="post">
+	<!--댓글 불러오기위한 쿼리  -->
+		SELECT * FROM POST where reid=#{obj}
+	</select>
 </mapper>
 
 

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.vo.User;
+
 public interface Biz<K,V> {
 	@Transactional
 	public void insert(V v) throws Exception;

@@ -43,9 +43,8 @@ public class PostDao implements Dao<Integer, Post>{
 		return um.selectall();
 	}
 	@Override
-	public ArrayList<Post> select2(int cate) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Post> select2(int cate) throws Exception { 
+		return um.selectall2(cate);
 	}
 
 }

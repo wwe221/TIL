@@ -14,12 +14,13 @@
 					cellspacing="0">
 					<thead>
 						<tr>
-							<th>POST ID</th>
+							<th>CONTENTS</th>
 							<th>TITLE</th>
 							<th>TEXT</th>
 							<th>Author</th>
 							<th>REGDATE</th>
-							<th>CONTENTS</th>
+							<th>Score</th>
+							<th>Detail</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -27,13 +28,37 @@
 							<c:choose>
 								<c:when test="${p.category eq 1 }">
 									<tr>
-										<td>${p.id }</td>
+										<td>
+										<c:set var="loop_flag" value="false" />
+										<c:forEach var="c" items="${clist}">
+										  <c:if test="${not loop_flag }">
+												<c:choose>												
+													<c:when test="${c.id eq p.contents}">
+													  <c:set var="loop_flag" value="true" />														
+														<img src="${c.poster}" class="newimg">
+														<p>${c.title}</p>														
+													</c:when>
+												</c:choose>
+												 </c:if>
+											</c:forEach></td>
 										<td>${p.title }</td>
 										<td>${p.text }</td>
 										<td>${p.writer}
 										<td>${p.regdate }</td>
-										<td>${p.contents }</td>
-									</tr>
+										<td>
+										<c:if test="${p.star == 0 }"> </c:if>
+										<c:if test="${p.star == 1 }"> ★☆☆☆☆</c:if>
+										<c:if test="${p.star == 2 }"> ★★☆☆☆</c:if>
+										<c:if test="${p.star == 3 }"> ★★★☆☆</c:if>
+										<c:if test="${p.star == 4 }"> ★★★★☆</c:if>
+										<c:if test="${p.star == 5 }"> ★★★★★</c:if>
+										
+										</td>
+										<td><form action="postdetail.sh" method="POST">
+											<input type="hidden" value="${p.id}" name="id">											
+											<input type="submit" value="자세히보기">
+										</form></td>										
+									</tr>									
 								</c:when>
 							</c:choose>
 

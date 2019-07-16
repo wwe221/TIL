@@ -14,32 +14,107 @@ public class Post {
 	public Date pdate;
 	public int cate;
 	public String writer;
-	public String img1;
-	public String img2;
-	public String img3;
+	public String img01;
+	public String img02;
+	public String img03;
 	public int contents;
 	public int reid;
-	MultipartFile mf;
+	public int star;
+	MultipartFile mf1;
+	MultipartFile mf2;
+	MultipartFile mf3;
 	
-	public Post(int id, String title, String text, int category, Date regdate, String writer, String img1, String img2,
-			String img3, int contents, int reid, MultipartFile mf) {
+
+	public int getStar() {
+		return star;
+	}
+				
+	public void setStar(int star) {
+		this.star = star;
+	}
+
+	public Post(int id, String title, String text, Date pdate, int cate, String writer, String img01, String img02,
+			String img03, int contents, int reid, MultipartFile mf1, MultipartFile mf2, MultipartFile mf3) {
 		super();
-		this.pdate = new Date(2016);
 		this.id = id;
 		this.title = title;
 		this.text = text;
-		this.cate = category;
-		this.pdate = regdate;
+		this.pdate = pdate;
+		this.cate = cate;
 		this.writer = writer;
-		this.img1 = "1";
-		this.img2 = "1";
-		this.img3 = "1";
+		this.img01 = img01;
+		this.img02 = img02;
+		this.img03 = img03;
 		this.contents = contents;
 		this.reid = reid;
-		this.mf = mf;
+		this.mf1 = mf1;
+		this.mf2 = mf2;
+		this.mf3 = mf3;
 	}
 
-	
+	public Date getPdate() {
+		return pdate;
+	}
+
+	public void setPdate(Date pdate) {
+		this.pdate = pdate;
+	}
+
+	public int getCate() {
+		return cate;
+	}
+
+	public void setCate(int cate) {
+		this.cate = cate;
+	}
+
+	public String getImg01() {
+		return img01;
+	}
+
+	public void setImg01(String img01) {
+		this.img01 = img01;
+	}
+
+	public String getImg02() {
+		return img02;
+	}
+
+	public void setImg02(String img02) {
+		this.img02 = img02;
+	}
+
+	public String getImg03() {
+		return img03;
+	}
+
+	public void setImg03(String img03) {
+		this.img03 = img03;
+	}
+
+	public MultipartFile getMf1() {
+		return mf1;
+	}
+
+	public void setMf1(MultipartFile mf1) {
+		this.mf1 = mf1;
+	}
+
+	public MultipartFile getMf2() {
+		return mf2;
+	}
+
+	public void setMf2(MultipartFile mf2) {
+		this.mf2 = mf2;
+	}
+
+	public MultipartFile getMf3() {
+		return mf3;
+	}
+
+	public void setMf3(MultipartFile mf3) {
+		this.mf3 = mf3;
+	}
 
 	public Post() {
 	}
@@ -51,9 +126,9 @@ public class Post {
 		this.text = text;
 		this.cate = category;
 		this.pdate = regdate;
-		this.img1 = img1;
-		this.img2 = img2;
-		this.img3 = img3;
+		this.img01 = img1;
+		this.img02 = img2;
+		this.img03 = img3;
 		this.contents = contents;
 	}
 	public String getWriter() {
@@ -115,27 +190,27 @@ public class Post {
 	}
 
 	public String getImg1() {
-		return img1;
+		return img01;
 	}
 
 	public void setImg1(String img1) {
-		this.img1 = img1;
+		this.img01 = img1;
 	}
 
 	public String getImg2() {
-		return img2;
+		return img02;
 	}
 
 	public void setImg2(String img2) {
-		this.img2 = img2;
+		this.img02 = img2;
 	}
 
 	public String getImg3() {
-		return img3;
+		return img03;
 	}
 
 	public void setImg3(String img3) {
-		this.img3 = img3;
+		this.img03 = img3;
 	}
 
 	public int getContents() {
@@ -154,23 +229,12 @@ public class Post {
 		this.reid = reid;
 	}
 
-	public MultipartFile getMf() {
-		return mf;
-	}
-
-	public void setMf(MultipartFile mf) {
-		this.mf = mf;
-	}
-
-
-
 	@Override
 	public String toString() {
-		return "Post [id=" + id + ", title=" + title + ", text=" + text + ", regdate=" + pdate + ", cate=" + cate
-				+ ", writer=" + writer + ", img1=" + img1 + ", img2=" + img2 + ", img3=" + img3 + ", contents="
-				+ contents + ", reid=" + reid + ", mf=" + mf + "]";
+		return "Post [id=" + id + ", title=" + title + ", text=" + text + ", pdate=" + pdate + ", cate=" + cate
+				+ ", writer=" + writer + ", img01=" + img01 + ", img02=" + img02 + ", img03=" + img03 + ", contents="
+				+ contents + ", reid=" + reid + ", star=" + star + ", mf1=" + mf1 + ", mf2=" + mf2 + ", mf3=" + mf3
+				+ "]";
 	}
-
-	
 
 }

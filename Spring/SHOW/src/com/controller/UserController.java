@@ -15,6 +15,7 @@ import com.vo.User;
 public class UserController {
 	@Resource(name = "ubiz")
 	Biz<String, User> biz;	
+	
 	@RequestMapping("/register.sh")
 	public ModelAndView uadd() {
 		ModelAndView mv = new ModelAndView();
@@ -74,28 +75,35 @@ public class UserController {
 		}
 		return "redirect:userlist.mc";
 	}
-	@RequestMapping("/userupdate.mc")
-	public ModelAndView pup(ModelAndView mv, String id) {
-		User u = null;
+	
+	// UserUpdate
+	@RequestMapping("/userupdate.sh")
+	public ModelAndView userupdate(ModelAndView mv, String id) {
+		User user = null;
+		
 		try {
-			u = biz.select(id);
+			user = biz.select(id);
+			System.out.println(user);
+			mv.addObject("userupdate",user);
+			mv.addObject("center", "user/update");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		mv.addObject("navi", Navi.productlist);
-		mv.addObject("uu",u);
-		mv.addObject("center", "user/update");
+		
 		mv.setViewName("main");
 		return mv;
 	}
-	@RequestMapping("/userupdateimpl.mc")
-	public String pupimp(ModelAndView mv, User p) {		
+	
+	@RequestMapping("/userupdateimpl.sh")
+	public String userupdateimpl(ModelAndView mv, User user) {		
 		try {
-			biz.update(p);
+			biz.update(user);
+			System.out.println(user);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:userdetail.mc?id="+p.getId();
+		return "redirect:userdetail.sh?id="+user.getId(); 
+		
 	}
 
 }

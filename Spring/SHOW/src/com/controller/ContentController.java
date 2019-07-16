@@ -29,7 +29,7 @@ public class ContentController {
 		Naver nv =new Naver();
 		ArrayList<String> b=new ArrayList<String> ();
 		ArrayList<Content> c=new ArrayList<> ();
-		b= nv.movieinsert(2018,2019);
+		b= nv.movieinsert(2015,2017);
 		int l = b.size();
 		for(int i=0;i<l;i++) {
 			if(nv.details(b.get(i)).getGenre().equals("성인물(에로)")) {
@@ -103,6 +103,7 @@ public class ContentController {
 		ArrayList<Content> list = null;
 		try {
 			list = biz.select2(2);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -10,6 +10,13 @@
  * Copyright 2011-2019 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
+
+@import url('https://fonts.googleapis.com/css?family=Poller+One&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Jua&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR&display=swap');
+/* font-family: 'Noto Serif KR', serif; 본문폰트 찾으면 추가하기 */
+@import url('https://fonts.googleapis.com/css?family=Nanum+Myeongjo&display=swap');
+
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -47,10 +54,7 @@
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-table .newimg{
-	width:110px;
-	height:157px;
-}
+
 html {
   font-family: sans-serif;
   line-height: 1.15;
@@ -70,7 +74,8 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  background-color: #fff;
+  /* background-color: #fff; */
+  background-color: #f2f4f7;
 }
 
 [tabindex="-1"]:focus {
@@ -376,6 +381,9 @@ h1, h2, h3, h4, h5, h6,
   margin-bottom: 0.5rem;
   font-weight: 500;
   line-height: 1.2;
+  /* 폰트적용테스트 */
+  /* font-family: 'Noto Serif KR', serif; */
+  font-family: 'Nanum Myeongjo', serif !important;
 }
 
 h1, .h1 {
@@ -1677,9 +1685,10 @@ pre code {
 
 .table th,
 .table td {
-  padding: 0.75rem;
-  vertical-align: top;
-  border-top: 1px solid #dee2e6;
+	padding: 0.75rem;
+	vertical-align: top;
+	border-top: 1px solid #dee2e6;
+	text-align: center;
 }
 
 .table thead th {
@@ -4818,16 +4827,21 @@ input[type="button"].btn-block {
   color: rgba(0, 0, 0, 0.9);
 }
 
-.navbar-dark .navbar-brand {
-  color: #fff;
+.navbar-dark .navbar-brand { 
+  /* 메인 내 SHOWer 글씨 */
+  /* color: #fff; */
+  color : #6799ff;
+  font-family: 'Poller One', cursive;
 }
 
 .navbar-dark .navbar-brand:hover, .navbar-dark .navbar-brand:focus {
-  color: #fff;
+  /* color: #fff; */
+  color : #6799ff;
 }
 
 .navbar-dark .navbar-nav .nav-link {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.5); 
+  color : #6799ff;
 }
 
 .navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:focus {
@@ -4882,7 +4896,22 @@ input[type="button"].btn-block {
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
 }
-
+.center_page{
+position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
 .card > hr {
   margin-right: 0;
   margin-left: 0;
@@ -6988,8 +7017,11 @@ button.bg-light:focus {
   background-color: #dae0e5 !important;
 }
 
-.bg-dark {
-  background-color: #343a40 !important;
+.bg-dark { 
+	/* 메인 페이지 상단 SHOWer 배경색 */
+  /* background-color: #343a40 !important; */
+  /* background-color : #f2f4f7 !important; */
+  background-color : #ffffff;
 }
 
 a.bg-dark:hover, a.bg-dark:focus,
@@ -10632,7 +10664,8 @@ body {
 }
 
 .navbar-nav .nav-item.active .nav-link {
-  color: #fff;
+  /* color: #fff; */
+  color: #6799ff;
 }
 
 .navbar-nav .nav-item.dropdown .dropdown-toggle::after {
@@ -10674,22 +10707,29 @@ body {
 
 .sidebar {
   width: 90px !important;
-  background-color: #212529;
+  /* background-color: #212529; */
+  /* 우측 슬라이드바 */
+  background-color: #f2f4f7; 
+  /* background-color : #ffffff; */
   min-height: calc(100vh - 56px);
 }
 
 .sidebar .nav-item:last-child {
   margin-bottom: 1rem;
+  
 }
 
 .sidebar .nav-item .nav-link {
   text-align: center;
   padding: 0.75rem 1rem;
   width: 90px;
+  color : #6799ff;
 }
 
 .sidebar .nav-item .nav-link span {
+	/* 우측 슬라이드바 폰트 */
   font-size: 0.65rem;
+  font-family: 'Jua', sans-serif;
   display: block;
 }
 
@@ -10711,7 +10751,8 @@ body {
 }
 
 .sidebar .nav-item .nav-link {
-  color: rgba(255, 255, 255, 0.5);
+  /* color: rgba(255, 255, 255, 0.5); */
+  color : #6799ff;
 }
 
 .sidebar .nav-item .nav-link:active, .sidebar .nav-item .nav-link:focus, .sidebar .nav-item .nav-link:hover {
@@ -10725,7 +10766,7 @@ body {
 
 @media (min-width: 768px) {
   .sidebar {
-    width: 225px !important;
+    width: 140px !important;
   }
   .sidebar .nav-item .nav-link {
     display: block;

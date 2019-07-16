@@ -3,10 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <style>
-table .newimg{
-	width:110px;
-	height:157px;
-}
 </style>
 <div class="center_page">
 	<h1>pe Page!!</h1>
@@ -25,7 +21,8 @@ table .newimg{
 							<th>Genre</th>
 							<th>Open</th>
 							<th>Close</th>
-							<th>Place</th>							
+							<th>Place</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tfoot>
@@ -36,6 +33,7 @@ table .newimg{
 							<th>Open</th>
 							<th>Close</th>
 							<th>Place</th>
+							<th></th>
 						</tr>
 					</tfoot>
 					<tbody>
@@ -45,8 +43,20 @@ table .newimg{
 								<td>${u.title}</td>
 								<td>${u.genre}</td>
 								<td>${u.open}</td>
-								<td>${u.close}</td>								
-								<td>${u.place}</td>								
+								<td>${u.close}</td>
+								<td>${u.place}</td>
+								<td>
+								<c:choose>
+								<c:when test="${loginuser!=null}">
+								<form action="postadd2.sh" method="POST">
+									<input type="hidden" value="${u.id}" name="id"> 
+									<input type="hidden" value="${u.title}" name="title"> 
+									<input type="hidden" value="${u.category}" name="category">
+									<input type="submit" value="글쓰기">
+								</form>
+								</c:when>
+								</c:choose>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>

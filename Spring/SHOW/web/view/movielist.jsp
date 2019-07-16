@@ -18,24 +18,26 @@
 						<tr>
 							<th>Poster</th>
 							<th>Title</th>
+							<th>Open></th>
 							<th>Genre</th>
 							<th>Director</th>
 							<th>Actor</th>
 							<th>Time</th>
 							<th>Grade</th>
-							<th>click</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tfoot>
 						<tr>
 							<th>Poster</th>
 							<th>Title</th>
+							<th>Open</th>
 							<th>Genre</th>
 							<th>Director</th>
 							<th>Actor</th>
 							<th>Time</th>
 							<th>Grade</th>
-							<th>click</th>
+							<th></th>
 						</tr>
 					</tfoot>
 					<tbody>
@@ -43,6 +45,7 @@
 							<tr>
 								<td><img src="${u.poster}" class="newimg"></td>
 								<td>${u.title}</td>
+								<td>${u.open}</td>
 								<td>${u.genre}</td>
 								<td>${u.director}</td>
 								<td>${u.actor1},${u.actor2},${u.actor3}</td>
@@ -50,12 +53,16 @@
 								<td>${u.grade}</td>
 								<!-- <td><input type="submit" value="글쓰기"></td> -->
 								<td>
+								<c:choose>
+								<c:when test="${loginuser!=null}">
 									<form action="postadd2.sh" method="POST">
 										<input type="hidden" value="${u.id}" name="id">							
 										<input type="hidden" value="${u.title}" name="title">							
 										<input type="hidden" value="${u.category}" name="category">							
 								<input type="submit" value="글쓰기">
 								</form>
+								</c:when>
+								</c:choose>
 								</td>
 							</tr>
 						</c:forEach>

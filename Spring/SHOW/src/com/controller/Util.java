@@ -9,7 +9,7 @@ public class Util {
 	public static void saveFile(MultipartFile mf) {
 		byte [] data;
 		String imgname = mf.getOriginalFilename();
-		String dir="C:\\Users\\student\\KH\\TIL\\Spring\\smvc3\\web\\img\\";
+		String dir="C:\\Users\\student\\KH\\TIL\\Spring\\SHOW\\web\\view\\img\\";
 		try {
 			data = mf.getBytes();
 			FileOutputStream fout = new FileOutputStream(dir+imgname);

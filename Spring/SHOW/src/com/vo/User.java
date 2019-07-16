@@ -29,6 +29,7 @@ public class User {
 		this.admin=0;
 		this.icon="default";
 	}
+	
 	public String getId() {
 		return id;
 	}
