@@ -1,14 +1,19 @@
 package com.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.biz.ContentBiz;
 import com.frame.Biz;
 import com.vo.Content;
 
@@ -127,4 +132,41 @@ public class ContentController {
 		mv.setViewName("main");
 		return mv;
 	}
+	@RequestMapping("/maplist.sh")
+	@ResponseBody
+	public void maplist(HttpServletResponse hsr) {
+
+	ArrayList<Content> list = null;
+	try {
+	list = biz.select2(2);
+	//System.out.println(list.get(0));
+//		PrintWriter pw = hsr.getWriter();
+	//	
+//		pw.print(list);
+//		pw.close();
+	} catch (Exception e) {
+	e.printStackTrace();
+	}
+	JSONArray ja =new JSONArray();
+	for(Content c :list) {	
+	JSONObject jo = new JSONObject();
+	jo.put("place",c.getPlace());	
+	jo.put("x",c.getLocx());
+	jo.put("y",c.getLocy());
+	ja.add(jo);
+	}
+
+	PrintWriter out = null;
+
+	try {
+	hsr.setCharacterEncoding("EUC-KR");
+	hsr.setContentType("text/json;charset=UTF-8");
+	out = hsr.getWriter();
+	} catch (IOException e) {
+	e.printStackTrace();
+	}
+
+	out.print(ja.toJSONString());
+	}
+
 }

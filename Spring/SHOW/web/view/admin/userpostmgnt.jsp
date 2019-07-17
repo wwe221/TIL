@@ -5,7 +5,7 @@
 <div class="center_page">	
 	<div class="card mb-3">
 		<div class="card-header">
-			<i class="fas fa-table"></i> 내가 쓴 글
+			<i class="fas fa-table"></i> ${uid} 님이 쓴 글
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
@@ -13,17 +13,18 @@
 					cellspacing="0">
 					<thead>
 						<tr>
-							<th>POST ID</th>
-							<th>TITLE</th>
-							<th>REGDATE</th>
-							<th></th>
+							<th>번호</th>
+							<th>제목</th>
+							<th>내용</th>
+							<th>작성일</th>
+							<th>삭제</th>
 							
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="mp" items="${mplist}">
 							<c:choose>
-							 <c:when test="${loginuser.id eq mp.writer }"> 
+							 <c:when test="${uid eq mp.writer }"> 
 							 <tr>
 										<td>${mp.id }</td>
 										<td>${mp.title }</td>

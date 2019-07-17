@@ -87,6 +87,12 @@ public class Content {
 		this.rating=rating;
 	}
 	
+	public double getRating() {
+		return rating;
+	}
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
 	public Content(int category, String title, String open, String close, String genre, String poster,
 			String place, double locx, double locy) {
 		// 공연/전시 일때		

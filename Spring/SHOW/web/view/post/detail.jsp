@@ -10,46 +10,19 @@
 	padding-top: 200px;
 	width: 95%;
 }
-
 #title_field {
 	width: 500px;
 }
-
 #content_field {
 	width: 500px;
 	height: 550px;
-	resize: none;
-	<!--
-	textarea의
-	크기
-	조정
-	방지
-	-->
+	resize: none;	
 }
-
 #comment_field {
 	width: 500px;
 	height: 200px;
-	<!--
-	사이즈
-	확인
-	못
-	함
-	→
-	서버
-	연결
-	후
-	확인하기
-	-->
-	resize
-	:
-	none;
-	<!--
-	textarea의
-	크기
-	조정
-	방지
-	-->
+	resize:none;
+	
 }
 
 .post-detail td {
@@ -68,6 +41,39 @@
 .bf_update {
 	display: none;
 }
+
+.boxline {
+	border-bottom-style: dashed;
+	border-bottom-width: 1px;
+	opacity: 0.3;
+}
+
+.detail {
+	width: 100%;
+	padding: 1rem;
+}
+
+.detail_img {
+	width: 150px;
+}
+
+.detail_list {
+	list-style: none;
+}
+
+.detail_review {
+	width: 100%;
+}
+.rightBox{
+float: right;
+}
+.detail_text{
+	padding: 1.25rem;
+	height:45vh;
+}
+.input_comm{
+	width:100%;
+}
 </style>
 
 <div class="center_page">
@@ -76,34 +82,77 @@
 	<!-- content 정보와 user가 작성한 게시글이 떠야됨 + 댓글 -->
 	<!-- 댓글은 입력 후 등록이 가능하도록 -->
 	<div class="detail">
-		<table id="board" class="post-detail">
-			<tbody>
-				<tr>
-					<td>컨텐츠</td>
-					<td>${contdetail.title}</td>
-					<td><img src="${contdetail.poster}"></td>
-				</tr>
-				<!-- 종류와 콘텐츠 입력 값은 사용자 선택 값을 받아서 뿌려줌 -->
-				<!-- content 정보도 표시해야 됨 -->
-				<tr id="title_field">
-					<td>제목</td>
-					<td>${postdetail.title }</td>
-				</tr>
-				<tr id="content_field">
-					<td>${postdetail.text }</td>
-				</tr>
+		<table>
+			<tr>
+				<td class="detail_review">
+					<table>
+						<tbody>
+							<tr valign="top">
+								<td><span class=""> ${postdetail.title} </span></td>
+								<td style="opacity: 0.5;">|</td>
+								<td>${postdetail.pdate }</td>
+								<td style="opacity: 0.5;">|</td>
+								<td class="rightBox">${postdetail.writer}</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="rightBox">
+						<tbody>
+							<tr>
+							<td>
+							<c:choose>
+							<c:when test="${postdetail.writer == loginuser.id}">
+								<a href="postupdate.sh?id=${postdetail.id}">UPDATE</a>
+								<a href="postdelete.sh?id=${postdetail.id }&cate=${postdetail.category}">DELETE</a>
+							</c:when>
+							</c:choose>
+							</td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="boxline"></div>
+					<div class="detail_text">${postdetail.text}!!</div>
+					
+				<td>
+					<ul class="detail_list">
+						<c:if test="${contdetail.category ==1 }">
+							<li><img src="${contdetail.poster}" class="detail_img"></li>
+							<li><span>제목</span> :${contdetail.title}</li>
+							<li><span>개봉일</span>: ${contdetail.open}</li>
+							<li><span>장르</span>:${contdetail.genre}</li>
+							<li><span>감독</span> :${contdetail.director}</li>
+							<li><span>출연</span> :${contdetail.actor1} ,
+								${contdetail.actor2} , ${contdetail.actor3}</li>
+							<li><span>상영시간</span> :${contdetail.time}</li>
+							<li><span>등급</span> :${contdetail.grade}</li>
+							<li><span>평점</span> :${contdetail.rating}</li>
+						</c:if>
 
-				<tr id="title_field">
-					<td>${stardetail.score }</td>
-				</tr>
-			</tbody>
+						<!--  -->
+
+						<c:if test="${contdetail.category ==2 }">
+							<li><img src="${contdetail.poster}" class="detail_img"></li>
+							<li><span>제목</span> :${contdetail.title}</li>
+							<li><span>개막일</span>: ${contdetail.open}</li>
+							<li><span>폐막일</span>: ${contdetail.close}</li>
+							<li><span>종류</span>:${contdetail.genre}</li>
+							<li><span>장소</span> :${contdetail.place}</li>
+
+						</c:if>
+					</ul>
+				</td>
 		</table>
-		<c:choose>
-			<c:when test="${postdetail.writer == loginuser.id}">
-				<a href="postupdate.sh?id=${postdetail.id}">UPDATE</a>
-				<a href="postdelete.sh?id=${postdetail.id }&cate=${postdetail.category}">DELETE</a>
-			</c:when>
-		</c:choose>
+		<!-- 종류와 콘텐츠 입력 값은 사용자 선택 값을 받아서 뿌려줌 -->
+		<!-- content 정보도 표시해야 됨 -->
+
+		<%-- <a href="#" onclick="down_menu('downmenu')"><h1>test</h1></a>
+				<div class="downmenu">				
+        		<a class="dropdown-item" href="mypage.sh?id=${loginuser.id }">My page</a>        
+    	      	<a class="dropdown-item" href="mypost.sh">My Post</a>
+    	      	</div>
+	        	</div>  --%>
+		<div class="boxline"></div>
+		
 	</div>
 	<ul class="cmt_list">
 		<c:forEach var="comm" items="${comments}">
@@ -117,17 +166,17 @@
 						<div id="${comm.id}div" class="bf_update">
 							<button onclick="myShowFunction('${comm.id}')">수정취소</button>
 							<form action="postupdateimpl.sh" method="POST">
-								<textarea name="text">${comm.text}</textarea>
-								<input type="hidden" name="id" value="${comm.id}"> 
-								<input type="hidden" name="title" value="${comm.title}"> 
-								<input type="hidden" name="contents" value="${comm.contents}">
+								<textarea class="input_comm" name="text">${comm.text}</textarea>
+								<input type="hidden" name="id" value="${comm.id}"> <input
+									type="hidden" name="title" value="${comm.title}"> <input
+									type="hidden" name="contents" value="${comm.contents}">
 								<input type="hidden" name="category" value="${comm.category}">
 								<input type="hidden" name="writer" value="${comm.writer}">
-								<input type="hidden" name="img1" value="${comm.img1}"> 
-								<input type="hidden" name="img2" value="${comm.img2}"> 
-								<input type="hidden" name="img3" value="${comm.img3}"> 
-								<input type="hidden" name="reid" value="${comm.reid}"> 
-								<input type="submit" value="수정">
+								<input type="hidden" name="img1" value="${comm.img1}"> <input
+									type="hidden" name="img2" value="${comm.img2}"> <input
+									type="hidden" name="img3" value="${comm.img3}"> <input
+									type="hidden" name="reid" value="${comm.reid}"> <input
+									type="submit" value="수정">
 							</form>
 						</div>
 						<a href="postdelete.sh?id=${comm.id}&cate=99">삭제</a>

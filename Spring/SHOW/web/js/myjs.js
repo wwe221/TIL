@@ -17,12 +17,13 @@ function myShowFunction(id) {
 	$('#'+id+'div').toggle('fast','swing');
 }
 function len_chk(){  
-  var frm = document.insertFrm.text; 
-    
+  var frm = document.insertFrm.text;
   if(frm.value.length > 200){  
        alert("글자수는 100자로 제한됩니다.!");  
        frm.value = frm.value.substring(0,200);  
        frm.focus();  
-  } 
-
+  }
+}
+function down_menu(id){
+$('.'+id).toggle('fast','swing');
 }

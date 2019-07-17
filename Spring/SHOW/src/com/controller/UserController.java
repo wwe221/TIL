@@ -102,7 +102,7 @@ public class UserController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:userdetail.sh?id="+user.getId(); 
+		return "redirect:mypage.sh?id="+user.getId(); 
 		
 	}
 

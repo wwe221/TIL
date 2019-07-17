@@ -20,15 +20,61 @@ import com.vo.User;
 public class MainController {
 	@Resource(name = "ubiz")
 	Biz<String, User> biz;
-	
+
 	@Resource(name = "pbiz")
 	Biz<Integer, Post> pbiz;
-	
+
 	@Resource(name = "cbiz")
 	Biz<Integer, Content> cbiz;
+
 	@RequestMapping("/main.sh")
 	public ModelAndView main() {
 		ModelAndView mv = new ModelAndView();
+		ArrayList<Post> list = null;
+		ArrayList<Post> mvlist = new ArrayList<>();
+		ArrayList<Post> pelist = new ArrayList<>();
+		ArrayList<Post> mulist = new ArrayList<>();
+		ArrayList<Post> dralist = new ArrayList<>();
+		ArrayList<Content> content = null;
+		try {
+			list = pbiz.select();
+			content = cbiz.select();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		boolean flag = false;
+		while (!flag) {
+			if (mvlist.size() == pelist.size() && mulist.size() == pelist.size() && pelist.size() == dralist.size()
+					&& mvlist.size() == 5 || list.isEmpty()) {
+				flag = true;
+				break;
+			}
+			if (list.get(0).getCategory() == 1) {
+				if (mvlist.size() <= 5) {
+					mvlist.add(list.remove(0));
+				}
+			} else if(list.get(0).getCategory() == 2) {
+				if (pelist.size() <= 5) {
+					pelist.add(list.remove(0));
+				}
+			} else if(list.get(0).getCategory() == 3) {
+				if (mulist.size() <= 5) {
+					mulist.add(list.remove(0));
+				}
+			} else if(list.get(0).getCategory() == 4) {
+				if (dralist.size() <= 5) {
+					dralist.add(list.remove(0));
+				}
+			}else {
+				list.remove(0);
+			}
+		}
+		mv.addObject("mvlist", mvlist);
+		mv.addObject("pelist", pelist);
+		mv.addObject("mulist", mulist);
+		mv.addObject("dralist", dralist);
+		mv.addObject("cont", content);
 		mv.setViewName("main");
 		return mv;
 	}
@@ -41,37 +87,38 @@ public class MainController {
 		mv.setViewName("main");
 		return mv;
 	}
-	
+
 	@RequestMapping("/loginimpl.sh")
-	public ModelAndView loginimpl(ModelAndView mv, HttpServletRequest request, HttpSession session) {
+	public String loginimpl(ModelAndView mv, HttpServletRequest request, HttpSession session) {
 		String id = request.getParameter("id");
-		String pwd = request.getParameter("pwd");		
+		String pwd = request.getParameter("pwd");
 		try {
 			User dbuser = biz.select(id);
-			if(pwd.equals(dbuser.getPwd())) {
-			session.setAttribute("loginuser", dbuser);
+			if (pwd.equals(dbuser.getPwd())) {
+				session.setAttribute("loginuser", dbuser);
 				mv.setViewName("main");
-			}else {
+			} else {
 				mv.setViewName("loginfail");
 			}
 		} catch (Exception e) {
 			mv.setViewName("loginfail");
-			
-			mv.addObject("center","loginfail");
+
+			mv.addObject("center", "loginfail");
 			e.printStackTrace();
 		}
 		
-		return mv;
+		return "redirect:main.sh";
 	}
 
 	@RequestMapping(value = "logout.sh", method = RequestMethod.GET)
-    //메소드 이름은 LOGOUT 매게 변수는 SESSION
-    public String logout(HttpSession session) {
-        //m으로 선언된 세션을 삭제시킨다.
-        session.removeAttribute("loginuser");
-        // /페이지로 리다이렉트 시킨다.
-        return "redirect:main.sh";
-    }
+	// 메소드 이름은 LOGOUT 매게 변수는 SESSION
+	public String logout(HttpSession session) {
+		// m으로 선언된 세션을 삭제시킨다.
+		session.removeAttribute("loginuser");
+		// /페이지로 리다이렉트 시킨다.
+		return "redirect:main.sh";
+	}
+
 	@RequestMapping("/movie.sh")
 	public ModelAndView movie() {
 		ModelAndView mv = new ModelAndView();
@@ -79,19 +126,20 @@ public class MainController {
 		ArrayList<Content> clist = new ArrayList<>();
 		try {
 			list = pbiz.select();
-			for(int i=0;i<list.size();i++) {
-				clist.add(cbiz.select(list.get(i).getContents()));				
+			for (int i = 0; i < list.size(); i++) {
+				clist.add(cbiz.select(list.get(i).getContents()));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		mv.addObject("clist",clist);
+		mv.addObject("clist", clist);
 		mv.addObject("plist", list);
 		mv.addObject("center", "movie");
 		mv.addObject("navi", Navi.login);
 		mv.setViewName("main");
 		return mv;
 	}
+
 	@RequestMapping("/pe.sh")
 	public ModelAndView pe() {
 		ModelAndView mv = new ModelAndView();
@@ -99,8 +147,8 @@ public class MainController {
 		ArrayList<Content> clist = new ArrayList<>();
 		try {
 			list = pbiz.select();
-			for(int i=0;i<list.size();i++) {
-				clist.add(cbiz.select(list.get(i).getContents()));				
+			for (int i = 0; i < list.size(); i++) {
+				clist.add(cbiz.select(list.get(i).getContents()));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -128,6 +176,7 @@ public class MainController {
 		mv.setViewName("main");
 		return mv;
 	}
+
 	@RequestMapping("/drama.sh")
 	public ModelAndView drama() {
 		ModelAndView mv = new ModelAndView();
@@ -152,6 +201,7 @@ public class MainController {
 		mv.setViewName("main");
 		return mv;
 	}
+
 	@RequestMapping("/mypost.sh")
 	public ModelAndView mp() {
 		ModelAndView mv = new ModelAndView();
@@ -166,6 +216,7 @@ public class MainController {
 		mv.setViewName("main");
 		return mv;
 	}
+
 	@RequestMapping("/mypage.sh")
 	public ModelAndView mypage(String id) {
 		ModelAndView mv = new ModelAndView();
@@ -173,15 +224,77 @@ public class MainController {
 		System.out.println(id);
 		try {
 			user = biz.select(id);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		mv.addObject("u", user);	//mypage.jsp에서 여기의 u를 받는다.????
+		mv.addObject("u", user); // mypage.jsp에서 여기의 u를 받는다.????
 		mv.addObject("center", "mypage");
 		mv.addObject("navi", Navi.login);
 		mv.setViewName("main");
 		return mv;
 	}
 
+	@RequestMapping("/adminmode.sh")
+	public ModelAndView adminmode() {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("center", "admin/adminmode");
+		mv.addObject("navi", Navi.login);
+		mv.setViewName("main");
+		return mv;
+	}
+
+	@RequestMapping("/usermgnt.sh")
+	public ModelAndView usermgnt() {
+		ModelAndView mv = new ModelAndView();
+		ArrayList<User> list = null;
+
+		try {
+			list = biz.select();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mv.addObject("ulist", list);
+		mv.addObject("center", "admin/usermgnt");
+		mv.addObject("navi", Navi.login);
+		mv.setViewName("main");
+		return mv;
+	}
+
+	@RequestMapping("/postmgnt.sh")
+	public ModelAndView postmgnt() {
+		ModelAndView mv = new ModelAndView();
+		ArrayList<Post> list = null;
+
+		try {
+			list = pbiz.select();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		mv.addObject("plist", list);
+		mv.addObject("center", "admin/postmgnt");
+		mv.addObject("navi", Navi.login);
+		mv.setViewName("main");
+		return mv;
+	}
+
+	@RequestMapping("/userpostmgnt.sh")
+	public ModelAndView userpostmgnt(String id) {
+		ModelAndView mv = new ModelAndView();
+		ArrayList<Post> list = null;
+		try {
+			list = pbiz.select();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		mv.addObject("uid", id);
+		mv.addObject("mplist", list);
+		mv.addObject("center", "admin/userpostmgnt");
+		mv.addObject("navi", Navi.login);
+		mv.setViewName("main");
+		return mv;
+	}
 }

@@ -181,18 +181,18 @@ public class PostController {
 
 	// PostDelete
 	@RequestMapping("/postdelete.sh")
-	public String postdelete(ModelAndView mv, String id, String cate) {
+	public String postdelete(ModelAndView mv, String id,String cate) {
 		int cat = Integer.parseInt(cate);
 		String nav = getNav(cat);
-		Post post = null;
+		Post post= null;
 		try {
-			post = pbiz.select(Integer.parseInt(id));
+			post = pbiz.select(Integer.parseInt(id));			
 			pbiz.delete(Integer.parseInt(id));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (cat == 99) {
-			return "redirect:" + "postdetail" + ".sh?id=" + post.getReid();
+		if(cat==99) {			
+			return "redirect:" + "postdetail" + ".sh?id="+post.getReid();
 		}
 		return "redirect:" + nav + ".sh";
 	}
@@ -249,6 +249,10 @@ public class PostController {
 		}
 		case 4: {
 			nav = "drama";
+			break;
+		}
+		case 77:{
+			nav="postmgnt";
 			break;
 		}
 		default: {

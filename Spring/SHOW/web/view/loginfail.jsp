@@ -14,7 +14,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin - Login</title>
+  <title>SHOWer - Login</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -34,28 +34,28 @@
           <div class="form-group">
             <div class="form-label-group">
               <input type="text"  name="id" class="form-control"  required="required" >
-              <label for="inputText">ID</label>
+              <label for="inputText">아이디를 다시 입력해주세요.</label>
             </div>
           </div>
           <div class="form-group">
             <div class="form-label-group">
               <input type="password" name="pwd" class="form-control"  required="required">
-              <label for="inputPassword">Password</label>
+              <label for="inputPassword">비밀번호를 다시 입력해주세요.</label>
             </div>
           </div>
-          <div class="form-group">
+          <!-- <div class="form-group">
             <div class="checkbox">
               <label>
                 <input type="checkbox" value="remember-me">
                 Remember Password
               </label>
             </div>
-          </div>
+          </div> -->
         <input type="submit" class="btn btn-primary btn-block"value="LOGIN">
         </form>
         <div class="text-center">
           <a class="d-block small mt-3" href="register.html">Register an Account</a>
-          <a class="d-block small" href="forgot-password.html">Forgot Password?</a>
+          <!-- <a class="d-block small" href="forgot-password.html">Forgot Password?</a> -->
         </div>
       </div>
     </div>

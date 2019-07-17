@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	
 	<!-- 게시판에 게시글 출력 -->
 	<select id="selectall" resultType="cont">
-		SELECT * FROM CONTENT where category=1
+		SELECT * FROM CONTENT
 	</select>
 	<select id="selectall2" parameterType="Integer" resultType="cont">
 		SELECT * FROM CONTENT where category=#{obj}
