@@ -11068,7 +11068,9 @@ color:#6799ff;
 	font-family: 'Do Hyeon', sans-serif;
 	font-size: 1.2em;
 }
-
+.card_list >a >li{
+	color: black;
+}
 .input_comm{
 width:100%;
 resize: none;
