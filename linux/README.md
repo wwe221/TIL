@@ -178,35 +178,6 @@ useradd -g newgroup user2 // 사용자 그룹 지정 생성
 
 새로운 계정 생성시에 자동으로 갖게 될 파일들
 
-###### 권한
-
-ls -l 출력시
-
-파일유형 소유자/그룹/Other 링크된파일수 유저 그룹 크기  순으로 나타난다.
-
-파일유형
-
-- d directory
-- `-`일반파일
-- b 블록디바이스
-- c 문자 디바이스
-- l 링크 , 바로가기
-
-r - 읽기
-
-w -쓰기
-
-x - 접근
-
-접근권한 변경
-
-```
-chmod 644 filename // file 접근 권한을 644로 변경한다.
-chown muser1.musers musersfile
-// musersfile 의 소유권을 muser1에게,  그룹을 musers 로 변경한다
-chgrp musers filename
-```
-
 
 
 ###### vi 명령어
@@ -280,7 +251,171 @@ mount /dev/cdrom /mycdrom
 --/mycdrom 으로 mount --
 ```
 
+##### 권한
 
+ls -l 출력시
+
+파일유형 소유자/그룹/Other 링크된파일수 유저 그룹 크기  순으로 나타난다.
+
+파일유형
+
+- d directory
+- `-`일반파일
+- b 블록디바이스
+- c 문자 디바이스
+- l 링크 , 바로가기
+
+r - 읽기
+
+w -쓰기
+
+x - 실행
+
+접근권한 변경
+
+```
+chmod 644 filename // file 접근 권한을 644로 변경한다.
+chown muser1.musers musersfile
+// musersfile 의 소유권을 muser1에게,  그룹을 musers 로 변경한다
+chgrp musers filename // 소유 그룹을 변경한다
+```
+
+
+
+##### PATH 설정 
+
+~/.bashrc
+
+```
+PATH=.:$PATH // 현재디렉토리 . 를 path로 추가
+export PATH
+
+
+```
+
+###### 링크
+
+Hard Link - 원본파일과 동일한 형태로, inode블록을 원본파일과 동일하게 가지게 된다.
+
+Symbolic Link (soft link) - 일반적인 바로가기, 원본 파일에 연결을 해주는 역할, 원본파일의 inode를 가리키기만 한다.
+
+
+
+`inode - 모든 파일/디렉토리가 하나씩 갖고 있는 데이터, 파일의 소유권, 허가권, 파일종류, 실제데이터의 위치(주소) 등을 담고 있다.`
+
+```
+ln originfile hardlink // 하드링크 생성
+ln -s ogfile symbolicLink // 심볼릭 링크 생성
+```
+
+원본 파일에 손상이 가더라도 하드링크 파일은 원본 그대로의 형태를 보존하고 있지만 심볼릭링크는 갈곳을 잃게된다.
+
+
+
+###### RPM
+
+프로그램 설치를 위한 redhat package manager, Redhat 사에서 만든 설치파일 종류
+
+rpm -Uvh installfile.rpm
+
+프로그램 설치에 의존성 문제가 있다. 
+
+이를 해결한 것이 yum이다
+
+###### yum
+
+yellowdog updater modified
+
+rpm과 별도라기 보다 rpm패키지 설치를 돕는 도구.
+
+인터넷을 통해 해당 파일과 의존성이 있는 다른 rpm 파일을 모두 다운받고 자동으로 설치한다.
+
+인터넷이 연결되어 있어야만 한다.
+
+yum -y install somehthing
+
+
+
+###### java setting
+
+```
+tar xvf jdk~
+```
+
+
+
+
+
+/etc/profile
+
+```
+JAVA_HOME=/opt/jdk1.8;
+export JAVA_HOME
+CLASSPATH=$JAVA_HOME/lib;
+export CLASSPATH JAVA_HOME
+PATH=.:$JAVA_HOME/bin:$PATH;
+export PATH
+
+```
+
+firewall-config 방화벽 설정 열기
+
+http port 열기
+
+###### tomcat -apache setting
+
+conf/server.xml 
+
+​	line 69 - Connector port 80으로 변경
+
+bin/startup.sh
+
+###### 파일압축
+
+xz
+
+xz -d
+
+###### 파일묶기
+
+tar
+
+- c - 새로운 묶음 만들기
+- x - 묶인 파일을 푼다
+- t -묶음을 풀기 전에 경로를 보여준다.
+- f - 묶음 파일의 이름을 지정한다. 
+- J : xz , z : gzip , j : bzip2
+
+```
+tar cvfz atest.tar2.gz atest
+// atest 폴더를 묶고, gzip으로 압축하겠다.
+tar xvfz atest.tar2.gz
+// gz 파일의 압축을 풀고 묶음을 풀겠다.
+```
+
+###### 파일 찾기 find
+
+```
+find /tec -name *.conf
+find ~ -user user1
+//소유자가 user1인 파일들을 찾아라.
+find /usr/bin -perm 644
+find /usr/bin -size +10k -size -100k
+find ~ -size 0k -exec cp {} temp \;
+//사이즈가 0인것들을 모두 찾아서 temp로 copty 해라
+// find 의 결과가 {} 안에 순서대로 들어가 작동하게 된다.
+```
+
+```
+which java //PATH에 설정된 디렉토리 검색
+whereis java //실행파일 ,소스 , man 페이지 파일까지 검색
+locate java // 파일목록 데이터베이스에서 검색
+```
+
+```
+firewall-config // 방화벽 설정 ui 를 연다
+//포트 설정 등 을 할 수 있다.
+```
 
 
 
