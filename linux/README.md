@@ -342,10 +342,6 @@ yum -y install somehthing
 tar xvf jdk~
 ```
 
-
-
-
-
 /etc/profile
 
 ```
@@ -412,10 +408,48 @@ whereis java //실행파일 ,소스 , man 페이지 파일까지 검색
 locate java // 파일목록 데이터베이스에서 검색
 ```
 
-```
 firewall-config // 방화벽 설정 ui 를 연다
+
 //포트 설정 등 을 할 수 있다.
+
+###### OracleDB 설치
+
+www.oracle.co.kr/
+
+oracle database 11g express edition -
+
+oracle database express edition 11grelease 2 for linux x64
+
+oracle-xe-11.2.0-1.0.x86_64.rmp.zip 다운로드.
+
+```
+unzip oracle*
+dd if=/swapfile of=/swapfile bs=1024 count=4194304
+mkswap /swapfile
+swapon /swapfile
+swapon -s
+cd /etc/rc.d/
+chmod 755 rc.local
+vi rc.local   
+//설정 저장하기 위해 마지막라인에 swapon /swapfile 추가
+cd /download/Disk1
+yum -y localinstall oracle*
+service oracle-xe configure
+// 오라클 서버 기본 설정 default는 엔터로 넘기기
+service oracle-xe start
+//오라클 실행
+. /u01/app/oracle/product/11.2.0/xe/bin/oracle_env.sh
+//오라클 환경설정 스크립트 실행
+vi /etc/bashrc
+//마지막 줄에 . /u01/app/oracle/product/11.2.0/xe/bin/oracle_env.sh 추가
+설정 지속적용
+firewall-config 로 포트 8080, 1521을 열어 준다.
+127.0.0.1:8080/apex 로 접속 하여 세팅가능하다.
 ```
 
+###### MariaDB 설치
 
+```mysql
+
+```
 
