@@ -199,6 +199,7 @@ cw // 단어 삭제
 $ // end
 dd // 한줄 잘라내기
 3dd // 3줄 잘라내기
+u // undo
 
 /text  // 문서 내에서 text 찾기 b 이전, n 다음
 :%/text/change // 모든 text를 change 로 바꾼다.
@@ -451,5 +452,71 @@ firewall-config 로 포트 8080, 1521을 열어 준다.
 
 ```mysql
 
+```
+
+###### 하드디스크 추가
+
+```
+ls -l /dev/sd*
+fdisk /dev/sdc
+:n      new
+:p      primary
+:1      no.1
+:
+mkfs.ext4 /dev/sdc1
+//ext4 형식으로 포맷을 한다.
+생성된 저장소를 mount 해줘야 사용이 가능하다.
+mount /dev/sdc1 /mydisk1
+//이 설정을 저장하기 위해서 /etc/fstab 에 설정을 추가한다.
+#/etc/fstab/
+/dev/sdc1	/mydisk1	ext4	defaults	1	2
+
+```
+
+###### RAID
+
+`R`edundant `A`rray of `I`nexpensive/Independent `D`isks
+
+여러개의 하드디스크를 하나의 하드디스크처럼 사용하는 방식
+
+비용절감, 신뢰성 향상, 성능까지 향상
+
+하드웨어 Raid 는 안정적이지만 굉장한 고가이기 때문에 이를 대안하기 위해 소프트웨어 Raid가 가능하다.
+
+Linear Raid -  다수의 하드디스크를 하나의 볼륨으로 사용한다. 앞 하드디스크에 데이터가 완전히 저장되지 않는다면 다음 하드디스크는 전혀 사용되지 않는다.
+
+Raid0 -  하드디스크를 동시에 사용한다. 성능은 빠르지만 하나의 하드디스크가 손상되면 쓸모없는 데이터가 된다. 데이터를 다수의 디스크에 나눠서 저장한다.
+
+Raid1 - Mirroring .한곳의 데이터의 거울을 만들어 놓는다. 하나의 디스크가 고장나도 데이터는 손상되지 않는다. `결함허용 Fault-tolerance`
+
+Raid5 -  Raid0 의 속도와 Raid1의 안전성을 합친 것 Parity 를 사용하여 하나의 하드디스크가 고장나더라도 그 내용을 예측하여 복구가능하다. 하지만 2개가 손상된다면 불가능하다.
+
+Raid6 - 
+
+VMware 에서 해보기
+
+```
+#각각의 Disf fdisk 의 형식 fd로 만들기
+fdisk /dev/sdb
+:t
+:fd
+mdadm --create /dev/md5 --level=5 --raid-devices=3 /dev/sdb1 /dev/sdc1 /dev/sdd1
+#sdb1 , sdc1 디스크를 /dev/md9 로 묶기
+mkfs.ext4 /dev/md5
+# 포맷
+mount /dev/md5 /raid5
+#마운트
+#/etc/fstab 에 설정 저장
+/dev/md5	/raid5	ext4	default 1 2
+```
+
+만약 raid5 의 3개 디스크 sdb1, sdc1, sdd1 중 하나가 손상이 된다면, Emergency-mode 로 실행이 되고, 데이터 복구를 위해서
+
+```
+
+mdadm --run /dev/md5 
+#를 통해 복구할 수 있다.
+mdadm /dev/md5 --add /dev/sdf1
+#을 통해 손상된 하드디스크 하나를 교체시켜 raid를 유지할 수 있다.
 ```
 
