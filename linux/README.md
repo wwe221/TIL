@@ -367,6 +367,8 @@ conf/server.xml
 
 bin/startup.sh
 
+
+
 ###### 파일압축
 
 xz
@@ -473,7 +475,7 @@ mount /dev/sdc1 /mydisk1
 
 ```
 
-###### RAID
+##### RAID
 
 `R`edundant `A`rray of `I`nexpensive/Independent `D`isks
 
@@ -518,5 +520,94 @@ mdadm --run /dev/md5
 #를 통해 복구할 수 있다.
 mdadm /dev/md5 --add /dev/sdf1
 #을 통해 손상된 하드디스크 하나를 교체시켜 raid를 유지할 수 있다.
+```
+
+##### LVM
+
+Logical Volume Manager 논리 하드디스크 관리자
+
+Raid와 비슷하지만 더 많은 기능이 있다.
+
+주요 용도는 여러개의 하드디스크를 합쳐 하나의 파티션으로 구성한후 필요에 따라서 원하는 크기별로 나누어 사용할 수 있다. 또는 하나의 하드디스크로 파티션을 구분 할 수도 있다.
+
+- Physical Volume :  물리적 파티션 /dev/sda1
+- Volume Groupe : 물리 볼륨을 합쳐 만든 1개의 물리 그룹
+- Logical Volume : 볼륨그룹을 1개이상으로 나눈 것
+
+```
+#일단 fdisk를 이용해 파티션 분할을 한뒤,
+:t
+Hex Code : 8e
+#를 입력하여 LVM 파일시스템으로 선언한다.
+$
+pvcreate /dev/sdc1
+pvcreate /dev/sdd1
+#물리적 볼륨을 생성하고
+vgcreate myVG /dev/sdc1 /dev/sdd1
+#하나의 볼륩그룹을 생성한다.
+vgdisplay
+#생성한 볼륨의 상태를 확인할 수 있다.
+
+lvcreate --size 1G --name myLG1 myVG
+#myVG 의 1G 짜리 파티션을 만든다.
+lvcreate --extends 100%FREE --name myLG2 myVG
+#myVG 의 남은 용량을 가진 파티션을 만든다.
+mkfs.ext4 /dev/myVG/myLG1
+mount /dev/myVG/myLG1 /lvm1
+#일반적인 하드디스크 파티션과 동일하게 포맷과 마운트를 해준다
+
+
+```
+
+#### scp
+
+ secure copy (remote file copy program)
+
+`ssh`이용 네트워크로 연결된 호스트간에 파일을 주고 받는 명령어
+
+`로컬 -> 리모트 (보내기)`, `리모트 -> 로컬 (가져오기)`
+
+`리모트 -> 리모트 (다른 호스트끼리 전송)` 로 복사 가능
+
+`ssh`를 이용하기 때문에 password를 입력하거나 ssh 키파일과 같은 identity file을 이용해 파일 송수신 가능
+
+보내기
+
+```
+##파일 보내기
+scp 파일 계정@서버주소:목적경로
+##디렉토리 보내기
+scp -r 디렉토리 계정@서버주소:목적경로
+## scp -r 무엇을 어디로
+scp -r /root/file root@192.168.111.115:/root/file
+
+```
+
+가져오기
+
+```
+##기본 포트 사용
+scp 계정@서버주소:원본경로 목적파일명
+##다른 포트 사용
+scp -P 포트 계정@서버주소:원본경로 목적파일명
+##폴더 복사
+scp -r 계정@서버주소:원본경로 목적상위폴더
+## scp -r 무엇을 어디로
+scp -r root@192.168.111.115:/root/file /root/file
+
+```
+
+###### 원시리눅스
+
+방화벽 설정
+
+```
+systemctl status firewalld
+## CentOS 에서는 iptables 대산 firewalld를 사용한다.
+firewall-cmd --zone=public --add-port=1521/tcp
+##1521 포트를 연다.
+firewall-cmd --zone=public --remove-port=1521/tcp
+##1521 포트 차단
+
 ```
 
