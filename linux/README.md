@@ -608,6 +608,37 @@ firewall-cmd --zone=public --add-port=1521/tcp
 ##1521 포트를 연다.
 firewall-cmd --zone=public --remove-port=1521/tcp
 ##1521 포트 차단
+firewall-cmt --permanet --add-service=http
+firewall-cmt --permanet --add-service=https
+firewall-cmt --permanet --add-port=1521/tcp
+##영구적으로 설정 저장. service 지정해서 열기
 
 ```
 
+```
+<details markdown="1">
+<summary>접기/펼치기</summary>
+
+### 제목
+
+여기에 내용을 작성합니다.
+
+</details>
+```
+
+###### 브릿지 
+
+Host PC 외의 pc 과 가상머신의 연결을 위해서는 브릿지 설정이 필요하다.
+
+<details markdown="1">
+<summary>접기/펼치기</summary>
+
+### 제목
+
+여기에 내용을 작성합니다.
+
+
+
+![브릿지설정하기](/bridge.jpg)
+
+</details>
