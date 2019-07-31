@@ -130,9 +130,15 @@ SELINUX = disabled
 
 windows 에서 ip setting
 
+### Shell
 
+HardWare > 커널 > Shell > OS
 
-### 명령어
+사용자가 입력한 명열을 해석해 커널에게 전달, 커널의 처리 결과를 사용자에게 전달하는 역할
+
+linux 에서는 bash shell 을 널리 쓴다.
+
+#### Shell 명령어
 
 ###### 종료명령
 
@@ -615,30 +621,16 @@ firewall-cmt --permanet --add-port=1521/tcp
 
 ```
 
-```
-<details markdown="1">
-<summary>접기/펼치기</summary>
-
-### 제목
-
-여기에 내용을 작성합니다.
-
-</details>
-```
-
 ###### 브릿지 
 
 Host PC 외의 pc 과 가상머신의 연결을 위해서는 브릿지 설정이 필요하다.
 
 <details markdown="1">
-<summary>접기/펼치기</summary>
+<summary>접기/펼치기    설정하기   </summary>
 
-### 제목
-
-여기에 내용을 작성합니다.
-
-
-
-![브릿지설정하기](/bridge.jpg)
+![브릿지설정하기](bridge.jpg)
 
 </details>
+
+
+
