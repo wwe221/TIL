@@ -110,6 +110,8 @@ systemctl restart network
 
 ###### hostname 과 ip를 매칭
 
+hostnamectl set-hostname SERVER1
+
 gedit /etc/hosts
 
 추가
@@ -129,6 +131,8 @@ SELINUX = disabled
 
 
 windows 에서 ip setting
+
+
 
 ### Shell
 
@@ -352,12 +356,14 @@ tar xvf jdk~
 /etc/profile
 
 ```
-JAVA_HOME=/opt/jdk1.8;
+TOMCAT_HOME=/root/file/apache-tomcat-9.0.22
+export TOMCAT_HOME
+JAVA_HOME=/etc/jdk1.8
 export JAVA_HOME
-CLASSPATH=$JAVA_HOME/lib;
-export CLASSPATH JAVA_HOME
-PATH=.:$JAVA_HOME/bin:$PATH;
-export PATH
+CLASSPATH=$JAVA_HOME/lib
+export CLASSPATH
+PATH=.:$JAVA_HOME/bin:$PATH
+export PATH USER LOGNAME MAIL HOSTNAME HISTSIZE HISTCONTROL
 
 ```
 
