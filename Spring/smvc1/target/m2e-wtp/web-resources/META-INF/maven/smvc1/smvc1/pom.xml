@@ -29,7 +29,7 @@
 		<java-version>1.8</java-version>
         <org.springframework-version>4.2.5.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.5</org.aspectj-version>
-		<org.slf4j-version>1.7.18</org.slf4j-version>
+		<org.slf4j-version>1.7.5</org.slf4j-version>
 	</properties>
   <dependencies>
 		<!-- Spring -->
@@ -128,7 +128,7 @@
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>1.2.15</version>
+			<version>1.2.16</version>
 			<exclusions>
 				<exclusion>
 					<groupId>javax.mail</groupId>
@@ -146,8 +146,7 @@
 					<groupId>com.sun.jmx</groupId>
 					<artifactId>jmxri</artifactId>
 				</exclusion>
-			</exclusions>
-			<scope>runtime</scope>
+			</exclusions>		
 		</dependency>
 
 		<!-- @Inject -->

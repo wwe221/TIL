@@ -8,7 +8,7 @@
 
 애플리케이션에 대한 분석, 설계 , 구현 에서 재사용성이 증가한다.
 
-장점
+장점e
 
 - 빠른 구현시간
 - 쉬운 관리
@@ -629,6 +629,111 @@ public void pdata(HttpServletResponse response) {
 	}
 }
 ```
+
+
+
+###### Log
+
+web.xml
+
+```xml
+  <listener>
+     <!--모든 request 에 대해서 리스너 설정-->
+  	<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+  </listener>
+  <context-param>
+  	<param-name>log4jConfigLocation</param-name>
+      <!-- log 에 관한 설정 파일 지정 -->
+  	<param-value>/WEB-INF/config/log4j.properties</param-value>
+  </context-param>
+```
+
+log4j.properties
+
+```properties
+log4j.logger.user = DEBUG, console, user
+#user 추가, log를 세군데에 출력하겠다.
+log4j.appender.work.Threadhold=DEBUG
+log4j.appender.work = org.apache.log4j.DailyRollingFileAppender 
+log4j.appender.work.DatePattern = '.'yyyy-MM-dd
+log4j.appender.work.layout = org.apache.log4j.PatternLayout 
+log4j.appender.work.layout.ConversionPattern = %-5p , %L , %d , %m%n
+log4j.appender.work.File = c:/logs/work.log 
+#log 파일의 저장 경로
+```
+
+logger.java
+
+```java
+@Service
+@Aspect
+public class Loggers {
+	private Logger user_log = 
+			Logger.getLogger("user"); 
+		//log4j.properties 에 정의된 user 를 사용하겠다 선언.
+	
+	// before com.controller 패키지의 모든 컨트롤러의 모든함수 실행 전에
+	@Before("execution(* com.controller..*Controller.*(..))")
+	public void logging(JoinPoint jp) {
+		user_log.debug(jp.getSignature().getName());
+		//user_log.debug(jp.getArgs()[0].toString());
+	}
+```
+
+exception 발생시 화면 처리
+
+web.xml
+
+```xml
+<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/config/springex.xml</param-value>
+	</context-param>
+```
+
+springex.xml
+
+```xml
+<bean id="exeptionResolver" 
+ 	class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+ 		<property name="exceptionMappings">
+ 			<props>
+                <!-- arithmeticexception 발생시 /veiw/error.jsp 로 가겠다. -->
+ 				<prop key="java.lang.ArithmeticException">
+ 					error
+ 				</prop>
+ 			</props>
+ 		</property>
+ 	</bean>
+```
+
+
+
+Session 정보 가져와서 log 에 남기기
+
+Logger.java
+
+```java
+HttpSession session = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest().getSession();
+// session 의 정보 가져오기
+String userid = (User) session.getAttribute("loginuser").getID();
+MDC.put("userid",userid);
+//userid 라는 변수 선언
+user_log.debug(jp.getSignature().getNmae());
+
+```
+
+log4j.properties
+
+```properties
+log4j.appender.user.layout.ConversionPattern = %X{userid} %n
+#userid 라는 변수 출력
+```
+
+
 
 
 
