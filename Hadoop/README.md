@@ -66,6 +66,14 @@ POSIX 명령어 미지원
 
 
 
+##ssh
+
+SeciureSHell
+
+네트워크 상의 다른컴퓨터에 로그인하거나 원격시스템에서 명령을 실행하게 해주는 프로그램/프로토콜
+
+
+
 ##### Setting
 
 1. 필요 소프트웨어 다운로드
@@ -108,15 +116,17 @@ export PATH
 
 4. ssh 키 생성
 
+[ssh](#ssh)
+
 키를 통해 접속하면 접속시 마다 id pwd 입력을 하는 번거러움을 덜고 자유롭게 서버들을 오갈 수 있게 만든다.
 
 private key 와 public key 를 이용해서, key가 일치하는 서버끼리는 자유롭게 접속이 가능하다.
 
-```
+```shell
 $ ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
 #dsa 알고리즘을 통해 public, private Key 생성
-$ cat /.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
-
+$ cat /.ssh/id_dsa.pub >> /.ssh/authorized_keys
+# 만들어진 authorized_keys를 다른 서버의 ~/.ssh 에 복사하게 되면 자유롭게 접속을 할 수 있게 된다.
 ```
 
 5. hadoop/conf 내의 configuration 파일 수정
@@ -127,38 +137,51 @@ $ cat /.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
 <property>
   <name>fs.default.name</name>
   <value>hdfs://localhost:9000</value>
+  <!--외부에서 namenode를 접속할때의 port를 지정해준다.-->
 </property>
 <property>
-  <name>dfs.tmp.dir</name>
+  <name>hadoop.tmp.dir</name>
   <value>/usr/local/hadoop/tmp</value>
 </property>
 </configuration>
+
 <!--hdfs-site.xml-->
 <configuration>
 <property>
   <name>dfs.replication</name>
   <value>1</value>
+    <!--데이터를 몇개의 형태로 저장할것 인지 지정-->
 </property>
 <property>
   <name>dfs.name.dir</name>
   <value>/usr/local/hadoop/name</value>
+    <!--namenode가 사용하는 정보를 저장하는 디렉토리 지정-->
 </property>
 <property>
   <name>dfs.data.dir</name>
   <value>/usr/local/hadoop/data</value>
+    <!--데이터를 저장하는 디렉토리 지정-->
 </property>
 <property>
   <name>dfs.webhdfs.enabled</name>
   <value>true</value>
 </property>
 </configuration>
+
 <!--mapred-site.xml-->
 <configuration>
 <property>
   <name>mapred.job.tracker</name>
   <value>localhost:9001</value>
+    <!--jobtracker로 접근하는 prot 설정-->
 </property>
 </configuration>
+
+맵리듀스
+JOBTRACKER
+분석에 대한 요청을 받는곳
+TASKTARCKER
+실재로 수행을 하는 것
 ```
 
 6. hadoop-env.sh 수정
@@ -192,4 +215,107 @@ $ hadoop jar hadoop-examples-1.2.1jar wordcount /data/input1 /data/output1
 ## examples... 의 wordcount 메소드를 이용해 아웃풋 생성
 
 ```
+
+
+
+#### 완전분산모드 설정하기
+
+1. ssh 활성화
+
+   ssh-keygen
+
+   public key 를 authorized_keys 로 서버들에게 나누어줘서 자유로운 출입 설정
+
+2. systemctl stop firewalld ,
+
+   systemctl disable firewalld  로 방화벽 완전 해제하기
+
+3. namenode 컴퓨터 hadoop 설치 및 configuration 파일 설정 + /etc/profile , /etc/bashrc 에서 path 설정 하기.
+
+conf/masters 에는 secondaryNamenode 를 담을 server를  지정 , conf/slaves 에는 datanode를 저장할 server를 지정한다.
+
+```
+#conf/master
+hadoop2
+
+#conf/slaves
+hadoop2
+hadoop3
+hadoop4
+```
+
+```xml
+<!--core-site.xml-->
+<configuration>
+<property>
+    <name>fs.default.name</name>
+    <value>hdfs://hadoop1:9000</value>
+  </property>
+  <property>
+    <name>hadoop.tmp.dir</name>
+    <value>/etc/hadoop-1.2.1/tmp</value>
+  </property>
+</configuration>
+
+<!--hdfs-site.xml-->
+<configuration>
+  <property>
+    <name>dfs.permissions</name>
+    <value>false</value>
+  </property>
+  <property>
+    <name>dfs.replication</name>
+    <value>2</value>      
+  </property>
+  <property>
+    <name>dfs.http.address</name>
+    <value>192.168.111.201:50070</value>
+      <!---->
+  </property>
+  <property>
+    <name>dfs.secondary.http.address</name>
+    <value>192.168.111.202:50090</value>
+      <!--SecondaryNamenode를 가질 서버 지정-->
+  </property>
+  <property>
+    <name>dfs.name.dir</name>
+    <value>/etc/hadoop-1.2.1/name</value>
+  </property>
+  <property>
+    <name>dfs.data.dir</name>
+    <value>/etc/hadoop-1.2.1/data</value>
+  </property>
+</configuration>
+
+<!-- mapred-site.xml -->
+<configuration>
+  <property>
+   <name>mapred.job.tracker</name>
+   <value>master:9001</value>
+  </property> 
+</configuration>
+
+```
+
+4. 각 서버에 hadoop 복사 
+
+5. namenode 서버에서 hadoop namenode -format 로 포맷, start-all.sh 로 실행 . 각 서버에서 jps 로 설정한대로 실행 중 인지 확인하기
+
+
+
+NameNode
+
+파일시스템의 네임스페이스를 관리한다.
+
+파일시스템 트리와 그 트리에 포함된 모든 파일과 디렉터리에 대한 메타데이터를 유지한다. 네임스페이스 이미지, 에디트 로그 파일로 저장된다. 파일에 속한 모든 블록이 어느 datanode에 있는지 파악하고 있다.
+
+Datanode
+
+클라이언트나 네임노드의 요청에 의해 블록을 저장, 탐색 한다. 저장하고 있는 블록의 목록을 주기적으로 네임노드에 보고한다.
+
+Secondary-NameNode
+
+주 네임노드에 장애가 발생할 것을 대비해서 네임스페이스 이미지의 복제본을 보관하는 역할을 한다. 
+
+네임스페이스의 이미지가 약간의 시간차를 두고 secondary로 복제되기 때문에 어느정도의 데이터 손실은 불가피 하다.
 
