@@ -47,5 +47,9 @@ public class UserDao implements Dao<String, User>{
 	public ArrayList<User> select() throws Exception {		
 		return um.selectall();
 	}
+	@Override
+	public ArrayList<User> select2(int cate) throws Exception {
+		return null;
+	}
 
 }

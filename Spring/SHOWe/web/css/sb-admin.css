@@ -10,6 +10,13 @@
  * Copyright 2011-2019 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
+
+ 
+@import url('https://fonts.googleapis.com/css?family=Poller+One&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Jua&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Do+Hyeon|Gothic+A1&display=swap');
+
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -61,13 +68,15 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; */
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  background-color: #fff;
+  /* background-color: #fff; */
+  background-color: #f2f4f7; 
+
 }
 
 [tabindex="-1"]:focus {
@@ -215,6 +224,11 @@ svg {
 
 table {
   border-collapse: collapse;
+}
+
+table > thead{
+	font-family: 'Do Hyeon', sans-serif;
+	background : #6799ff;
 }
 
 caption {
@@ -373,6 +387,9 @@ h1, h2, h3, h4, h5, h6,
   margin-bottom: 0.5rem;
   font-weight: 500;
   line-height: 1.2;
+  /* 폰트적용테스트 */
+  /* font-family: 'Noto Serif KR', serif; */
+  /* font-family: 'Nanum Myeongjo', serif !important; */
 }
 
 h1, .h1 {
@@ -1677,6 +1694,7 @@ pre code {
   padding: 0.75rem;
   vertical-align: top;
   border-top: 1px solid #dee2e6;
+  text-align:center;
 }
 
 .table thead th {
@@ -4332,7 +4350,7 @@ input[type="button"].btn-block {
 
 .nav-link {
   display: block;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0rem;
 }
 
 .nav-link:hover, .nav-link:focus {
@@ -4447,7 +4465,7 @@ input[type="button"].btn-block {
   justify-content: space-between;
 }
 
-.navbar-brand {
+.navbar-brand { /* 로고 */
   display: inline-block;
   padding-top: 0.3125rem;
   padding-bottom: 0.3125rem;
@@ -4455,7 +4473,7 @@ input[type="button"].btn-block {
   font-size: 2.25rem;
   line-height: inherit;
   white-space: nowrap;
-  margin-left: 5rem;
+  margin-left: 1rem;
 }
 
 .navbar-brand:hover, .navbar-brand:focus {
@@ -4815,16 +4833,21 @@ input[type="button"].btn-block {
   color: rgba(0, 0, 0, 0.9);
 }
 
-.navbar-dark .navbar-brand {
-  color: #fff;
+.navbar-dark .navbar-brand { 
+  /* 메인 내 SHOWer 글씨 */
+  /* color: #fff; */
+  color : #6799ff;
+  font-family: 'Poller One', cursive;
 }
 
 .navbar-dark .navbar-brand:hover, .navbar-dark .navbar-brand:focus {
-  color: #fff;
+  /* color: #fff; */
+  color : #6799ff;
 }
 
 .navbar-dark .navbar-nav .nav-link {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.5); 
+  color : #6799ff;
 }
 
 .navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:focus {
@@ -4876,10 +4899,26 @@ input[type="button"].btn-block {
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 0.25rem;
+  /* border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.5rem; */
 }
+.center_page{
+position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  /* border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem; */
 
+}
 .card > hr {
   margin-right: 0;
   margin-left: 0;
@@ -4896,14 +4935,44 @@ input[type="button"].btn-block {
 }
 
 .card-body {
-  -webkit-box-flex: 1;
+   -webkit-box-flex: 1; 
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
-  padding: 1.25rem;
+  /* padding: 1.25rem; */
+  padding : 3px;
 }
 
 .card-title {
   margin-bottom: 0.75rem;
+}
+/* 우리가 만듦 → 메인 페이지에서 게시글 미리 볼 수 있는 card */
+.card_list{
+	list-style:none;
+	padding:8px;
+	margin:0 auto;
+}
+
+.card_list > a{
+	color:white;
+}
+
+.card_list_title{
+	font-weight:bold;
+	color:black;
+}
+/* 메인에서 section 나누에 데이터 표시할 공간 */
+.newcontent{
+ width:100%;
+ height:20vh;
+}
+.newchart{
+  width:100%; 
+ height:500px;
+}
+
+.map{
+width:100%;
+
 }
 
 .card-subtitle {
@@ -4923,11 +4992,25 @@ input[type="button"].btn-block {
   margin-left: 1.25rem;
 }
 
-.card-header {
+.card-header /* 로그인, 회원가입 alert 창 좌측 상단 로고 */
+{
   padding: 0.75rem 1.25rem;
   margin-bottom: 0;
-  background-color: rgba(0, 0, 0, 0.03);
+  /* background-color: rgba(0, 0, 0, 0.03); */ 
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  color : #6799ff;
+  font-family: 'Poller One', cursive;
+  font-size: 2.5em;
+}
+
+.card-header >a {
+	text-decoration: none;
+}
+
+.modal-title{ /*로그아웃 alert창 좌측 상단 로고 */
+	color : #6799ff;
+	font-family: 'Poller One', cursive;
+	font-size: 1.5em;
 }
 
 .card-header:first-child {
@@ -6985,8 +7068,11 @@ button.bg-light:focus {
   background-color: #dae0e5 !important;
 }
 
-.bg-dark {
-  background-color: #343a40 !important;
+.bg-dark { 
+	/* 메인 페이지 상단 SHOWer 배경색 */
+  /* background-color: #343a40 !important; */
+  /* background-color : #f2f4f7 !important; */
+  background-color : #ffffff;
 }
 
 a.bg-dark:hover, a.bg-dark:focus,
@@ -8569,7 +8655,11 @@ button.bg-dark:focus {
 
 .mr-5,
 .mx-5 {
-  margin-right: 3rem !important;
+  /* margin-right: 3rem !important; */
+}
+
+.mr-5{
+	margin:0 0.5rem;
 }
 
 .mb-5,
@@ -10370,6 +10460,7 @@ button.bg-dark:focus {
 
 .text-white {
   color: #fff !important;
+  font-size: 15px;
 }
 
 .text-primary {
@@ -10629,7 +10720,8 @@ body {
 }
 
 .navbar-nav .nav-item.active .nav-link {
-  color: #fff;
+  /* color: #fff; */
+  color: #6799ff;
 }
 
 .navbar-nav .nav-item.dropdown .dropdown-toggle::after {
@@ -10671,22 +10763,29 @@ body {
 
 .sidebar {
   width: 90px !important;
-  background-color: #212529;
+  /* background-color: #212529; */
+  /* 우측 슬라이드바 */
+  background-color: #f2f4f7; 
+  /* background-color : #ffffff; */
   min-height: calc(100vh - 56px);
 }
 
 .sidebar .nav-item:last-child {
   margin-bottom: 1rem;
+  
 }
 
 .sidebar .nav-item .nav-link {
   text-align: center;
   padding: 0.75rem 1rem;
   width: 90px;
+  color : #6799ff;
 }
 
 .sidebar .nav-item .nav-link span {
+	/* 우측 슬라이드바 폰트 */
   font-size: 0.65rem;
+  font-family: 'Jua', sans-serif;
   display: block;
 }
 
@@ -10708,11 +10807,13 @@ body {
 }
 
 .sidebar .nav-item .nav-link {
-  color: rgba(255, 255, 255, 0.5);
+  /* color: rgba(255, 255, 255, 0.5); */
+  color : #6799ff;
 }
 
 .sidebar .nav-item .nav-link:active, .sidebar .nav-item .nav-link:focus, .sidebar .nav-item .nav-link:hover {
-  color: rgba(255, 255, 255, 0.75);
+  /* color: rgba(255, 255, 255, 0.75); */
+  color : #414242;
 }
 
 .sidebar.toggled {
@@ -10722,7 +10823,7 @@ body {
 
 @media (min-width: 768px) {
   .sidebar {
-    width: 225px !important;
+    width: 140px !important;
   }
   .sidebar .nav-item .nav-link {
     display: block;
@@ -10912,4 +11013,65 @@ body.sidebar-toggled footer.sticky-footer {
   body.sidebar-toggled footer.sticky-footer {
     width: calc(100% - 90px);
   }
+}
+
+/* 게시판 꾸미기 */
+.boardtitle{
+	font-family: 'Do Hyeon', sans-serif;
+}
+
+table > tbody{
+	font-family: 'Gothic A1', sans-serif;
+}
+
+/* 게시판 이미지 일정한 크기로 업로드 되도록 */
+table .newimg{
+width: 110px;
+height: 157px;
+} 
+.user_icon{
+	font-size:22px;
+}
+.user_nick{
+	width:120px;
+}
+.skycolor{
+background-color: white; 
+}
+.skycolor_bold{
+background-color: black;
+}
+
+.center_icon{
+color:#6799ff;
+}
+
+.mainsigninup >a{
+	display:inline;
+}
+
+.downmenu{
+ display:none;
+}
+
+/* mypage 꾸미기 */
+.mypageuserdetail{
+	width:100%;
+	background: #f2f4f7;
+	/* border: 2px solid #f2f4f7; */
+	height:20vh;
+	font-family: 'Gothic A1', sans-serif;
+}
+
+/* Post 하나보기 */
+.post_title{
+	font-family: 'Do Hyeon', sans-serif;
+	font-size: 1.2em;
+}
+.card_list >a >li{
+	color: black;
+}
+.input_comm{
+width:100%;
+resize: none;
 }

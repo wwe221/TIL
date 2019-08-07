@@ -1,11 +1,17 @@
 package com.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.frame.Biz;
@@ -23,18 +29,47 @@ public class ContentController {
 		return mv;
 	}
 	@RequestMapping("/insert.sh")
-	public ModelAndView insert() {
+	public ModelAndView insert(String to, String from) { //영화 정보 
+		ModelAndView mv = new ModelAndView();		
+		Naver nv =new Naver();
+		int tto=Integer.parseInt(to);
+		int ffrom=Integer.parseInt(from);
+		ArrayList<String> b=new ArrayList<String> ();
+		ArrayList<Content> c=new ArrayList<> ();
+		b= nv.movieinsert(tto,ffrom);
+		int l = b.size();
+		for(int i=0;i<l;i++) {
+			if(nv.details(b.get(i)).getGenre().equals("성인물(에로)")) {
+				continue;
+			}
+			c.add(nv.details(b.get(i)));
+			
+		}
+		try {
+			while(!c.isEmpty()) {
+				biz.insert(c.remove(0));
+			}			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		mv.addObject("center", "register");
+		mv.setViewName("main");
+		return mv;
+	}
+	@RequestMapping("/insert2.sh")
+	public ModelAndView insert2() { // 공연정보
 		ModelAndView mv = new ModelAndView();
 		Naver nv =new Naver();
-		ArrayList<String> b=new ArrayList<String> ();
-		b= nv.movieinsert("2015","2016");
-		Content c=nv.details(b.get(0));
-		System.out.println(c);
+		
+		ArrayList<Content> c=new ArrayList<> ();		
+		c= Naver.test();
 		try {
-			System.out.println(biz);
-			biz.insert(c);
+			while(!c.isEmpty()) {
+				biz.insert(c.remove(0));
+			}			
+			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		mv.addObject("center", "register");
@@ -52,18 +87,34 @@ public class ContentController {
 		mv.setViewName("main");
 		return mv;
 	}
-	@RequestMapping("/contentlist.mc")
+	@RequestMapping("/movielist.sh")
 	public ModelAndView ulist() {
 		ModelAndView mv = new ModelAndView();
 		ArrayList<Content> list = null;
 		try {
-			list = biz.select();
+			list = biz.select2(1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		mv.addObject("center", "content/list");
-		mv.addObject("ulist", list);
+		mv.addObject("center", "movielist");
+		mv.addObject("clist", list);
+		mv.setViewName("main");
+		return mv;
+	}
+	@RequestMapping("/pelist.sh")
+	public ModelAndView pelist() {
+		ModelAndView mv = new ModelAndView();		
+		ArrayList<Content> list = null;
+		try {
+			list = biz.select2(2);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		mv.addObject("center", "pelist");
+		mv.addObject("clist", list);
 		mv.setViewName("main");
 		return mv;
 	}
@@ -76,43 +127,41 @@ public class ContentController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		mv.addObject("navi", Navi.productlist);
 		mv.addObject("center", "content/detail");
 		mv.setViewName("main");
 		return mv;
 	}
+	@RequestMapping("/maplist.sh")
+	@ResponseBody
+	public void maplist(HttpServletResponse hsr) {
 
-	@RequestMapping("/contentdelete.mc")
-	public String pdel(ModelAndView mv, Integer id) {
-		try {
-			biz.delete(id);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "redirect:contentlist.mc";
+	ArrayList<Content> list = null;
+	try {
+	list = biz.select2(2);
+
+	} catch (Exception e) {
+	e.printStackTrace();
 	}
-	@RequestMapping("/contentupdate.mc")
-	public ModelAndView pup(ModelAndView mv, Integer id) {
-		Content u = null;
-		try {
-			u = biz.select(id);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		mv.addObject("navi", Navi.productlist);
-		mv.addObject("uu",u);
-		mv.addObject("center", "content/update");
-		mv.setViewName("main");
-		return mv;
+	JSONArray ja =new JSONArray();
+	for(Content c :list) {	
+	JSONObject jo = new JSONObject();
+	jo.put("place",c.getPlace());	
+	jo.put("x",c.getLocx());
+	jo.put("y",c.getLocy());
+	ja.add(jo);
 	}
-	@RequestMapping("/contentupdateimpl.mc")
-	public String pupimp(ModelAndView mv, Content p) {		
-		try {
-			biz.update(p);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "redirect:contentdetail.mc?id="+p.getId();
+
+	PrintWriter out = null;
+
+	try {
+	hsr.setCharacterEncoding("EUC-KR");
+	hsr.setContentType("text/json;charset=UTF-8");
+	out = hsr.getWriter();
+	} catch (IOException e) {
+	e.printStackTrace();
+	}
+
+	out.print(ja.toJSONString());
 	}
 
 }

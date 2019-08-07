@@ -51,6 +51,12 @@ public class ContentBiz implements Biz<Integer, Content>{
 	@Override
 	public ArrayList<Content> select() throws Exception {
 		return dao.select();
+	}	
+	@Override
+	public ArrayList<Content> select2(int cate) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.select2(cate);
 	}
+	
 
 }

@@ -29,6 +29,7 @@ public class User {
 		this.admin=0;
 		this.icon="default";
 	}
+	
 	public String getId() {
 		return id;
 	}
@@ -44,8 +45,6 @@ public class User {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-
-
 
 	public String getEmail() {
 		return email;

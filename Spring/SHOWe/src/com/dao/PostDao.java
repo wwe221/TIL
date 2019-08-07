@@ -42,5 +42,9 @@ public class PostDao implements Dao<Integer, Post>{
 	public ArrayList<Post> select() throws Exception {		
 		return um.selectall();
 	}
+	@Override
+	public ArrayList<Post> select2(int cate) throws Exception { 
+		return um.selectall2(cate);
+	}
 
 }

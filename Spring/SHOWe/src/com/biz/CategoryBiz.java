@@ -48,5 +48,11 @@ public class CategoryBiz implements Biz<Integer, Category>{
 	public ArrayList<Category> select() throws Exception {
 		return dao.select();
 	}
+	@Override
+	public ArrayList<Category> select2(int cate) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 
 }

@@ -48,5 +48,10 @@ public class PostBiz implements Biz<Integer, Post>{
 	public ArrayList<Post> select() throws Exception {
 		return dao.select();
 	}
+	@Override
+	public ArrayList<Post> select2(int cate) throws Exception {		
+		return dao.select2(cate);
+	}
+	
 
 }

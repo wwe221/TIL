@@ -56,9 +56,9 @@
 		<property name="driverClassName"
 			value="oracle.jdbc.driver.OracleDriver" />
 		<property name="url"
-			value="jdbc:oracle:thin:@70.12.114.61:1521:xe" />
-		<property name="username" value="db2" />
-		<property name="password" value="db2" />
+			value="jdbc:oracle:thin:@192.168.1.110:1521:xe" />
+		<property name="username" value="db" />
+		<property name="password" value="db" />
 	</bean>
 	<!-- 2. Transaction Setting -->
 	<bean id="txManager"

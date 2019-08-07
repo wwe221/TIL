@@ -46,5 +46,9 @@ public class ContentDao implements Dao<Integer, Content>{
 	public ArrayList<Content> select() throws Exception {		
 		return cm.selectall();
 	}
+	@Override
+	public ArrayList<Content> select2(int cate) throws Exception {		
+		return cm.selectall2(cate);
+	}
 
 }

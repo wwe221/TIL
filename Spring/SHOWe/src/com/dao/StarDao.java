@@ -42,5 +42,9 @@ public class StarDao implements Dao<Integer, Star>{
 	public ArrayList<Star> select() throws Exception {		
 		return um.selectall();
 	}
+	@Override
+	public ArrayList<Star> select2(int cate) throws Exception {
+		return null;
+	}
 
 }

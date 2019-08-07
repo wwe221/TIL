@@ -10,4 +10,5 @@ public interface ContentMapper {
 	public void update(Content obj);
 	public Content select(int obj);
 	public ArrayList<Content> selectall();
+	public ArrayList<Content> selectall2(int obj);
 }

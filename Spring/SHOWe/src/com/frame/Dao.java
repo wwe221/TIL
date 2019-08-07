@@ -8,5 +8,6 @@ public interface Dao<K,V> {
 	public void delete(K k) throws Exception;
 	public V select(K k) throws Exception;
 	public ArrayList<V> select() throws Exception;
+	public ArrayList<V> select2(int cate) throws Exception;
 	
 }

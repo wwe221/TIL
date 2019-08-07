@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<insert id="insert" parameterType="cont">
 		INSERT INTO CONTENT VALUES (CONTENT_SEQ.NEXTVAL,#{category},#{title},#{open},
 		#{close},#{genre},#{poster},#{place},#{locx},#{locy},#{director},#{actor1},
-		#{actor2},#{actor3},#{time},#{contry},#{grade})
+		#{actor2},#{actor3},#{time},#{contry},#{grade},#{rating})
 	</insert>	
 
 	<delete id="delete" parameterType="Integer">
@@ -31,6 +31,9 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<!-- 게시판에 게시글 출력 -->
 	<select id="selectall" resultType="cont">
 		SELECT * FROM CONTENT
+	</select>
+	<select id="selectall2" parameterType="Integer" resultType="cont">
+		SELECT * FROM CONTENT where category=#{obj}
 	</select>
 	
 </mapper>

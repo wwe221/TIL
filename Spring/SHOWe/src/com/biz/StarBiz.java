@@ -48,5 +48,10 @@ public class StarBiz implements Biz<Integer, Star>{
 	public ArrayList<Star> select() throws Exception {
 		return dao.select();
 	}
+	
+	@Override
+	public ArrayList<Star> select2(int cate) throws Exception {		
+		return dao.select2(cate);
+	}
 
 }

@@ -52,5 +52,10 @@ public class UserBiz implements Biz<String, User>{
 	public ArrayList<User> select() throws Exception {
 		return dao.select();
 	}
+	
+	@Override
+	public ArrayList<User> select2(int cate) throws Exception {	
+		return dao.select2(cate);
+	}
 
 }

@@ -25,18 +25,20 @@ public class CategoryDao implements Dao<Integer, Category>{
 	}
 	@Override
 	public void insert(Category v) throws Exception {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public void update(Category v) throws Exception {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
 	public void delete(Integer k) throws Exception {
-		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public ArrayList<Category> select2(int cate) throws Exception {
+		return null;
 	}
 
 }
