@@ -432,6 +432,9 @@ hive/conf/hive-site.xml 수정 or 생성
         <value>true</value>
         <description>controls whether to connect to remove metastore server or open a new metastore server in Hive Client JVM</description>
     </property>
+    
+    
+    <!-- Maria DB 의 테이블과 jdbc driver, 계정 id 와 pwd 지정-->
     <property>
         <name>javax.jdo.option.ConnectionURL</name>
         <value>jdbc:mariadb://localhost:3306/hive_db?createDatabaseIfNotExist=true</value>
@@ -441,7 +444,7 @@ hive/conf/hive-site.xml 수정 or 생성
         <name>javax.jdo.option.ConnectionDriverName</name>
         <value>org.mariadb.jdbc.Driver</value>
         <description>Driver class name for a JDBC metastore</description>
-    </property>
+    </property>    
     <property>
         <name>javax.jdo.option.ConnectionUserName</name>
         <value>hive</value>
@@ -451,6 +454,17 @@ hive/conf/hive-site.xml 수정 or 생성
         <name>javax.jdo.option.ConnectionPassword</name>
         <value>111111</value>
         <description>password to use against metastore database</description>
+    </property>    
+    <property>
+        <!--data를 넣을때 hadoop 의 어느 디렉토리에 저장할지 지정.
+		밑의 값은 디폴트와 동일 -->
+    	<name>hive.metastore.warehouse.dir</name>
+        <value>/user/hive/warehouse</value>
+    </property>    
+    <property>
+        <!--hive 내에서 header를 출력-->
+    	<name>hive.cli.print.header</name>
+        <value>true</value>
     </property>
 </configuration>
 ```
@@ -467,10 +481,46 @@ hive
 hadoop fs -chmod 777 /tmp/hive 
 ```
 
-```
+```mysql
+create table post(date1 string, date2 string, cmd string, id string) row format delimited fields terminated by ',' stored as textfile;
+## 데이터 파일의 한 줄을 , 를 이용해서 각 attribute를 나누겠다.
+load data local inpath '/root/data/2008.csv' overwrite into table airline_delay partition (delayYear='2008');
+##저장할 때에 delayyear=2008의 파티션을 생선하고 그곳에 데이터를 넣는다.
+##아주 많은 양의 데이터를 저장하기 때문에 원하는 
+select * from airline_delay where delayyear='2007' LIMIT 10;
+
 load data local inpath '/root/hdi.txt' into table HDI;
 ##파일을 hive 디렉토리 안에 이동 , hdi.txt 의 내용을 hdi table 의 column에 맞춰 들어가게 된다.
 ```
 
+###### 하이브QL
 
+- UPDATE 와 ELETE를 사용할수 없다.
+- FROM절 에서만 서브 쿼리를 사용할 수 있다.
+- 뷰는 읽기 전용이며 비구체화된 뷰만 지원한다.
+- HAVING 절을 사용 할 수 없다.
+- 저장 프로시져(stored procedure)를 지원하지 않는다.
+
+
+
+###### Java Application 으로 하이브 돌리기
+
+```shell
+hive --service hiveserver2
+## hive 위의 listener 역할을 하는 녀석을 준비상태로 실행시킨다.
+```
+
+App.java
+
+```java
+ Class.forName("org.apache.hive.jdbc.HiveDriver");
+ Connection conn =DriverManager.getConnection("jdbc:hive2://70.12.114.207:10000/default","root","111111");
+//hive2 서버를 구동하고있는 ip주소로 접속한다. id / pwd 입력 (익명으로 로그인시 생략 가능)
+        Statement stmt =conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM airline_delay");
+        while(rs.next()) {
+             System.out.println(rs.getString(1) + " " +rs.getString(5));             
+           }
+        conn.close();
+```
 
