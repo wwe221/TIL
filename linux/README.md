@@ -638,5 +638,77 @@ Host PC 외의 pc 과 가상머신의 연결을 위해서는 브릿지 설정이
 
 </details>
 
+#### Cron
 
+/etc/crontab
+
+![캡처](캡처.JPG)
+
+###### 주기마다 실행되는 매크로를 설정 할 수 있게 만들어 주는 스케줄러이다.
+
+예시
+
+```
+* * * * * /root/every_1min.sh
+→ 매 1분마다 /root/every_1min.sh 를 수행 (하루에 1440회[2])
+```
+
+```
+15,45 * * * * /root/every_30min.sh
+→ 매시 15분, 45분에 /root/every_30min.sh 를 수행 (하루에 48회[3])
+```
+
+```
+*/10 * * * * /root/every_10min.sh
+→ 10분마다 /root/every_10min.sh 를 수행 (하루에 144회[4])
+```
+
+```
+0 2 * * * /root/backup.sh
+→ 매일 02:00에/root/backup.sh 를 수행 (하루에 1회)
+```
+
+```
+30 */6 * * * /root/every_6hours.sh
+→ 매 6시간마다 수행(00:30, 06:30, 12:30, 18:30)
+```
+
+```
+30 1-23/6 * * * /root/every_6hours.sh
+→ 1시부터 매 6시간마다 수행(01:30, 07:30, 13:30, 19:30)
+```
+
+```
+0 8 * * 1-5 /root/weekday.sh
+→ 평일(월요일~금요일) 08:00
+```
+
+```
+0 8 * * 0,6 /root/weekend.sh
+→ 주말(일요일, 토요일) 08:00
+```
+
+
+
+실행시 hive 내에 지정한 log 파일을 load 하는 스크립트
+
+```
+date=`date -d 'yesterday'`
+echo $date
+partitionName="${date:0:4}-${date:6:2}-${date:10:2}"
+echo $partitionName
+fileName="post.log.$partitionName"
+echo $fileName
+
+if [ -f /etc/tomcat/webapps/log/shower/$fileName  ]
+then
+hive << EOF
+LOAD DATA LOCAL INPATH '/etc/tomcat/webapps/log/shower/$fileName' INTO table post_log partition (date='$date');
+EOF
+echo "OK"
+echo "OK"
+else
+echo "File Not Found"
+fi
+```
 
