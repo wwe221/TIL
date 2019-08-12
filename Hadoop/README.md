@@ -482,12 +482,19 @@ hadoop fs -chmod 777 /tmp/hive
 ```
 
 ```mysql
-create table post(date1 string, date2 string, cmd string, id string) row format delimited fields terminated by ',' stored as textfile;
+create table post(date1 string, date2 string, cmd string, id string) PARTITIONED BY (date INT) row format delimited fields terminated by ',' stored as textfile;
 ## 데이터 파일의 한 줄을 , 를 이용해서 각 attribute를 나누겠다.
 load data local inpath '/root/data/2008.csv' overwrite into table airline_delay partition (delayYear='2008');
 ##저장할 때에 delayyear=2008의 파티션을 생선하고 그곳에 데이터를 넣는다.
 ##아주 많은 양의 데이터를 저장하기 때문에 원하는 
+
 select * from airline_delay where delayyear='2007' LIMIT 10;
+
+
+ROW FORMAT DELIMITED
+    FIELDS TERMINATED BY ','
+    LINES TERMINATED BY '\n'
+    STORED AS TEXTFILE;
 
 load data local inpath '/root/hdi.txt' into table HDI;
 ##파일을 hive 디렉토리 안에 이동 , hdi.txt 의 내용을 hdi table 의 column에 맞춰 들어가게 된다.

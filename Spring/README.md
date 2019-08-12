@@ -654,8 +654,9 @@ log4j.properties
 log4j.logger.user = DEBUG, console, user
 #user 추가, log를 세군데에 출력하겠다.
 log4j.appender.work.Threadhold=DEBUG
-log4j.appender.work = org.apache.log4j.DailyRollingFileAppender 
+log4j.appender.work = org.apache.log4j.DailyRollingFileAppender
 log4j.appender.work.DatePattern = '.'yyyy-MM-dd
+# 매일마다 로그파일을 생성한다. 즉 하루가 지나면 어제 만들어진 로그파일의 이름을 변경한다. 패턴은 기존파일이름.yyyy-MM-dd 로 지정한다.
 log4j.appender.work.layout = org.apache.log4j.PatternLayout 
 log4j.appender.work.layout.ConversionPattern = %-5p , %L , %d , %m%n
 log4j.appender.work.File = c:/logs/work.log 
