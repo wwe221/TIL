@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1565929680477.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2897298233",
+    "id" : "9411A5A0",
+    "lastKnownWriteTime" : 1565933856,
+    "last_content_update" : 1565933856132,
+    "path" : "C:/rstudio/r2/r05.R",
+    "project_path" : "r05.R",
+    "properties" : {
+        "cursorPosition" : "8,0",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

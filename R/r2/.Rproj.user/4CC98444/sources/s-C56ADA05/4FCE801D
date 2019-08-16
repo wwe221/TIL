@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1565939868830.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2131784729",
+    "id" : "4FCE801D",
+    "lastKnownWriteTime" : 1565944573,
+    "last_content_update" : 1565944573912,
+    "path" : "C:/rstudio/r2/health.R",
+    "project_path" : "health.R",
+    "properties" : {
+        "cursorPosition" : "4,14",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 9,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
