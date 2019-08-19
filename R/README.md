@@ -1,6 +1,8 @@
 # R
 
-데이터 분석을 위한 통계 및 그래픽스를 지원하는 오픈 소프트웨어 환경이다. 컴퓨터 언어이자 다양한 패키지의 집합이고 이를 무료로 이용할 수 있다.
+데이터 분석을 위한 통계 및 그래픽스를 지원하는 오픈 소프트웨어 환경이다. 컴퓨터 언어이자 다양한 패키지의 집합이고 이를 무료로 이용할 수 있다. 
+
+오픈소스기 때문에 새로운 패키지가 날마다 생기지만 동시에 끊임없이 배워야한다.
 
 통계를 기반으로 한 데이터 분석.
 
@@ -302,7 +304,13 @@ user <- read.csv(
 stringsAsFactors=default.stringsAsFactors()
   # 문자열을 팩터로 저장할지 또는 문자열로 저장할지 여부를 지정하는 데 사용한다. 별다른
   # 설정을 하지 않았다면 기본값은 보통 TRUE다.
-print(user)
+print(user);
+    
+    
+#excel 파일 열기
+    install.packages("readxl")
+    library(readxl)
+    st <- read_excel("st.xlsx")
 ```
 
 ###### 파일 쓰기
@@ -451,6 +459,8 @@ aggregate( #데이터프레임을 리턴한다.
   FUN # 그룹별로 요약치 계산에 사용할 함수
 )
 tag <-  aggregate(Sepal.Width ~ Species, iris, mean) #sepal.Width 를 Species 별로 처리 하겠다~
+
+aggregate(data=st, avg~class , mean)
 ```
 
 
@@ -464,6 +474,87 @@ library(sqldf)
 iris
 result <- sqldf('select Species,avg("Sepal.Length" ) from iris group by Species')
 print(result)
+
+```
+
+```R
+install.package("dplyr") #다양한 함수들을 가진 패키지
+library(dplyr)
+st<- rename(st, MA=MATH) #column 이름 변경
+st %>% filter(CLASS==1)
+
+```
+
+조건에 따라 column 추가
+
+```R
+st$text <- ifelse(st$AVG>85 , "pass","fail")
+#AVG 가 85 면 pass, 아니면 fail
+```
+
+
+
+연습
+
+```R
+cty<- aggregate(data=mpg,cty~class,mean)
+cty<- cty[order(cty$cty, decreasing = T),]
+
+#정렬
+comp<-aggregate(data=mpg,hwy~manufacturer,mean)
+comp<- comp[order(comp$hwy, decreasing = T),]
+comp[c(1:3),]
+
+#갯수 세기
+comp2 <-  mpg[mpg$class=="compact",]
+comp2<-as.data.frame(table(comp2$manufacturer))
+comp2<-comp2[order(comp2$Freq,decreasing = T),]
+```
+
+
+
+데이터프레임 병합
+
+```R
+x <- data.frame(name=c("a", "b", "c"), math=c(1, 2, 3))
+y <- data.frame(name=c("c", "b", "a"), english=c(4, 5, 6))
+merge(x, y)
+#
+
+x <- data.frame(name=c("a", "b", "c"),math=c(1, 2, 3))
+y <- data.frame(name=c("a", "b", "d"),english=c(4, 5, 6))
+merge(x, y) #없는 데이터는 행을 삭제한 체로
+merge(x, y, all=TRUE) # 없는 데이터는 NA로
+```
+
+ggplot 이용해 그래프 그리기
+
+```R
+ggplot(data=mpg,aes(x= displ, y = hwy)) + #배경 그리기
+geom_point() +# 산점도 추가
+xlim(3,6) + ylim(10,30) # 범위 제한 추가
+```
+
+```
+body <- read.csv("health.csv")
+str(body)
+
+body1<-aggregate(data=body,신장.5Cm단위.~연령대코드.5세단위.,mean)
+colnames(body1)<-c("나이","키")
+body$key<-body$신장.5Cm단위./100
+body$bm<-body$체중.5Kg.단위./body$key/body$key
+body$bmm<-ifelse(body$bm>30,"비만",
+                 ifelse(body$bm>25,"과체중","정상"))
+body3<-aggregate(data=body,연령대코드.5세단위.~bmm,table)
+body4<-aggregate(data=body,bmm~연령대코드.5세단위.,table)
+
+ggplot(data=body,aes(x=연령대코드.5세단위.,y=bm, col=bmm)) + geom_point()
+ggplot(data=body,aes(x=))
+
+body2<-aggregate(data=body,체중.5Kg.단위.~연령대코드.5세단위.,mean)
+colnames(body1)<-c("나이","키")
+ggplot(data=body,aes(x=체중.5Kg.단위.,y=총콜레스테롤))+geom_col()
+ggplot(data=body1,aes(x=신장.5Cm단위.,y=연령대코드.5세단위.))+geom_col()
 
 ```
 

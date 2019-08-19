@@ -1,0 +1,18 @@
+body <- read.csv("health.csv")
+str(body)
+
+body1<-aggregate(data=body,신장.5Cm단위.~연령대코드.5세단위.,mean)
+colnames(body1)<-c("나이","키")
+body$key<-body$신장.5Cm단위./100
+body$bm<-body$체중.5Kg.단위./body$key/body$key
+body$bmm<-ifelse(body$bm>30,"비만",
+                 ifelse(body$bm>25,"과체중","정상"))
+body3<-aggregate(data=body,연령대코드.5세단위.~bmm,table)
+body4<-aggregate(data=body,bmm~연령대코드.5세단위.,table)
+ggplot(data=body,aes(x=연령대코드.5세단위.,y=bm, col=bmm)) + geom_point()
+
+
+body2<-aggregate(data=body,체중.5Kg.단위.~연령대코드.5세단위.,mean)
+colnames(body1)<-c("나이","키")
+ggplot(data=body,aes(x=체중.5Kg.단위.,y=총콜레스테롤))+geom_col()
+ggplot(data=body1,aes(x=신장.5Cm단위.,y=연령대코드.5세단위.))+geom_col()
