@@ -1,0 +1,42 @@
+dd<- function(x, y){
+  return(x+y) ;
+}
+df<-function(){
+  year <- c(2010,2011,2012,2013,2014);
+  qt<-c(980,920,850,789,957)
+  result<- data.frame(YEAR=year,QT=qt);
+  return(result);
+}
+
+db <- function(){
+  library(RJDBC);
+  library(DBI);
+  library(rJava);
+  drv=JDBC(driverClass="oracle.jdbc.driver.OracleDriver",
+           classPath="c:\\ojdbc6_g.jar");
+  conn=dbConnect(drv,"jdbc:oracle:thin:@127.0.0.1:1521:XE","SN","sn");
+  emp<-dbGetQuery(conn,"select * from t_user") 
+  emp
+  dbDisconnect(conn);
+  return (emp)
+}
+
+rhive <- function(){
+  library(RJDBC);
+  library(DBI);
+  library(rJava);
+  hive_lib <- 'c:\\lib';
+  .jinit();
+  .jaddClassPath(dir(hive_lib,full.names = T));
+  .jclassPath();
+  
+  drv=JDBC(driverClass='org.apache.hive.jdbc.HiveDriver',
+           'hive-jdbc-1.0.1.jar');
+  
+  conn=dbConnect(drv,"jdbc:hive2://70.12.114.207:10000",
+                 "root","111111");
+  
+  user=dbGetQuery(conn,"select hdi.country, hdi.hdi from hdi limit 10");
+  dbDisconnect(conn);
+  return (user);
+}
