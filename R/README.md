@@ -235,7 +235,7 @@ is.data.frame(x)#주어진 객체 x가 데이터 프레임인가
 
 - 전체 데이터를 한번에 다루는 벡터 연산을 주로 사용한다.
 - NA 결측치 기록 되지 않는 데이터를 표시하기 위해 사용 되는데 계산에 포함되게 되면 원하는 결과를 얻지 못할 수 있다.
-- 객체의 불변성, 객체의 값을 수정할 수 없고 다만 새로운 객체를 생성된다.
+- 객체의 불변성, 객체의 값을 수정할 수 없고 다만 새로운 객체를 생성한다.
 
 
 
@@ -535,26 +535,133 @@ geom_point() +# 산점도 추가
 xlim(3,6) + ylim(10,30) # 범위 제한 추가
 ```
 
+
+
+##### 텍스트마이닝
+
+```R
+library(KoNLP)
+library(dplyr)
+library(stringr)
+txt <- readLines("hiphop.txt") #타겟파일
+txt2<-str_replace_all(txt,"\\W"," ") # 특수문자 제거
+nouns <- extractNoun(txt2)
+cnt<-table(unlist(nouns))
+df_cnt <- as.data.frame(cnt,stringsAsFactors = F)
+colnames(df_cnt) <- c("word","freq")
+df_word<- filter(df_cnt,nchar(word)>=2)
+df_word<-df_word[order(df_word$freq,decreasing = T),]
+head(df_word,20)
+
+library(wordcloud)
+pal <- brewer.pal(8,"Dark2") #팔레트 생성
+set.seed(4321) #난수 생성
+wordcloud(words= df_word$word,
+          freq= df_word$freq,
+          min.freq = 2,
+          max.words = 200,
+          random.order=F,
+          rot.per = .1,
+          scale = c(4,0,3),
+          colors= pal)
+
+
 ```
-body <- read.csv("health.csv")
-str(body)
 
-body1<-aggregate(data=body,신장.5Cm단위.~연령대코드.5세단위.,mean)
-colnames(body1)<-c("나이","키")
-body$key<-body$신장.5Cm단위./100
-body$bm<-body$체중.5Kg.단위./body$key/body$key
-body$bmm<-ifelse(body$bm>30,"비만",
-                 ifelse(body$bm>25,"과체중","정상"))
-body3<-aggregate(data=body,연령대코드.5세단위.~bmm,table)
-body4<-aggregate(data=body,bmm~연령대코드.5세단위.,table)
+R Oracle 연동
 
-ggplot(data=body,aes(x=연령대코드.5세단위.,y=bm, col=bmm)) + geom_point()
-ggplot(data=body,aes(x=))
+```R
+#1. RJDBC, rJava 두가지 패키지 인스톨
+>install.packages("RJDBC")
+>install.packages("DBI")
+>install.packages("rJava")
+>library(RJDBC)
+>library(DBI)
+>library(rJava)
 
-body2<-aggregate(data=body,체중.5Kg.단위.~연령대코드.5세단위.,mean)
-colnames(body1)<-c("나이","키")
-ggplot(data=body,aes(x=체중.5Kg.단위.,y=총콜레스테롤))+geom_col()
-ggplot(data=body1,aes(x=신장.5Cm단위.,y=연령대코드.5세단위.))+geom_col()
+#2. JDBC 드라이버 로딩 및 Connection 만들기
+> drv=JDBC(driverClass="oracle.jdbc.driver.OracleDriver",classPath="c:\\ojdbc6.jar")
+> conn=dbConnect(drv,"jdbc:oracle:thin:@127.0.0.1:1521:EX","db","db")
 
+#3. 데이터 가지고 오기
+> emp <- dbGetQuery(conn,"select * from emp") 
+
+#4. Connection Close
+> dbDisconnect(conn)
+```
+
+
+
+###### R Java와 연동
+
+REngine.jar , RseveEngine.jar 가 필요하다.
+
+```R
+#R 에서의 listener 역할
+> install.package("Rserve")
+> Rserve::run.Rserve() # Rserve 리스너 실행
+
+#remote 로 실행, run 은 Rstudio 에서 다른 작업을 하지 못하기 때문에
+#이를 방지하기 위해 remote로 한다.
+Rserve(args="--RS-enable-remote")
+```
+
+```java
+RConnection rc = new RConnection();
+		System.out.println("Connection OK");
+		rc.eval("source('C:/rstudio/r4/r05.R', echo=TRUE)");
+		// R 에서의 명령어 실행
+		REXP rx = rc.eval("dd(3,24)");
+		double result = rx.asDouble();	
+
+		// R 에서의 return 값을 받아 와 타입 변환하기		
+		System.out.println(result);
+
+		// R 에서 return 하는 dataFrame 을 받아오기
+		REXP rx2 = rc.eval("df()");
+		RList rlist = rx2.asList();
+		double years [] = rlist.at("YEAR").asDoubles();
+		double qts [] = rlist.at("QT").asDoubles();
+		rc.close();
+	}
+
+```
+
+###### 한글 문제 해결
+
+```java
+RConnection rconn = null;
+rconn = new RConnection();
+
+rconn.setStringEncoding("utf8")
+
+rconn.eval("source('C:/r/d1/jdbc.R',encoding='UTF-8')");
+```
+
+
+
+###### R Hive 연동
+
+```R
+rhive <- function(){
+  library(RJDBC);
+  library(DBI);
+  library(rJava);
+    
+  #Hive 연동에 필요한 라이브러리의 경로 지정
+  hive_lib <- 'c:\\lib';
+  .jinit();
+  .jaddClassPath(dir(hive_lib,full.names = T));
+  .jclassPath();
+  
+  #라이브러리 지정 및 Connect
+  drv=JDBC(driverClass='org.apache.hive.jdbc.HiveDriver','hive-jdbc-1.0.1.jar');  
+  conn=dbConnect(drv,"jdbc:hive2://70.12.114.207:10000","root","111111");
+  
+  #쿼리 문을 통해 데이터 가져오기
+  user=dbGetQuery(conn,"select hdi.country, hdi.hdi from hdi limit 10");
+  dbDisconnect(conn);
+  return (user);
+}
 ```
 
