@@ -614,7 +614,7 @@ RConnection rc = new RConnection();
 		REXP rx = rc.eval("dd(3,24)");
 		double result = rx.asDouble();	
 
-		// R 에서의 return 값을 받아 와 타입 변환하기		
+		// R 에서의 return 값을 받아 와 타입 변환하기
 		System.out.println(result);
 
 		// R 에서 return 하는 dataFrame 을 받아오기
@@ -663,5 +663,44 @@ rhive <- function(){
   dbDisconnect(conn);
   return (user);
 }
+```
+
+
+
+
+
+###### t 검정 (t- test)
+
+두 집단의 평균에 통계적으로 유의한 차이가 있는지 알아볼 때 사용하는 통계 분석 기법.
+
+
+
+```R
+p-value < 2.2e-16
+```
+
+p-value 가 유의할 확률을 의미. 0.05 미만이면 집단 간 차이가 통계적으로 유의하다고 해석할 수 있다.
+
+```R
+
+m2 <-(mpg[,c("trans","hwy")])
+m2$type <- ifelse(substr(m2$trans,1,4) %in% "auto","AUTO","MANUAL")
+#trans 가 auto 로 시작하는 것들을 묶기
+t.test(data=m2,hwy~type,var.equal=T)
+```
+
+상관분석
+
+```R
+library(ggplot2)
+ggplot(data=economics,aes(x=unemploy, y = pce))+ geom_point()
+economics
+cor.test(economics$unemploy,economics$pce)
+result = lm (economics$pce~economics$unemploy)
+result$coefficients
+##       (Intercept)  economics$unemploy  
+##        -1609.1876              0.8273  
+## y = -1609.1876 + 0.8273x 라는 방정식을 세울수 있다.
+
 ```
 
