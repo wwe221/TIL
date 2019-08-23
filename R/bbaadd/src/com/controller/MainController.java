@@ -1,20 +1,12 @@
 package com.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpServletResponse;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.rosuda.REngine.REXP;
 import org.rosuda.REngine.RList;
 import org.rosuda.REngine.Rserve.RConnection;
-import org.rosuda.REngine.Rserve.RserveException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -23,60 +15,77 @@ public class MainController {
 	@RequestMapping("/main.sh")
 	public ModelAndView main() {
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("center", "main");
+		mv.addObject("center", "center");
 		mv.setViewName("main");
 		return mv;
 	}
 
-	@RequestMapping("/highC.sh")
-	public ModelAndView highCharts() {
+	@RequestMapping("/first.sh")
+	public ModelAndView first() {
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("center", "highC");
+		mv.addObject("center", "first");
+		try {
+			ArrayList<String> list = maplist();
+			mv.addObject("weight",list.get(0));
+			mv.addObject("cole",list.get(1));	
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		mv.setViewName("main");
 		return mv;
 	}
-	@RequestMapping("/Rcon1.sh")//
-	@ResponseBody
-	public void maplist(HttpServletResponse hsr) throws Exception {
-		RConnection rc = new RConnection("70.12.114.58");
+	@RequestMapping("/second.sh")
+	public ModelAndView second() {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("center", "bb");
+		mv.setViewName("main");
+		return mv;
+	}
+	@RequestMapping("/third.sh")
+	public ModelAndView third() {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("center", "third");
+		mv.setViewName("main");
+		return mv;
+	}
+	
+	@RequestMapping("/Rcon2.sh")
+	public void map() throws Exception {
+		RConnection rc = new RConnection("70.12.114.194");
+		System.out.println("Connection OK");
+		rc.eval("source('/home/centos/R/heath.R', encoding = 'UTF-8', echo=TRUE)");
+		REXP rx2 = rc.eval("keys()");
+		RList rlist = rx2.asList();
+		rc.close();
+		
+	}
+	public ArrayList<String> maplist() throws Exception {
+		RConnection rc = new RConnection("70.12.114.194");
 		System.out.println("Connection OK");
 		rc.setStringEncoding("utf8");
-		rc.eval(" source('C:/rstudio/r3/heath.R', encoding = 'UTF-8', echo=TRUE)");
+		rc.eval(" source('/home/centos/R/heath.R', encoding = 'UTF-8', echo=TRUE)");
 		REXP rx2 = rc.eval("cole()");
 		RList rlist = rx2.asList();
-		double id[] = rlist.at("weight").asDoubles();
-		double pwd[] = rlist.at("coles").asDoubles();
-		JSONArray ja = new JSONArray();
-		for (int i = 0; i < id.length; i++){
-			JSONObject jo = new JSONObject();
-			jo.put("ID", id[i]);
-			jo.put("pwd", pwd[i]);
-			ja.add(jo);
-		}
-		rc.close();
-		PrintWriter out = null;
-		try {
-			hsr.setCharacterEncoding("EUC-KR");
-			hsr.setContentType("text/json;charset=UTF-8");
-			out = hsr.getWriter();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		String id[] = rlist.at("weight").asStrings();
+		String pwd[] = rlist.at("coles").asStrings();
+		
 		
 		//데이터 1차 가공 id = weight, pwd = 콜레스테롤로 가정
 		String WeightArray = "[";
 		String colesterolArray = "[";
 		for(int i=0;i<id.length;i++) {
 			WeightArray += "'"+id[i]+"', ";
-			colesterolArray += "'" +pwd[i]+"',";
+			colesterolArray += "'" +pwd[i]+"', ";
 		}
-		WeightArray = WeightArray.substring(0, WeightArray.length()-1);
-		colesterolArray = colesterolArray.substring(0,colesterolArray.length()-1);
+		
+		WeightArray = WeightArray.substring(0, WeightArray.length()-2);
+		colesterolArray = colesterolArray.substring(0,colesterolArray.length()-2);
 		WeightArray+="]";
 		colesterolArray+="]";
-		JSONObject jsO = new JSONObject();
-		jsO.put("weight", WeightArray);
-		jsO.put("colesterol",colesterolArray);
-		out.print(jsO);
+		ArrayList<String> list = new ArrayList<String>();
+		list.add(WeightArray);
+		list.add(colesterolArray);
+		return list;
 		}
 }

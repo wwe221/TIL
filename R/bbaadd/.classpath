@@ -17,7 +17,6 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/lib/json-simple-1.1.1.jar"/>
 	<classpathentry kind="lib" path="C:/lib/REngine.jar"/>
 	<classpathentry kind="lib" path="C:/lib/RserveEngine.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
