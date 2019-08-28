@@ -114,3 +114,142 @@ alpha 값으로 투명도를 조정할 수 있다.
 
 layout_weight - 비율을 통해 화면내 영역 크기를 조정할수 있다. vertical - 숫자가 작을 수록 큰 비중을 차지한다. horizontal - 숫자가 클수록 큰 비중
 
+
+
+###### 버튼 리스너
+
+```java
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    Button bt;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);        
+        bt= findViewById(R.id.button);
+        bt.setOnClickListener(this); // 버튼에 이벤트가 들어오면~ MainActivity 가 처리한다. -> onClick 함수가 처리한다.
+    }
+    @Override
+    public void onClick(View view) {
+        Toast.makeText(this, "Button Clicked", Toast.LENGTH_SHORT).show();
+    }
+}
+```
+
+###### 스위치 리스너
+
+```java
+aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+    // anonymous class 를 통해 리스너를 만든다.
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                Toast.makeText(MainActivity.this, "changed", Toast.LENGTH_SHORT).show();     //anonymous 에서는 context를 this 로 설정할수 없기 때문에 상위 클래스를 통해 설정한다.
+                if (b)
+                    bt.setBackgroundColor(Color.BLUE);
+                else
+                    bt.setBackgroundColor(Color.RED);
+
+            }
+        });
+```
+
+###### 가로 / 세로 전환시
+
+mnifest.xml
+
+```xml
+<activity android:name=".MainActivity"
+          android:configChanges="orientation|screenSize|keyboardHidden" >
+    <!--추가가 필요하다-->
+```
+
+
+
+```java
+@Override
+    public void onConfigurationChanged(Configuration newConfig) {// 가로/세로 방향이 바뀌었을때
+        super.onConfigurationChanged(newConfig);
+        if(newConfig.orientation ==Configuration.ORIENTATION_LANDSCAPE){
+            show("Landscape 방향쓰");
+        }
+        else if(newConfig.orientation ==Configuration.ORIENTATION_PORTRAIT){
+            show("Portrait 방향쓰");
+        }
+    }
+```
+
+###### View 를 Toast 에 붙이기
+
+```java
+public void toast(View v){ // Toast 에 새로 만든 화면을 붙이기
+        LayoutInflater inflater = getLayoutInflater();
+        View tview = inflater.inflate(R.layout.toast, (ViewGroup) findViewById(R.id.tLayout)); // 만든 view layout 호출
+        Toast toast = new Toast(this);
+        toast.setView(tview); 
+        toast.setDuration(Toast.LENGTH_LONG);
+    
+    	TextView view = tview.findViewById(R.id.textView);
+    	view.setText("Itzy is exist");
+     	// layout 의 개체 의 속성도 바꿀수 있다.
+        toast.show();
+```
+
+###### dialog
+
+```java
+ public void dialog(View v){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("new Dialog");
+        builder.setMessage("message 1 2 3 ");
+        builder.setIcon(R.drawable.itzy);
+        builder.setNegativeButton("no", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(MainActivity.this, "nonono", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setPositiveButton("yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(MainActivity.this, "yesyesyes", Toast.LENGTH_SHORT).show();
+                finish(); // 어플리케이션 종료
+            }
+        });
+      LayoutInflater inflater = getLayoutInflater();
+        View tview = inflater.inflate(R.layout.toast, (ViewGroup) findViewById(R.id.tLayout));
+        builder.setView(tview);
+     // dialog 의 Message 영역은 다른 view로 치환이 가능 하다.
+     
+        AlertDialog dialog = builder.create();
+        dialog.setCancelable(false); // dialog 무시 불가
+        dialog.show();
+    }
+```
+
+###### progressBar / progressDialog
+
+```java
+ public void pbar(View v){
+        int a = progressBar.getProgress();
+        if(v.getId() == R.id.button){
+            progressBar.setProgress(a+10);
+        }else{
+            progressBar.setProgress(a-10);
+        }
+    }
+    public void pdia(View v){
+        if(v.getId() == R.id.button3){
+            progressDialog= new ProgressDialog(MainActivity.this);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setMessage("progressing...");
+            progressDialog.setButton(progressDialog.BUTTON_NEGATIVE, "canclse", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    progressDialog.dismiss();
+                }
+            });
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+    }
+```
+
