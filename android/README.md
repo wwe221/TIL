@@ -12,6 +12,16 @@ OS 위에 ART 라는 런타임 (Runtime) 이 탑재되어 있다. ( 자바의 JV
 
 설치 후 SDK Manager 를 통해 필요한 버전의 sdk 를 설치한다.
 
+###### 구성요소
+
+액티비티 ( Activity) - 화면구성
+
+서비스 (Service) - 백그라운드에서 실행된다.
+
+브로드캐스트 수신자 (Broadcast Receiver) - OS 의 신호를 받는다. 
+
+내용 제공자 ( Content Provider) - 저장된 정보를 가져와서 사용할 수 있다.
+
 
 
 ###### gradle
@@ -82,6 +92,7 @@ Activity 들을 apk로 묶어서 전송, android 가 이를 풀어서 실행하�
 ###### 안드로이드 생명주기
 
 - onCreate - 실행
+- 
 - onPause - 백그라운드 전환 등 일시정지
 - onResume - 재개
 
@@ -251,5 +262,38 @@ public void toast(View v){ // Toast 에 새로 만든 화면을 붙이기
             progressDialog.show();
         }
     }
+```
+
+###### SharePreference 정보 저장
+
+```java
+//저장
+SharedPreferences pref = getSharedPreferences("pref", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putBoolean("save", true);
+                editor.putString("id",ID);
+                editor.putString("pwd",PWD);
+                editor.commit();
+//가져오기
+SharedPreferences pref = getSharedPreferences("pref", Activity.MODE_PRIVATE);
+        if((pref!=null)&& pref.contains("save")){
+            if(pref.getBoolean("save",false)){
+                return true;
+            }
+        }
+```
+
+
+
+###### Intent 
+
+화면과 화면간의 연결을 돕는다.
+
+```java
+	Intent intent = new Intent(MainActivity.this,Main2Activity.class);
+    //Intent intent = new Intent(getApplicationContext(),Main2Activity.class);
+    intent.putExtra("key",500);
+    intent.putExtra("str","String is good to go");
+    startActivity(intent);
 ```
 
