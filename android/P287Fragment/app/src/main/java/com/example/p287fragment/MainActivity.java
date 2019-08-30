@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     View1Fragment v1;
     View2Fragment v2;
     view3Fragment v3;
+    TextView tv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         v1= (View1Fragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
         v2=new View2Fragment();
         v3=new view3Fragment();
+
 
     }
     public void setbt(){
@@ -40,11 +43,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
     public void fragmentChg(int index){
         if(index == 1 ){
             getSupportFragmentManager().beginTransaction().replace(
                     R.id.container,v1
             ).commit();
+            v1.sett();
         }
         else if (index == 2 ){
             getSupportFragmentManager().beginTransaction().replace(

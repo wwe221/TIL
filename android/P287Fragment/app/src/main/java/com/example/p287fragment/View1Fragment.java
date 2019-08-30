@@ -22,6 +22,7 @@ public class View1Fragment extends Fragment {
         ViewGroup viewGroup=
                 (ViewGroup) inflater.inflate(R.layout.fragment_view1, container, false);
         bt4=viewGroup.findViewById(R.id.button4);
+
         bt4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,5 +40,8 @@ public class View1Fragment extends Fragment {
         textView=viewGroup.findViewById(R.id.textView);
 
         return viewGroup;
+    }
+    public void sett(){
+        textView.setText("hihihihi");
     }
 }

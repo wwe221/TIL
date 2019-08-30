@@ -20,6 +20,8 @@ OS 위에 ART 라는 런타임 (Runtime) 이 탑재되어 있다. ( 자바의 JV
 
 브로드캐스트 수신자 (Broadcast Receiver) - OS 의 신호를 받는다. 
 
+- 브로드캐스트 - OS 가 특정신호( 전화, 메세지 수신 등) 를 모두에게 뿌린다.
+
 내용 제공자 ( Content Provider) - 저장된 정보를 가져와서 사용할 수 있다.
 
 
@@ -296,4 +298,86 @@ SharedPreferences pref = getSharedPreferences("pref", Activity.MODE_PRIVATE);
     intent.putExtra("str","String is good to go");
     startActivity(intent);
 ```
+
+
+
+###### Service
+
+기존의 Activity 와 동일하지만 화면이 필요없다.
+
+백그라운드 동작을 하기 때문.
+
+
+
+MainActivity.java
+
+```java
+//서비스 호출
+i=  new Intent(this,MyService.class);
+        startService(i);
+```
+
+Myservice.java
+
+```java
+public class MyService extends Service {
+    boolean flag = false;
+    public MyService() {
+
+    }
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.i("@@@nCreate","Service Created-------------------");
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i("@@@nCreate","DESTROY-------------------");
+    }
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        //액티비티가 서비스를 호출할 때 onCreate가 호출된 후 호출된다.
+        // args 의 intent 를 서비스 호출시 입력 한다.
+        Log.i("@@@nStartComm","yes , Commander-----------");
+        flag=true;
+        final Intent sendi = new Intent(getApplicationContext(),MainActivity.class);
+        sendi.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                Intent.FLAG_ACTIVITY_SINGLE_TOP|
+                Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //서비스에서 메인으로 보내기 위한 플레그 설정
+        Runnable run = new Runnable() {
+            boolean flaga = flag;
+            @Override
+            public void run() {
+                for(int i=0;i<5;i++){
+                    sendi.putExtra("cmd",i);
+                    startActivity(sendi);
+                    try {
+                        Thread.sleep(1000);
+                        Log.i("@@@onWhile","while-----------");
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    if(!flaga)
+                        break;
+                }
+            }
+        };
+        Thread t =new Thread(run);
+        t.start();
+
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        // TODO: Return the communication channel to the service.
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+}
+
+```
+
+
 
