@@ -9,10 +9,9 @@ import android.util.Log;
 public class MyService extends Service {
     int a =0;
     int b =0;
-    class myBinder extends Binder {
+    class myBinder extends Binder { //myBinder를 통해 MyService 객체를 끄집어 낼 수 있다.
         //액티비티가 서비스에 접근하기 위해 사용
         public MyService getService(){
-
             return MyService.this;
         }
     }
@@ -42,7 +41,7 @@ public class MyService extends Service {
                     sendi.putExtra("cmd2", b);
                     startActivity(sendi);
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(700);
                         Log.i("@@@onWhile", "while-----------");
                     } catch (InterruptedException e) {
                         e.printStackTrace();

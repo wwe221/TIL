@@ -57,6 +57,6 @@ public class MainActivity extends AppCompatActivity {
         int data2= intent.getIntExtra("cmd2",0);
         progressBar.setProgress(data);
         seekBar.setProgress(data2);
+        }
     }
-}
 }

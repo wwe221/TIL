@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.PermissionChecker;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -24,14 +25,11 @@ public class MainActivity extends AppCompatActivity {
         String[] permissions = {
                 Manifest.permission.CALL_PHONE
         };
-
-        checkPermissions(permissions);
-
+        ActivityCompat.requestPermissions(this, permissions, 101);
     }
 
     public void checkPermissions(String[] permissions) {
         ArrayList<String> targetList = new ArrayList<String>();
-
         for (int i = 0; i < permissions.length; i++) {
             String curPermission = permissions[i];
             int permissionCheck = ContextCompat.checkSelfPermission(this, curPermission);
@@ -46,10 +44,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
         String[] targets = new String[targetList.size()];
         targetList.toArray(targets);
-
         ActivityCompat.requestPermissions(this, targets, 101);
 
     }
@@ -106,17 +102,23 @@ public class MainActivity extends AppCompatActivity {
             case R.id.button1:{
                 i = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.naver.com"));
                 //default browser가 뜨면서 이동
+                startActivity(i);
                 break;
             }
             case R.id.button2:{
-                i= new Intent(Intent.ACTION_CALL, Uri.parse("tel:01045418273"));
+                int check = PermissionChecker.checkSelfPermission(this, Manifest.permission.CALL_PHONE);
+                if(check==PermissionChecker.PERMISSION_GRANTED) {
+                    i = new Intent(Intent.ACTION_CALL, Uri.parse("tel:01045418273"));
+                    startActivity(i);
+                }
                 break;
             }
             case R.id.button3:{
                 i= new Intent(Intent.ACTION_VIEW, Uri.parse("tel:01045418273"));
+                startActivity(i);
                 break;
             }
         }
-        startActivity(i);
+
     }
 }
