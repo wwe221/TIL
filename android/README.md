@@ -469,5 +469,82 @@ private void getData() {
 }
 ```
 
+#### Thread
 
+하나의 프로세스 에서 여러개의 Task 를 동시에 처리할 수 있게 해주는 기법
 
+Sub Thread 는 Main Thread 를 제어할 수 없다.
+
+따라서 메인 쓰레드의 Ui 접근을 위해서는 runOnUiThread 사용이 필요하다.
+
+```java
+Runnable r1 = new Runnable() { 
+//한번 이상의 사용을 위해서는 Runnable 로의 정의가 필요하다.
+     @Override
+     public void run() {
+         for(int i=0;i<10;i++){
+             try {
+                 Thread.sleep(300);
+                 Log.d("[t]","-------" + i);
+             } catch (InterruptedException e) {
+                 e.printStackTrace();
+             }
+             tv1.setText(""+i);
+         }
+         runOnUiThread(new Runnable() {
+             // 서브 스레드가 메인 스레드의 ui에 접근할 수 있게 해 주는 녀석
+             @Override
+             public void run() {
+
+                 b1.setEnabled(true);
+             }
+         });
+     }
+};
+Thread t = new Thread(r1);
+t.start();
+```
+
+thread handler
+
+```java
+Runnable r = new Runnable() {
+    @Override
+    public void run() {
+        Bundle bundle = new Bundle(); // 번들 선언
+        for(int i=0;i<10;i++){
+            try {
+                Thread.sleep(300);
+                Log.d("[t]","========" + i);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            final int a = i ;
+            Message message = ch.obtainMessage();
+            bundle.putInt("cnt",i);
+            message.setData(bundle);
+            ch.sendMessage(message);
+            //서브 스레드에서 메인스레드로 값을 전달하는 방법
+        }
+        Message message = ch.obtainMessage();
+        bundle.putInt("cmd",1200);
+        message.setData(bundle);
+        ch.sendMessage(message);
+    }
+};
+class countHandler extends Handler{ // 핸들러 선언
+    @Override
+    public void handleMessage(@NonNull Message msg) { 
+        // msg 를 통해 data가 들어있는 bundle을 통해 값을 전달 받는다.
+        Bundle bundle = msg.getData();
+        int value = bundle.getInt("cnt");
+        tv.setText(value+"");
+        if(bundle.getInt("cmd")==1200)
+            b.setEnabled(true);
+    }
+}
+```
+
+service 는 메인쓰레드가 죽어도 작동하지만 
+
+서브 쓰레드는 메인쓰레드안에서 돌아가기 때문에 메인쓰레드가 죽으면 서브스레드도 작동하지 못한다.
