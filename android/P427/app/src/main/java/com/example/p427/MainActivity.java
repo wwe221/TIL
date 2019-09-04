@@ -6,8 +6,12 @@ import androidx.core.content.PermissionChecker;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +23,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.zip.Inflater;
 
@@ -40,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Manifest.permission.CALL_PHONE
         };
         ActivityCompat.requestPermissions(this, permissions, 101);
+        items = new ArrayList<>();
     }
 
     @Override
@@ -67,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
             public void addItem(Item item){
                 alist.add(item);
-
             }
             @Override
             public int getCount() {
@@ -82,13 +92,35 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 View myView = null;
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 myView = inflater.inflate(R.layout.mylayout, container,true);
-                ImageView im = myView.findViewById(R.id.imageView);
                 TextView tv1 = myView.findViewById(R.id.textView);
                 TextView tv2 = myView.findViewById(R.id.textView2);
-                int l = alist.size()-1;
-                tv1.setText(alist.get(l - i).name);
-                tv2.setText(alist.get(l - i).phone);
-                im.setImageResource(alist.get(l - i).imgId);
+                tv1.setText(alist.get(i).name);
+                tv2.setText(alist.get(i).phone);
+                String imgname = alist.get(i).img;
+                imgname="http://70.12.60.100/hello/"+imgname;
+                final ImageView im = myView.findViewById(R.id.imageView);
+                final String finalImgname = imgname;
+                Thread t= new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        URL u =null;
+                        try {
+                            InputStream is = null;
+                            u = new URL(finalImgname);
+                            is=u.openStream();
+                            final Bitmap bm = BitmapFactory.decodeStream(is);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    im.setImageBitmap(bm);
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                t.start();
                 final String phone ="tel:";
                 final String numb = tv2.getText().toString();
                /* myView.setOnClickListener(new View.OnClickListener() {
@@ -108,23 +140,68 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 });*/
                 return myView;
             }
+            public void setImg(ImageView view , String url){
+                try {
+                    URL u = new URL(url);
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
 
+            }
             @Override
             public long getItemId(int i) {
                 return i;
             }
         }
     public void clickBt(View v){
-            getData();
-            it = new itemAdapter(items);
-            listView.setAdapter(it);
+        getData();
+        it = new itemAdapter(items);
+        listView.setAdapter(it);
     }
     public void clickBt2(View v){
         it.addItem(new Item("새로운이름","0111155555",R.drawable.itzy));
         it.notifyDataSetChanged(); // 새로고침 느낌
     }
+    private void getData(){
+        String url = "http://70.12.60.100/hello/Item.jsp";
+        HttpTask httpTask = new HttpTask(url);
+        httpTask.execute();
+    }
+    class HttpTask extends AsyncTask<String,Void,String> {
+        String url;
+        public HttpTask(String url){
+            this.url = url;
+        }
+        @Override
+        protected void onPreExecute() {
+        }
+        @Override
+        protected String doInBackground(String... strings) {
+            String str = HttpHandler.getString(url);
+            return str;
+        }
+        @Override
+        protected void onPostExecute(String str) {
+            Log.d("[asdfasdfasdf][]",str);
+            JSONArray ja = null;
+            try {
+                ja = new JSONArray(str);
+                for(int i=0;i <ja.length();i++){
+                    JSONObject jo = ja.getJSONObject(i);
+                    String name = jo.getString("name");
+                    String phone = jo.getString("nation");
+                    String img = jo.getString("img");
+                    Log.i("[JSON}}",name + " " + phone + " "+img);
+                    Item item = new Item(name, phone,img);
+                    items.add(item);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
-    private void getData() {
+        }
+    }
+    private void getDataOg() {
         items = new ArrayList<>();
         items.add(new Item("일경헌","01011112222",R.drawable.it01));
         items.add(new Item("이경헌","01012345678",R.drawable.it02));

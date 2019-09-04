@@ -548,3 +548,62 @@ class countHandler extends Handler{ // 핸들러 선언
 service 는 메인쓰레드가 죽어도 작동하지만 
 
 서브 쓰레드는 메인쓰레드안에서 돌아가기 때문에 메인쓰레드가 죽으면 서브스레드도 작동하지 못한다.
+
+#### AsyncTask
+
+뭔가 멋진거임!
+
+스레드와 ui를 위한 코드를 한번에 넣을 수 있다.
+
+또한 쓰레드 작동 중 제어하기가 편리하다.
+
+```java
+class MyTask extends AsyncTask<Integer , Integer, String>{
+    //3가지 generic 사용 <argument , 쓰레드 동작중의 발생 타입 , 리턴 타입>
+        int cnt;
+        public MyTask(int cnt) {
+            this.cnt = cnt;
+        }
+        @Override
+        protected void onPreExecute() { // 실행 전 처리
+            progressBar.setMax(cnt);
+            button.setEnabled(false);
+            textView.setText("Start Task");
+        }
+        @Override
+        protected String doInBackground(Integer... integers) { //Thread가 동작하는 부분
+            String str = "";
+            int sum = 0;
+            for(int i=0;i<=cnt;i++){
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                sum+=i;
+                publishProgress(i); // onProgressUpdate 에게 변수를 던져준다.
+            }
+            str+=sum;
+            return str;
+        }
+        @Override
+        protected void onProgressUpdate(Integer... values) {// Thread 에 의해 발생하는 내용 처리
+            progressBar.setProgress(values[0].intValue());
+        }
+        @Override
+        protected void onPostExecute(String s) { // 실행 후 처리
+            button.setEnabled(true);
+            textView.setText("End Task "+s);
+        }
+    }
+```
+
+AsyncTask 는 기본으로 하나만 포함할 수 있는  Pool 을  가지고 있어 여러개의 Task 가 동시에 작동하지 않지만, 이를 보완하기 위해 총 5개를 가질수 있는 pool 이 새로 update 되었다.
+
+이를 사용하기 위해서는 기존의 .execute() 명령어 대신에
+
+```java
+spTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+```
+
+를 통해 실행시킬 수 있다.

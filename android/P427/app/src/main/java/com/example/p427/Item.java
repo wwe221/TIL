@@ -4,6 +4,7 @@ public class Item {
     String name;
     String phone;
     int imgId;
+    String img;
     public Item() {
 
     }
@@ -11,6 +12,20 @@ public class Item {
     public Item(String name, String phone) {
         this.name = name;
         this.phone = phone;
+    }
+
+    public Item(String name, String phone, String img) {
+        this.name = name;
+        this.phone = phone;
+        this.img = img;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public Item(String name, String phone, int imgId) {
