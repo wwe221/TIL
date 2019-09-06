@@ -1,11 +1,11 @@
-# git 기초 입니당
+# git
 
 ### 코드 관리
     SCM
         Source Code Management
     VCS
         Version Control System    
-
+    
     Working Direcory
         Staging Area   
             Commiting
@@ -55,3 +55,37 @@ Fork 를 통해서 repository를 가져온다.
 수정한 내용을 자신의 repository 에 push 한다.
 
 Owner 에게 pull request를 보낸다.
+
+# Git Branch
+
+Branch 를 통한 코드 관리
+
+CI & CD
+Git의 Master brancn 에 새로운 commit 이 생기면 `자동으로`프로젝트를 메인서버에 올리고 메인서비스에 적용이 되게끔 구현해 놓은 기능
+
+때문에 아무나 Master Branch에 push 할 수 없게끔 권한을 줘야 한다.
+
+## Branch
+
+각각의 가지(branch) 는 서로 독립적이기 때문에 간섭할 수 없다.
+기본적으로 만들어 지는 brach를 master라 한다.
+
+### 명령어
+
+`git branch` 현재 branch 의 상태 ( 어떤 브랜치가 있는지, 내가 어떤 브랜치 인지) 확인
+
+`git branch [브랜치이름]` 새로운 브랜치 생성
+
+`git switch [브랜치이름]` 브랜치 이동
+
+`git merge [브랜치이름]` 현재 브랜치에서 해당 브랜치를 가져와 합친다.
+
+`git branch -d [브랜치이름] ` 브랜치 삭제
+
+`git checkout -b [브랜치이름]` 브랜치를 생성하고 이동 == `git switch -c [브랜치이름]`
+
+# Merge Scenario
+
+1. Fast Forward Merge - 기존의 브랜치에 더 이상 수정 사항이 없을 경우 기존 브랜치의 Pointer 만 옮겨도 무방한 경우
+2. Auto Merge (Merge without Conflict) - 두 브랜치의 수정 파일이 겹치지 않는 경우 ( 충돌 conflict 가 없는 경우)
+3. Merge With Conflict - 두 브랜치의 수정된 파일이 겹치는 경우, conflict 가 발생하고 이를 해결 해야만 merge가 성공적으로 이루어 질 수 있다.
