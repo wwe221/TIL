@@ -299,6 +299,11 @@ SharedPreferences pref = getSharedPreferences("pref", Activity.MODE_PRIVATE);
     startActivity(intent);
 ```
 
+```java
+Intent i = getIntent();
+titleT = i.getStringExtra("str");
+```
+
 
 
 ###### Service
@@ -607,3 +612,87 @@ spTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 ```
 
 를 통해 실행시킬 수 있다.
+
+
+
+#### 모바일데이터베이스
+
+안드로이드는 임베디드 관계형 데이터베이스인 SQLite를 가지고 있다.
+
+SharedPreference 와는 달리 어플리케이션이 종료되어도 데이터가 유지된다.
+
+```java
+public class DatabaseHelper extends SQLiteOpenHelper { // 사용하기 편리하게 새로운 클래스를 정의하였다.
+    public static String NAME = "employee.db"; //사용하는 db 이름 선언
+    public static int VERSION = 1; // 임의로 개발자가 정하는 버전
+    public DatabaseHelper(Context context) {
+        super(context, NAME, null, VERSION);
+    }
+    public void onCreate(SQLiteDatabase db) {
+        println("onCreate 호출됨");
+        String sql = "create table if not exists emp("
+            + " _id integer PRIMARY KEY autoincrement, "
+            + " name text, "
+            + " age integer, "
+            + " mobile text)";
+        db.execSQL(sql);
+    }
+    public void onOpen(SQLiteDatabase db) {
+        println("onOpen 호출됨");
+    }
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        println("onUpgrade 호출됨 : " + oldVersion + " -> " + newVersion);
+        if (newVersion > 1) {
+            db.execSQL("DROP TABLE IF EXISTS emp");
+        }
+    }
+    public void println(String data) {
+        Log.d("DatabaseHelper", data);
+    }
+}
+```
+
+
+
+```java
+DatabaseHelper dbHelper;
+SQLiteDatabase database;
+public void create (){
+        String name = "dia";
+        dbHelper = new DatabaseHelper(this);
+        database = dbHelper.getWritableDatabase();
+        if (database == null) {
+            return;
+        }
+    	//execSQL 을 통해 sql 문을 실행 시킬수 있다.
+        database.execSQL("create table if not exists " + name + "("
+                + " _id integer PRIMARY KEY autoincrement, "
+                + " title text, "
+                + " date text, "
+                + " contents text)");
+    }
+public void select (){
+    	//JDBC 와 유사하게 커서를 통해 쿼리문의 결과를 저장하고 하나씩 읽을수 있다.
+        Cursor cursor = database.rawQuery("select _id, title, date, contents from dia", null);
+        int recordCount = cursor.getCount();
+        for (int i = 0; i < recordCount; i++) {
+            cursor.moveToNext();
+            int id = cursor.getInt(0);
+            String name = cursor.getString(1);
+            String age = cursor.getString(2);
+            String mobile = cursor.getString(3);
+            Item it = new Item(name, age, mobile);
+            items.add(it);
+        }
+    	cursor.close();
+}
+```
+
+
+
+###### 내용 제공자 Contents Provider 
+
+```java
+
+```
+

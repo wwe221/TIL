@@ -125,10 +125,12 @@ public class MainActivity extends AppCompatActivity{
         @Override
         protected String doInBackground(String... strings) {
             String str = HttpHandler.getString(url);
+            Log.i("test",str);
             return str;
         }
         @Override
         protected void onPostExecute(String str) {
+            Log.i("posttest",str);
             JSONArray ja = null;
             try {
                 ja = new JSONArray(str);

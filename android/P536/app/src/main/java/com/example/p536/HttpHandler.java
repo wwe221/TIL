@@ -1,4 +1,4 @@
-package com.example.p535;
+package com.example.p536;
 
 import android.util.Log;
 
@@ -23,6 +23,7 @@ public class HttpHandler {
             hcon.setRequestMethod("GET");
             is = new BufferedInputStream(hcon.getInputStream());
             result = convertStr(is);
+            Log.i("handlertest",result);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -38,8 +39,8 @@ public class HttpHandler {
         String temp;
         try{
             while((temp = br.readLine()) != null){
-                Log.i("temptest",temp);
                 sb.append(temp);
+                Log.i("temptest",temp);
             }
         }catch(Exception e){
             e.printStackTrace();
