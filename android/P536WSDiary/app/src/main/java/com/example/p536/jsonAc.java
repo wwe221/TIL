@@ -1,4 +1,4 @@
-package com.example.p535;
+package com.example.p536;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,8 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,17 +25,17 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity{
-    ArrayList<Item> items;
+public class jsonAc extends AppCompatActivity {
+    ArrayList<JItem> items;
     ListView listView;
     LinearLayout container;
     itemAdapter it;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_json);
         container = findViewById(R.id.container);
-        listView = findViewById(R.id.listView);
+        listView = findViewById(R.id.jsonLView);
         items = new ArrayList<>();
 
     }
@@ -48,12 +46,12 @@ public class MainActivity extends AppCompatActivity{
         it.notifyDataSetChanged();
     }
     class itemAdapter extends BaseAdapter {
-        ArrayList<Item> alist;
+        ArrayList<JItem> alist;
 
-        public itemAdapter(ArrayList<Item> alist) {
+        public itemAdapter(ArrayList<JItem> alist) {
             this.alist = alist;
         }
-        public void addItem(Item item){
+        public void addItem(JItem item){
             alist.add(item);
         }
         @Override
@@ -75,7 +73,7 @@ public class MainActivity extends AppCompatActivity{
         public View getView(int i, View view, ViewGroup viewGroup) {
             View myView = null;
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            myView = inflater.inflate(R.layout.mylayout, container,true);
+            myView = inflater.inflate(R.layout.mylayout2, container,true);
             TextView tv1 = myView.findViewById(R.id.textView);
             TextView tv2 = myView.findViewById(R.id.textView2);
             tv1.setText(alist.get(i).name);
@@ -139,7 +137,7 @@ public class MainActivity extends AppCompatActivity{
                     String phone = jo.getString("nation");
                     String img = jo.getString("img");
                     Log.i("[JSON}}",name + " " + phone + " "+img);
-                    Item item = new Item(name, phone,img);
+                    JItem item = new JItem(name, phone,img);
                     items.add(item);
                 }
             } catch (JSONException e) {
