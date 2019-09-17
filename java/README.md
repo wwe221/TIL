@@ -319,3 +319,74 @@ collection API
 - 표준화가 가능
 - 서로 관계없는 클래스들 사이에 관계를 맺어 줄 수 있다.
 - 독립적인 프로그래밍이 가능하다.
+
+
+
+## Thread
+
+프로세스 : OS로 부터 실행에 필요한 자원을 할당받은 프로그램.
+
+쓰레드 :  프로세스가 생성한 동시 수행가능한 작업 단위. 프로세스가 할당 받은 자원을 공유한다.
+
+프로세스로의 자원을 함께 나눠 쓰기 때문에 메모리 활용 차원에서 이득이다.
+
+
+
+```java
+class myThread extends Thread{ 
+    // Thread 를 상속 받아 새로운 쓰레드를 정의할수 있다
+    String name;
+	public MyThread(String name) {
+		this.name = name;
+	}
+	@Override
+	public void run() {// Thread 가 수행할 작업을 run 메소드로 정의해준다.
+		for(int i=0;i<20;i++) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			System.out.println(name + " "+i);
+		}
+	}   
+}
+
+class MYThread2 implements Runnable{ // extends를 이용해 상속을 받으면 다른 부모를 둘수 없기 때문에 다른 부모가 필요할 경우 Runnable 인터페이스를 이용한다.
+	String name;
+	public MYThread2(String name) {
+		this.name = name;
+	}
+	@Override
+	public void run() {
+		for(int i=0;i<20;i++) {
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println(name + " "+i);
+		}
+	}
+}
+
+MYThread2 a = new MYThread2("number1");
+Thread t= new Thread(a);
+t.start();
+//Runnable 을 Thread를 이용하여 실행할 수 있다.
+```
+
+setDaemon();
+
+메인 쓰레드가 종료가 되면 해당 쓰레드도 종료시킨다.
+
+```java
+st.setDaemon(true);
+st.start();
+for(int i=0;i<10;i++) {
+    Thread.sleep(500);
+    System.out.println(i);
+}
+```
+
