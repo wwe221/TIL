@@ -390,3 +390,53 @@ for(int i=0;i<10;i++) {
 }
 ```
 
+#### 쓰레드 실행제어
+
+interrupt - 해당 쓰레드의 interrupted 상태를 변경시킨다.
+
+```java
+th1.interrupt();
+
+if(isInterrupted()){
+    //로 상태를 확인할 수 있다.
+}
+```
+
+
+
+join - 쓰레드가 종료 될 때 까지 기다린다.
+
+```java
+Th2 th2 = new Th2();
+th2.start();
+th2.join();// th2 쓰레드가 수행을 끝낼때 까지 기다린다.
+System.out.println("sum:"+th2.getSum());
+```
+
+
+
+#### Syncronized 동기화
+
+여러쓰레드가 공유하고 있는 자원에 접근한다면 값의 변화에 동기화가 필요하다.
+
+하나의 쓰레드가 공유자원의 사용을 하고 있다면 다른 쓰레드들은 앞선 쓰레드의 작업이 끝날때 가지 기다리게 된다.
+
+```java
+public synchronized void widthdraw(int m) throws Exception{	
+    if(balance>= m)
+        balance -=m;
+    else
+        wait();
+    //wait 처리를 하게 되면, balance < m 을 만족할 때 까지 waiting pool 에서 일시정지상태로 기다리게 된다.
+}
+public void deposit(int m) throws Exception{
+    if(m <=0) {
+        throw new Exception();
+    }
+    balance += m;
+    notify();
+    //notify 를 통해 waiting 을 하고 있는 쓰레드들에게 신호를 줌으로서 Runnable 상태로 만들어 준다.
+	}
+
+```
+
