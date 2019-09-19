@@ -440,3 +440,190 @@ public void deposit(int m) throws Exception{
 
 ```
 
+
+
+## 자바의 I/O
+
+###### 스트림 Stream
+
+​	데이터를 운반하는데 사용되는 통로
+
+File I/O , Network I/O 가 대표적, Thread 간의 Stream 도 존재한다.
+
+1 byte 단위로 데이터를 전달한다. 
+
+Filter - 큰 데이터를 다룰때는 buffer 를 사용해 큰 단위로 데이터를 전달하여 시간을 단축한다.
+
+
+
+Java 는 기본적으로 2 byte 를 단위로 다루기 때문에 
+
+InputStream :arrow_forward: Reader
+
+OutputStream :arrow_forward: Writer
+
+를 사용한다.
+
+```java
+FileInputStream fi = null;
+	FileReader fr = null;
+	BufferedReader br = null;
+	try {
+		fi = new FileInputStream("text.txt");
+		int data =0 ;			
+		while((data=fi.read())!= -1) { // -1 이면 문장의 끝
+			char c = (char) data;
+			System.out.println(c);
+		}
+		fr = new FileReader("text.txt");
+		br = new BufferedReader(fr);
+		String str ;
+		while( (str = br.readLine()) != null) {
+			System.out.println(str);
+		}
+		fr.close();
+		br.close();
+    }
+    catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+    }
+```
+
+###### Pipe 이용하여 데이터 전달
+
+inputThread.java
+
+```java
+public class InputThread extends Thread {
+	PipedReader input = new PipedReader();
+	BufferedReader br;
+	public InputThread(String name) {
+		super(name);
+		input = new PipedReader();
+	}
+
+	public void run() {
+		StringWriter sw = new StringWriter();
+		br = new BufferedReader(input);
+		StringBuffer sb = new StringBuffer();
+		int data;
+		String str;
+		System.out.println("Ready");
+		try {
+			while ((str=br.readLine())!=null) { // input 이 있기 까지 기다린다.
+				sb.append(str);
+			}
+			System.out.println("recived " + sb.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public PipedReader getInput() {
+		return input;
+	}
+
+	public void connect(PipedWriter output) {
+		try {
+			input.connect(output);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}
+
+```
+
+outputThread.java
+
+```java
+public class OuputThread extends Thread {
+	PipedWriter output = new PipedWriter();
+
+	public OuputThread(String name) {
+		super(name);
+		output = new PipedWriter();
+	}
+
+	public void run() {
+		Scanner sc = new Scanner(System.in);
+		try {
+			String msg = sc.next();
+			System.out.println(msg);
+			output.write(msg);
+			output.flush();
+			output.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public PipedWriter getOutput() {
+		return output;
+	}
+
+	public void connect(PipedReader input) {
+		try {
+			output.connect(input);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}
+
+```
+
+main
+
+```java
+public class Main {
+	public static void main(String[] args) {
+		InputThread it = new InputThread("");
+		OuputThread ot = new OuputThread("");
+		it.connect(ot.getOutput());
+		it.start();
+		ot.start();
+	}
+}
+```
+
+Java의 Object 도 Stream을 통해서 전달이 가능하다.
+
+```java
+FileOutputStream fos = new FileOutputStream("user.dat");
+BufferedOutputStream bos = new BufferedOutputStream(fos);
+ObjectOutputStream oop = new ObjectOutputStream(bos);
+User u = new User("id01", "pwd01", 30);
+oop.writeObject(u);
+oop.close();
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+FileInputStream fos = new FileInputStream("user.dat");
+BufferedInputStream bos = new BufferedInputStream(fos);
+ObjectInputStream oop = new ObjectInputStream(bos);		
+User u = (User) oop.readObject();
+System.out.println(u);
+oop.close();
+```
+
+Stream을 통해서 전달하는 것을 원치않으면 transient 로 선언한다.
+
+```java
+public class User implements Serializable{
+	private String id;
+	transient private String pwd;
+	private int age;
+	public String getId() {
+		return id;
+	}
+}
+```
+
+## Network
+
+InetAddress - ip 주소를 알아내기 위해 사용.
