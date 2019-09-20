@@ -627,3 +627,182 @@ public class User implements Serializable{
 ## Network
 
 InetAddress - ip 주소를 알아내기 위해 사용.
+
+Screen Scrapping
+
+```java
+public static void main(String[] args) throws Exception {
+    URL url = new URL("http://70.12.60.90/test");
+    URLConnection conn = url.openConnection();
+    InputStream is =conn.getInputStream();
+    InputStreamReader isr = new InputStreamReader(is);
+    BufferedReader br = new BufferedReader(isr);
+    String data;
+    StringWriter sw = new StringWriter();
+    while((data = br.readLine())!=null) {
+        sw.write(data);
+        sw.write("\n");
+    }
+    System.out.println(sw.toString());
+    sw.close();
+}
+```
+
+File 또한 byte 단위로 읽어들인후 출력을 통해 다운로드 받을 수 있다.
+
+```java
+public static void main(String[] args) throws Exception {
+    URL url = new URL("http://70.12.60.90/test/oracle.zip");
+    InputStream is = url.openStream();
+    InputStreamReader isr = new InputStreamReader(is);
+    FileOutputStream fo = new FileOutputStream("output.zip");
+    BufferedOutputStream bos = new BufferedOutputStream(fo);
+    int dat =0;
+    BufferedInputStream br = new BufferedInputStream(is,1024);
+    while((dat = br.read())!=-1) {
+        bos.write(dat);
+    }
+    System.out.println("Finishhhh.....");
+    br.close();
+    bos.flush();
+    bos.close();
+}
+```
+
+
+
+url에 쿼리를 전달하고 값 받아오기
+
+```java
+String id ="zukgeDDa";
+String pwd ="banga";
+URL url = new URL("http://70.12.60.90/test/login.jsp?id="+id+"&pwd="+pwd);		 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+conn.setRequestMethod("GET");
+conn.setReadTimeout(10000);
+InputStream a= conn.getInputStream();
+InputStreamReader bs = new InputStreamReader(a);
+BufferedReader br = new BufferedReader(bs);
+if(conn.getResponseCode() ==HttpURLConnection.HTTP_OK) { // 정상연결
+    String str;
+    while((str=br.readLine())!=null)
+        System.out.println(str);			
+}
+else {
+    System.out.println("Err");
+}
+bs.close();
+```
+
+## Socket
+
+프로세스 간의 통신을 위해 사용되는 endpoint.
+
+#### 
+
+### TCP / IP
+
+TCP (Transmission Control Protocol) / IP (Internet Protocol)
+
+- 이기종 시스템 간의 통신을 위한 표준 프로토콜의 집합
+
+TCP 와 UDP
+
+TCP
+
+- 1대1 방식
+- 연결 후 통신
+- 신뢰성보장
+
+UDP
+
+- n 대 n 통신방식
+- 비연결기반
+- 신뢰성 없는 전송
+- 전송속도가 빠르다.
+
+```java
+public class Server {
+    int port;
+    ServerSocket serverSocket;
+    Socket socket;
+    OutputStream out;
+    OutputStreamWriter outW;
+    BufferedWriter bw;
+    public Server(int port) throws IOException {
+        this.port = port;
+        serverSocket = new ServerSocket(port);
+    }
+    public void startServer() throws IOException {
+        System.out.println("Server Start..");
+        boolean flag = true;
+        while (flag) {
+            try {
+                System.out.println("Server Ready..");
+                socket = serverSocket.accept(); // 접속을 기다린다.
+                System.out.println("Server Accepted.. " + socket.getInetAddress());
+                out = socket.getOutputStream();
+                outW = new OutputStreamWriter(out);
+                bw = new BufferedWriter(outW);
+                bw.write("wellcome to the paradise");
+            } catch (IOException e) {
+                throw e;
+            } finally {
+                if (bw != null)
+                    bw.close();
+                if (socket != null)
+                    socket.close();
+            }
+        }
+        System.out.println("Server Dead... ...");
+    }
+}
+```
+
+```java
+public class Client {
+    String ip;
+    int port;
+    ServerSocket serverSocket;
+    Socket socket;
+    InputStream in;
+    InputStreamReader inR;
+    BufferedReader br;
+    public Client(String ip, int port) {
+        this.ip = ip;
+        this.port = port;
+    }
+    public void request() throws Exception {
+        try {
+            in = socket.getInputStream();
+            inR = new InputStreamReader(in);
+            br = new BufferedReader(inR);
+            String str = br.readLine();
+            System.out.println(str);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (in != null)
+                in.close();
+            if (inR != null)
+                inR.close();
+            if (br != null)
+                br.close();
+        }
+    }
+    public void startClient() throws Exception {
+        System.out.println("Client Start");
+        try {
+            socket = new Socket(ip, port);
+            request();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (socket != null)
+                socket.close();
+        }
+    }
+}
+```
+
+
+
