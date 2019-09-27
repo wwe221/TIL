@@ -128,7 +128,7 @@ public class Client {
 	public static void main(String[] args) {
 		Client client = null;
 		try {
-			client = new Client("70.12.60.110", 1234);
+			client = new Client("70.12.228.218", 1234);
 			//client = new Client("70.12.60.90", 8888);
 			//client = new Client("70.12.60.111", 8877);
 			client.start();
