@@ -84,6 +84,10 @@ Git의 Master brancn 에 새로운 commit 이 생기면 `자동으로`프로젝�
 
 `git checkout -b [브랜치이름]` 브랜치를 생성하고 이동 == `git switch -c [브랜치이름]`
 
+`gti branch -r 원격 저장소에 있는 branch 확인`
+
+`git checkout -t origin/[브랜치 이름]`
+
 # Merge Scenario
 
 1. Fast Forward Merge - 기존의 브랜치에 더 이상 수정 사항이 없을 경우 기존 브랜치의 Pointer 만 옮겨도 무방한 경우
