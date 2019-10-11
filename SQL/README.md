@@ -534,3 +534,15 @@ Drop sequence pseq
 /*drop 을 이용해 시퀀스를 삭제한다. */
 ```
 
+
+
+MYSQL 에서 변수 사용하기
+
+```mysql
+SET @hour = -1; 
+SELECT @hour := @hour + 1 AS HOUR, /* 변수 선언과 1씩 증가 시키기*/
+( SELECT COUNT(DATETIME) FROM ANIMAL_OUTS B WHERE HOUR(DATETIME) = @hour ) 
+AS COUNT FROM ANIMAL_OUTS A 
+WHERE @hour < 23
+```
+
