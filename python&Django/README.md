@@ -72,9 +72,9 @@ print(response.text)
 
 ​	Key - Value , 쌍으로 데이터를 저장하는 방식,
 
-Java의 HashMap 과 같다.
+Java의 HashMap 과 같다. 
 
-Key 값은 고유해야한다, 중복 되면 안된다 이말이다.
+Key 값은 고유해야한다, 중복 되면 안된다 이말이다. o
 
 ```python
 lunch_menu={
@@ -132,7 +132,7 @@ print(random.sample(list(keys),2))
 
 #### 덕타이핑 duck Typing
 
-꽥꽥 울고 뒤뚱뒤뚱 걸으면오리다,
+꽥꽥 울고 뒤뚱뒤뚱 걸으면 오리다,
 
 객체의 변수 및 메소드의 집합이 객체의 타입을 결정한다.
 
@@ -237,7 +237,90 @@ $env:FLASK_ENV="Development"
 
 ```
 
+## Day3
 
+- parameter
+  - query string
+  - path parameter
+- html 파일로 view 만들기 (render template)
+- Beautiful soup
+  - 사이트 구조 분석 (html)
+  - URL 구조(query string) 분석
+
+
+
+```python
+@app.route('/')
+def index():          
+    # request.args -> Dicktionary(Immutable)
+    # 클라이언트로 부터 받은 파라미터를 저장하고 있다
+    student = request.args.get('student')
+    return student
+
+## Spring 의 그것과 같이 해당 url로 접속시 화면을 연결 해 준다.
+## /daum_webtoon/ 뒤에 오는 값을 day에 담아 사용한다.
+@app.route('/daum_webtoon/<day>')
+def daum_toon(day) :    
+    url = f"http://webtoon.daum.net/data/pc/webtoon/list_serialized/{day}"
+    ## formating , 문자열 합치기
+    data = request_json_from_url(url)    
+    dayWebtoon[day] = parse_daum_webtopon_data(data)
+    return dayWebtoon
+
+@app.route('/daum_webtoon')
+def daum_toon_index():
+    days = ['mon','tue','wed','thu','fri','sat','sun']
+    msg = "alone"
+    return render_template('daum_webtoon_list.html', **locals())
+## **locals() 로 해당 html 에 지역 번수들을 전달해줄 수 있다.
+## 만약 원하는 데이터만 전달해 주고 싶다면, (~~.html' , days = days , msg = msg) 로도 가능하다.
+```
+
+#### BeutifulSoup
+
+html 속에서 원하는 정보들을 find , select 할 수 있다.
+
+
+
+```python
+from bs4 import BeautifulSoup
+import requests
+url = "http://www.saramin.co.kr/zf_user/jobs/list/job-category?cat_cd=404&panel_type=&search_optional_item=n&search_done=y&panel_count=y"
+response = requests.get(url)
+html = BeautifulSoup(response.text,'html.parser')
+## 받아온 데이터를 파싱한다.
+company_names = html.select('.company_name')
+# company_name 클래스를 list 형태로 모두 가져온다
+
+###############################################
+
+html = BeautifulSoup(response.text,'html.parser')
+ ## html 내 상위 클래스 안에 있는 것들에 대해 따로 처리가 가능하다.
+company = html.select('.part_top')
+for com in company:
+    name = com.select_one('.company_name')
+    rec = com.select_one('.recruit_name')
+    cond  = com.select_one('.list_recruit_condition')
+    print(f'{name.text} :: {rec.text} -{cond.text}')
+ #################################################
+    
+
+## 회사 공고 상세보기 페이지에서 데이터 크롤링하기
+company_list = html.select('ul.product_list li')
+for com in company_list:
+    company_info_url =f"http://www.saramin.co.kr{com.select_one('a')['href']}"
+    idx = company_info_url.split('=')[-1]    
+    company_info_url = 'http://www.saramin.co.kr/zf_user/jobs/relay/view-ajax'
+    company_info_param = { 'rec_idx':idx }
+    #post 방식을 사용하는 url 이기 때문에 parameter 들을 변수를 통해 넘겨준다.
+    company_response = requests.post(company_info_url, params = company_info_param)
+    #
+    company_html = BeautifulSoup(company_response.text,'html.parser')
+    company_title = company_html.select_one('.company_name').text
+    print(company_title.strip())
+    # strip() 함수를 통해 공백을 모두 없에준다.
+    break
+```
 
 
 
