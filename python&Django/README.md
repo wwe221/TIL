@@ -220,6 +220,8 @@ time.sleep(3)
 
 python을 이용하여 웹 요청을 처리할 수 있도록 해주는 , 서버를 구동시키게 해주는 프레임워크
 
+경량화
+
 ```python
 from flask import Flask , escape, request
 # 기본으로 flask 의 port 는 5000번 이다.
@@ -323,4 +325,55 @@ for com in company_list:
 ```
 
 
+
+## Day4
+
+CSRF Token ...?
+
+​	보안. POST방식일때 사용
+
+
+
+
+
+아이디어톤
+
+- 새로운거 할려고 하지마
+- 기존에 있던거 활용을 잘하자
+  - api , 기존데이터를 가공, 이쁘게 하는 것 만으로도 서비스가 된다.
+
+
+
+
+
+## REST API
+
+``Representational State Transfer``
+
+Interface , 약속
+
+- URI는 정보의 자원을 표현해야 한다.
+- 자원에 대한 행위는 HTTP Method (GET, POST, PUT, DELETE) 로 표현한다. 각 자원에 대한 행위가 다르다.
+  - CRUD 를 했을 때 각각의 Method 하나로 표현이 가능 해야 한다. (매칭)
+  - C - POST, R - GET , U - PUT / PATCH , D - DELETE
+  - 같은 URI를 사용하더라도 Method 에 따라 행위가 달라질 수 있다.
+
+ㅇ
+
+#### Django
+
+```shell
+django-admin startproject [projectname]
+# 프로젝트 만들기
+python manage.py runserver 
+# 서버 시작, 포트는 기본적으로 8000번을 사용한다.
+python manage.py migrate
+python manage.py startapp [appname]
+```
+
+urls.py - 모든 urlpatterns을 관리
+
+url (-> domain을 ip로 치환, DNS ) -> requests -> route -> controller -> model -> controller -> View -> response -> Browser
+
+setting.py - 
 
