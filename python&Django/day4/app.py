@@ -76,28 +76,11 @@ def main():
 def sofifa():
     url = 'https://sofifa.com/'
     data = requests.get(url).text
-    html = BeautifulSoup(data,'html.parser')    
-    '''allp = html.select('.col-name')
-    ae = html.select('td.col-ae')    
-    ages = []
-    for age in ae:
-        ages.append(age.text)
-    names=[]
-    player={}    
-    for tmp in allp:        
-        name = tmp.select('.nowrap')        
-        pos = tmp.select('.pos')        
-        poss=[]
-        for ptmp in pos:
-            poss.append(ptmp.text)
-        for ntmp in name:
-            if ntmp.text=="" or ntmp.text is None:
-                continue
-            player[ntmp.text] = { 'position':poss }
-            names.append(ntmp.text)'''
+    html = BeautifulSoup(data,'html.parser')
     player={}
     ages={}
     table= html.select('tr')
+    ## 일단 선수의 정보를 dictionary 로 넣자
     for line in table:
         name = line.select_one('.col-name .nowrap')
         age = line.select_one('.col-ae')
@@ -114,5 +97,51 @@ def sofifa():
             continue
         stat.append(ova.text)
         stat.append(poten.text)
-        player[name.text] = stat
+        player[name.text] = {
+            'pos':posis,
+            'ova':ova.text,
+            'poten':poten.text
+        }
     return render_template('sofifa.html', data=player , age = ages)
+@app.route('/sofifa/<poss>')
+def sofifapos(poss):
+    url = 'https://sofifa.com/'
+    data = requests.get(url).text
+    html = BeautifulSoup(data,'html.parser')
+    player={}
+    ages={}
+    table= html.select('tr')
+    titles = []
+    ## 일단 선수의 정보를 dictionary 로 넣자
+    for line in table:       
+        name = line.select_one('.col-name .nowrap')
+        age = line.select_one('.col-ae')
+        posi = line.select('.col-name .pos')
+        ova = line.select_one('.col-oa .p')
+        poten = line.select_one('.col-pt .p')
+        posis =[]
+        for pos in posi:
+            posis.append(pos.text)
+        if name is None:
+            continue
+        pic = line.select_one('.col-avatar .player-check')
+        team = line.select_one('.col-name .bp3-text-overflow-ellipsis a')
+        print(team.text)
+        id = name['href']
+        ids = id.split('/')
+        id = ids[2]
+        player[name['title']] = {
+            'nick':name.text,
+            'pos':posis,
+            'ova':ova.text,
+            'poten':poten.text,
+            'age':age.text,
+            'img':pic['data-src'],
+            'id':id
+        }
+    targetPlayer={}
+    for ptmp in player.keys():
+        for postmp in player[ptmp]['pos']:
+            if poss == postmp:
+                targetPlayer[ptmp]=player[ptmp]
+    return render_template('sofifa.html', data=targetPlayer)

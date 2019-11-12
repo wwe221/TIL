@@ -6,14 +6,45 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+<style>
+    .player{
+        cursor: pointer;
+    }
+    .plist{
+        border: 1px solid #444444;
+    }
+    td{
+        border: 1px solid #444444;
+        text-align: center;
+    }
+    
+</style>
 <body>
-    {% for a in age: %}
-        {{a}}<br>
-    {% endfor %}
-    {% for key,val in data.items(): %}
-        {{key}} / {{val}}<br>
-    {% endfor %}
-
+    <table class="plist">
+        <thead>
+            <th>avatar</th>
+            <th>name</th>
+            <th>nick</th>
+            <th>position</th>
+            <th>age</th>
+            <th>overAll</th>
+            <th>potential</th>
+        </thead>
+        <tbody>
+            {% for key,val in data.items() %}
+                <tr onClick = "location.href='http://sofifa.com/player/{{val.id}}'" class="player">
+                    <td><image src="{{val.img}}"></td>
+                    <td>{{key}}</td> 
+                    <td>{{val.nick}}</td>
+                    <td>{{val.pos}}</td> 
+                    <td>{{val.age}}</td>
+                    <td>{{val.ova}}</td>
+                    <td>{{val.poten}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+            
     
 </body>
 </html>
