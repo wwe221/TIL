@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>당신의 숫자</h1>
+    <h3>
+    {% for num in picked %}
+        {{ num }}
+    {% endfor %}
+    </h3>
+    <h1>당첨 숫자</h1>
+    <h3>
+        {% for n in balls %}
+         {{n}}
+         {% endfor %}
+         + {{bonus}} <br>
+    </h3>
+    맞은 갯수: {{win_cnt}} <br>
+    {% for n in winning_list %}
+        {{n}}
+    {% endfor %}
+    
+    <h2>
+        당첨금 ::{{fst}}
+    </h2>
+
+</body>
+</html>

@@ -377,3 +377,109 @@ url (-> domain을 ip로 치환, DNS ) -> requests -> route -> controller -> mode
 
 setting.py - 
 
+
+
+## Day05
+
+Django 시작하기
+
+- 프로젝트 만들기
+- 프로젝트 vs 어플리케이션(app)
+- MVC -> MVT
+- Model View Controller -> Model View(Controller)Template(View)
+
+
+
+시작하기
+
+```shell
+django-admin startproject [projectname]
+cd [project]
+python manage.py startapp [appname]
+#django 에서 app 단위는 하나의 모델에 대한 모든 내용잉 담겨 있다.
+#예를 들어 게시판을 만든다면, Post라는 app을 만들어 그안에서 모든 처리를 한다.
+```
+
+project
+
+- settings.py
+  - INSTALLED_APPS
+
+    - 해당 프로젝트에서 실행될 app들을 선언해준다.
+
+    - ```python
+      INSTALLED_APPS = [
+          'lotto',
+          ....
+      ]
+      ```
+
+- urls.py
+
+  - request가 들어온 url을 views의 method와 연결해주기 위해 app의 views를 import 한다.
+
+    - ```python
+      from lotto import views
+      #lotto app 의 view를 가져온다.
+      from lotto import views as lotto_views
+      from ascii import views as ascii_views
+      ## 만약 여러 app 을 사용 한다면 views 에 alias 를 줄수도 있다.
+      ```
+
+  - urlpatterns
+
+    - ```python
+      urlpatterns = [
+          path('admin/', admin.site.urls),
+          path('lotto/',lotto_views.lotto),
+          path('winning/',lotto_views.winning),    
+      ]
+      ```
+
+app
+
+- views.py
+
+  - url 을 매핑받고 수행할 method를 정의한다.
+
+  - ```python
+    # 매핑 받을 method 는 항상 request를 parameter로 받아야 한다.
+    def lotto(request):
+        return render(request , 'lotto.html', {'lotto':lotto} )
+    # 변수를 render 의 3번째 parameter 로 전해줄 수 있다.
+    ```
+
+project 안의 templates 폴더가 파일의 기본 directory 이다.
+
+templates
+
+- winning.html
+
+  - ```html
+    <body>    
+        <h1>당신의 숫자</h1>
+        <h3>
+            <!-- method 에서 건내준 변수를 사용할때-->
+        {% for num in picked %}
+            {{ num }}
+        {% endfor %}
+        </h3>
+        <h1>당첨 숫자</h1>
+        <h3>
+            {% for n in balls %}
+             {{n}}
+             {% endfor %}
+             + {{bonus}} <br>
+        </h3>
+        맞은 갯수: {{win_cnt}} <br>
+        {% for n in winning_list %}
+            {{n}}
+        {% endfor %}    
+        <h2>
+            당첨금 ::{{fst}}
+        </h2>
+    </body>
+    ```
+
+  - 
+
