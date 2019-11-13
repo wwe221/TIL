@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>원하는 위치를 선택하시오</h1>
+    <form action="/kakao/result">
+        <p> 키워드를 입력하세요</p>
+            <input type="text" name="keyword">
+            <input type="submit" value="검색">
+                {% for posi_tmp in addr_data %}
+                    <label>{{posi_tmp.address_name}} <input type="radio" name="position" value="{{posi_tmp.x}}&{{posi_tmp.y}}"></label> <br>
+                {% endfor %}
+            
+    </form>
+</body>
+</html>

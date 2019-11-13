@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1> {{keyword}} 로 검색결과</h1>
+    {% for tmp in data %}
+        <a href="{{tmp.place_url}}" target="_blank"><p> {{tmp.place_name}} / {{tmp.address_name}} / {{tmp.phone}} / {{tmp.distance}}m</p></a>
+    {% endfor %}
+</body>
+</html> 

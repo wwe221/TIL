@@ -282,6 +282,8 @@ def daum_toon_index():
 
 html 속에서 원하는 정보들을 find , select 할 수 있다.
 
+pip install beutifulsoup4
+
 
 
 ```python
@@ -482,4 +484,23 @@ templates
     ```
 
   - 
+
+
+
+## Day6
+
+[kakaoDeveloper](https://developers.kakao.com/docs/restapi/)
+
+
+
+api 문서 볼때 주의할 점
+
+- 요청방식
+- 요청을 보내야 할 주소 (End-point)
+- 필수적인 Parameter
+
+```python
+json.loads(response.text)
+#String daa를 json으로(dictionary로) 강제 변환
+```
 
