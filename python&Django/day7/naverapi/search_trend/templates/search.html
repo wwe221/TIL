@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/search/trend">
+        <label>기간 시작 날짜</label>
+        <input type="date" name="startDate">
+        <label>기간 종료 날짜</label>
+        <input type="date" name="endDate">
+        <label>구간 단위</label>
+        <select name="timeUnit">
+            <option value="date">일간</option>
+            <option value="week">주간</option>
+            <option value="month">월간</option>
+        </select>
+        <label>검색어 그룹명</label>
+        <input type="text" name="groupName">
+        <label>검색어 목록</label>
+        <input type="text" name="keywords">
+        <input type="submit" value="검색">
+    </form>
+</body>
+</html>

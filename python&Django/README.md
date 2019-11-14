@@ -504,3 +504,111 @@ json.loads(response.text)
 #String daa를 json으로(dictionary로) 강제 변환
 ```
 
+
+
+## Day7
+
+네이버 datalab api 쓰기
+
+class
+
+python 에서의 c;ass
+
+```python
+# class 의 선언
+
+class Human:
+    ## 변수선언
+    name = 'name'
+    age = 'age'    
+    ## 함수 선언
+    def say_hello(self): #parameter에는 self가 기본으로 들어간다.         print("hiroo")
+    def walk(self,para) : # 다른 변수도 parameter에 넣을 수 있다.
+        print("i'm walking" + para)
+    
+```
+
+#### ORM
+
+Object-relational mapping
+
+간단하게 python 코드를 통해 DB의 table과 row를 조작할 수 있다.
+
+model.py
+
+```python
+class Board(models.Model):
+    title = models.CharField(max_length=30)
+    content = models.TextField()
+    created_by = models.CharField(max_length=10 , null=True)````
+    # column 의 뼈대를 생성 한다.
+```
+
+
+
+```shell
+python manage.py makemigrations
+# model,py의 내용을 바탕으로테이블의 구조를 만들어 준다.
+python manage.py migrate
+```
+
+python shell 명령어
+
+python manage.py shell
+
+```shell
+from boards.models import Board
+b1 = Board()
+b1.titel='제목'
+b1.save()
+# db에 저장한다
+# 이때 db는 기본적으로 [project]/db.sqlite3 파일이다.
+b_all = Board.objects.all()
+#모든 오브젝트들 배열로 리턴
+b2 =Board.objects.filter(title='제목').first()
+# 원하는 row 검색, 배열로 리턴한다.
+```
+
+
+
+save() 하기 전엔 table에 저장하지 않기 때문에 id를 갖지 않고,
+
+save() 이후엔 table에 저장을 하면서, table의 해당 row를 가리키게 되고 이때 id를 갖게 된다.
+
+해당 row를 가리키고 있기 때문에 정보를 변경하고 save() 를 하게 되면 UPDATE와 같이 덮어씌우기가 된다.
+
+```shell
+>>> b1 = Board()
+>>> b1.title = '테스트'
+>>> b1.save()
+>>> b_all = Board.objects.all()
+>>> for tmp in b_all:
+...     print(tmp.title)
+...
+지금 먹으로 갑니다
+롤리폴리
+테스트
+>>> b1.id
+3
+>>> b1.title = '빢빢'
+>>> b1.save()
+>>> b_all = Board.objects.all()
+>>> for tmp in b_all:
+...     print(tmp.title)
+...
+지금 먹으로 갑니다
+롤리폴리
+빢빢
+>>> b1.id
+3
+>>> b2.id
+2
+>>> b3.id
+1
+>>> b1 = Board()
+>>> b1.id
+>>>
+```
+
+
+
