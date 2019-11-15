@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}            
+<table class="table table-hover table-dark">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Title</th>
+            <th scope="col">Creator</th>
+            <th scope="col">WriteDate</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for tmp in objects %}
+        <tr onclick="location.href='/boards/{{tmp.id}}'">
+            <th scope="row">{{tmp.id}}</th>
+            <td>{{tmp.title}}</td>
+            <td>{{tmp.contents}}</td>
+            <td>{{tmp.creator}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="/boards/new/">
+    <button type="button" class="btn btn-primary">Saegle Sseugi</button>
+</a>
+{% endblock %}

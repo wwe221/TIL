@@ -530,17 +530,19 @@ class Human:
 
 #### ORM
 
-Object-relational mapping
+Object-Relational Mapping
 
 간단하게 python 코드를 통해 DB의 table과 row를 조작할 수 있다.
+
+table에 있는 row를 python 객체처럼 사용 할 수 있다.
 
 model.py
 
 ```python
 class Board(models.Model):
-    title = models.CharField(max_length=30)
+    title = models.CharField(max_length=30)s
     content = models.TextField()
-    created_by = models.CharField(max_length=10 , null=True)````
+    created_by = models.CharField(max_length=10 , null=True)
     # column 의 뼈대를 생성 한다.
 ```
 
@@ -548,11 +550,14 @@ class Board(models.Model):
 
 ```shell
 python manage.py makemigrations
-# model,py의 내용을 바탕으로테이블의 구조를 만들어 준다.
+# models.py의 내용을 바탕으로테이블의 구조를 만드는 파일을 작성한다.
+# migration 파일을 만들어 준다. ex)0001_initial.py
 python manage.py migrate
+# migration 파일을 토대로 db 구조를 만들어 준다.
+
 ```
 
-python shell 명령어
+###### python shell 명령어
 
 python manage.py shell
 
@@ -611,4 +616,88 @@ save() 이후엔 table에 저장을 하면서, table의 해당 row를 가리키�
 ```
 
 
+
+## Day8
+
+```python
+#django 에서도 path-para 방식을 사용할 수 있다.
+#views.py
+def show(request, id):
+    return
+#urls.py
+urlpatterns = [
+	path('boards/<id>/',boards_views.show)
+]
+```
+
+###### block content 를 사용한 html 간소화
+
+중복되는 값들 (설정 등등) 을 base.html 과 같이 한 곳에 저장하고 다른 페이지에서는 내용만 작성한다.
+
+index.html
+
+```html
+{% extends 'base.html' %}
+{% block content %}
+	<!-- 내용 입력-->
+{% endblock %}
+```
+
+base.html
+
+```html
+<head>~~~</head>
+<div class="container">
+	{% block content %}
+	{% endblock %}
+</div>
+<script>~~~</script>
+```
+
+URL 분리하기
+
+기존에는 urls.py에 모든 주소를 명시했지만 CRUD를 위해서 필요한 페이지가 많기 때문에 분명히 하기 위해 각각의 App 마다 url.py를 만들어 관리한다.
+
+
+
+urls.py
+
+```python
+from django.urls import path , include #include를 import
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('boards/',include('boards.urls'))
+    #boards.urls 파일에 정의된 path들을 사용한다.
+    #app 디렉토리 안에 새로운 urls.py 파일을 만들어 주었다.
+]
+```
+
+boards/urls.py
+
+```python
+from django.urls import path
+from . import views as boards_views
+urlpatterns = [
+    path('',boards_views.index),
+    path('new/',boards_views.new),
+    path('create/',boards_views.create),
+    path('<int:id>/',boards_views.show),
+    path('<int:id>/update',boards_views.update),
+   	##path-para 방식 중 값의 type을 정해서 넘겨 줄 수 있다.
+]
+```
+
+boards/views.py
+
+```python
+def update(request, id): ##넘겨준 값을 parameter로 받는다
+    board = Boards.objects.get(id=id) ##Boards table 에서 하나의 row만을 가리키기    
+    title = request.GET['title']
+    content = request.GET['contents']
+    board.title = title
+    board.contents =content    
+    board.save()
+    return redirect(f'/boards/{id}')
+```
 
