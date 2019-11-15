@@ -701,3 +701,6 @@ def update(request, id): ##넘겨준 값을 parameter로 받는다
     return redirect(f'/boards/{id}')
 ```
 
+
+#### tip
+VSCODE에서 Git 활용하기
