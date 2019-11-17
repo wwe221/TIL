@@ -59,7 +59,7 @@ def fake_search():
 @app.route('/login')
 def login_form():
     return render_template('login.html')
-
+ 
 @app.route('/login/submit' , methods=['POST'])
 def login():
     id = request.args.get('id')
@@ -87,6 +87,8 @@ def sofifa():
         posi = line.select('.col-name .pos')
         ova = line.select_one('.col-oa .p')
         poten = line.select_one('.col-pt .p')
+        pic = line.select_one('.col-avatar .player-check')
+        team = line.select_one('.col-name .bp3-text-overflow-ellipsis a')
         posis =[]
         stat = []
         stat.append(age.text)
@@ -98,9 +100,12 @@ def sofifa():
         stat.append(ova.text)
         stat.append(poten.text)
         player[name.text] = {
+            'age':age.text,
+            'nick':name.text,
             'pos':posis,
             'ova':ova.text,
-            'poten':poten.text
+            'poten':poten.text,
+            'img':pic['data-src']
         }
     return render_template('sofifa.html', data=player , age = ages)
 @app.route('/sofifa/<poss>')
@@ -125,8 +130,10 @@ def sofifapos(poss):
         if name is None:
             continue
         pic = line.select_one('.col-avatar .player-check')
-        team = line.select_one('.col-name .bp3-text-overflow-ellipsis a')
-        print(team.text)
+        flag = line.select('td .bp3-text-overflow-ellipsis a')        
+        nation = flag[0]
+        team_flag = line.select_one('img.team')['data-src']
+        team_name = flag[2].text
         id = name['href']
         ids = id.split('/')
         id = ids[2]
@@ -137,7 +144,10 @@ def sofifapos(poss):
             'poten':poten.text,
             'age':age.text,
             'img':pic['data-src'],
-            'id':id
+            'id':id,
+            'nation':nation,
+            'team_name':team_name,
+            'team_flag':team_flag
         }
     targetPlayer={}
     for ptmp in player.keys():

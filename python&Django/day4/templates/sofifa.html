@@ -29,17 +29,20 @@
             <th>age</th>
             <th>overAll</th>
             <th>potential</th>
+            <th>team</th>
         </thead>
         <tbody>
             {% for key,val in data.items() %}
                 <tr onClick = "location.href='http://sofifa.com/player/{{val.id}}'" class="player">
                     <td><image src="{{val.img}}"></td>
-                    <td>{{key}}</td> 
-                    <td>{{val.nick}}</td>
-                    <td>{{val.pos}}</td> 
-                    <td>{{val.age}}</td>
-                    <td>{{val.ova}}</td>
-                    <td>{{val.poten}}</td>
+                        <td>{{key}}</td> 
+                        <td>{{val.nick}}</td>
+                        <td>{{val.pos}}</td> 
+                        <td>{{val.age}}</td>
+                        <td>{{val.ova}}</td>
+                        <td>{{val.poten}}</td>
+                        <td><image src="{{val.team_flag}}"></image>{{val.team_name}}</td>
+                        
                 </tr>
             {% endfor %}
         </tbody>
