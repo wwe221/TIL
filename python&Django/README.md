@@ -704,3 +704,99 @@ def update(request, id): ##넘겨준 값을 parameter로 받는다
 
 #### tip
 VSCODE에서 Git 활용하기
+
+## DAY9
+
+- pip install pylint
+- pip install pylint-django
+- 컴퓨터 속성 - 고급시스템설정 - 고급 - 환경변수 - PATH (python 녀석들만)복사
+- VS code ctl+p ``>user settings`` 의 python:Python Path 에 붙여넣기
+
+C -> new , create
+
+R ->index, show
+
+U -> edit , update
+
+D -> destroy
+
+##### URL namespace
+
+- 각각의 url에 ``별명``을 지어줘서 html 파일에서 사용하는 링크를 추가적으로 바꾸지 않고, ``urls.py``에서만 수정하면 html 파일에서도 링크 수정이 반영되게끔 함
+
+urls.py
+
+```python
+app_name = 'articles'
+#
+urlpatterns = [
+    path('', views.index,name="index"),
+    path('<int:id>/',views.show,name="show"),
+	path('edit/<int:id>',views.edit,name="edit"),
+    #name 을 통해 별명을 지어줄 수 있다.
+]
+
+```
+
+index.html
+
+```html
+<tr herf="{% url 'show' tmp.id %}"></tr>
+<a href="{% url 'articles:edit' article.id %}" class="btn btn-info" >수정</a>
+<!-- {% url '[name]' } 을 통해 url의 별명에 접근할 수 있다.-->
+<!-- {% url '[name]' parameter} 를 통해 인자를 전달할 수 있다.--> 
+```
+
+
+
+##### RESTful api
+
+| 역할    | Request Method | End-point             | Views(function) |             |
+| ------- | -------------- | --------------------- | --------------- | ----------- |
+| Create  | GET            | /articles/new/        | new             | 새글 form   |
+| Create  | POST           | /articles/new/        | new(create)     | 새글 작성   |
+| Read    | GET            | /articles/<id>/       | show            | 글 하나     |
+| Read    | GET            | /articles/            | index           | 전체 리스트 |
+| Update  | GET            | /articles/<id>/edit/  | edit            | 수정 form   |
+| Updtate | POST           | /articles/<id>/edit/  | edit            | 수정 반영   |
+| Delete  | POST(DELETE)   | /articles/<id>delete/ | delete          | 삭제        |
+
+models.py
+
+```python
+class Articles:
+    created_at = models.DateTimeField(auto_now_add=True , null=True)
+    #날짜를 속성으로 할 수  있다.
+    #auto_now_add=True 는 
+	def datetime_to_str(self):
+        return self.created_at.strftime("%Y-%m-%d")
+#함수를 만들고 이를 html 에서도 실행 시킬 수 있다.
+```
+
+```html
+<td>{{tmp.datetime_to_str}}</td>
+```
+
+##### admin
+
+python manage.py createsuperuser
+
+​	  ,.,.,..
+
+⎝⎛•‿•⎞⎠
+
+
+
+## Day10
+
+CSRF
+
+post 방식으로 값을 전달하기 위해서 csrf 토큰이 필요하다
+
+```html
+<form>
+    <input type="hidden" value="{{csrf_token}}">    
+</form>
+```
+
+a 태그는 get 방식으로의 요청 밖에 할 수 없다.
