@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="thead-light">
+            <th scope="col">avatar</th>
+            <th scope="col">name</th>
+            <th scope="col">nick</th>
+            <th scope="col">position</th>
+            <th scope="col">age</th>
+            <th scope="col">overAll</th>
+            <th scope="col">potential</th>
+            <th scope="col">team</th>
+        </thead>
+        <tbody>
+            {% for key,val in data.items %}
+            <tr onClick="location.href='http://sofifa.com/player/{{val.id}}'" class="player" >
+                <td>
+                    <image src="{{val.img}}">
+                </td>
+                <td>{{key}}</td>
+                <td>{{val.nick}}</td>
+                <td>{{val.pos}}</td>                
+                <td>{{val.age}}</td>
+                <td class="numbs">{{val.ova}}</td>
+                <td class="numbs">{{val.poten}}</td>
+                <td>
+                    <image src="{{val.team_flag}}"></image>{{val.team_name}}
+                </td>
+                <td><svg data-icon="star" height="16" viewbox="0 0 16 16" width="16"><path d="M8 0l2.5 5.3 5.5.8-4 4.1.9 5.8L8 13.3 3.1 16l.9-5.8-4-4.1 5.5-.8z" fill-rule="evenodd"></path></svg></td>
+
+                <td>{{val.stat}}</td>
+                <td>{{val}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
