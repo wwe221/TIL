@@ -48,6 +48,11 @@ def all(request):
             'team_name':team_name,
             'team_flag':team_flag
         }
+        pos_str=""
+        for tmp in posis:
+            pos_str+='/'+tmp            
+        print(pos_str)
+        print("----------")
         this= Player()
         this.psa = pic['data-src']
         this.name = name['title']
@@ -59,6 +64,7 @@ def all(request):
         this.team_flag=team_flag
         this.team=team_name
         this.nation = nation
+        this.position = pos_str
         this.save()       
     context = {
         'data':player
