@@ -637,7 +637,8 @@ urlpatterns = [
 index.html
 
 ```html
-{% extends 'base.html' %}
+{% extends 'base.html' %} 
+<!--base.html 을 먼저 읽어 오고, base.html 에 있는 block content안에 내용을 넣는다.-->
 {% block content %}
 	<!-- 내용 입력-->
 {% endblock %}
@@ -795,8 +796,54 @@ post 방식으로 값을 전달하기 위해서 csrf 토큰이 필요하다
 
 ```html
 <form>
-    <input type="hidden" value="{{csrf_token}}">    
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
 </form>
 ```
 
 a 태그는 get 방식으로의 요청 밖에 할 수 없다.
+
+
+
+## Day11
+
+###### foreignkey
+
+models.py
+
+```python
+class Article(models.Model):
+    contents = models.TextField()
+    create_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+class Comment(models.Model):
+    contents = models.TextField()
+    create_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    target = models.ForeignKey(Article,on_delete=models.CASCADE)
+    #Article를 참조하고, CASCADE로 설정하여 함께 삭제하게 한다.
+    #자동으로 db 에는 target_id 가 생긴다
+```
+
+
+
+###### 비동기
+
+특정작업 요청을 보내고 다른작업을 하다가 요청을 보낸 작업의 종료알림 (callback)만 받는다.
+
+
+
+parameter를 여려개 보내 줄 수있다.
+
+urls.py
+
+```python
+path('<int:article_id>/<int:type>/delete/',article_views.delete,name="delete"),
+```
+
+html
+
+```html
+<a href="{% url 'delete' article.id 2 %}" > 삭제</a>
+```
+

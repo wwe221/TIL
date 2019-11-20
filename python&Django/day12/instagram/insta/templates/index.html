@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="card ">
+        <form action="{% url 'articles' %}" method="POST">
+            <div class="card-body text-center">
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
+                <h5 class="card-title">What's in yo mind?</h5>
+                <textarea class="form-control" name="contents" rows="5"></textarea>
+            </div>
+            <div class="card-footer text-right">
+                <input type="submit" class="btn btn-success" value="작성">
+            </div>
+        </form>
+    </div>
+</div>
+<div class="container">
+    {% for tmp in articles %}
+    <div class="row mt-4">
+        <div class="card col-12">
+            <img src="" class="card-img-top" alt="">
+            <div class="card-body" style="min-height: 8rem;">
+                <p class="card-text">{{tmp.contents}}</p>
+                <span class="float-right mt-0">
+                    <a href="{% url 'edit_art' tmp.id %}"class="btn btn-white "><i class="far fa-edit"></i> </a>
+                    <a href="{% url 'delete_art' tmp.id %}" class="btn btn-white "><i class="far fa-trash-alt"></i></a>
+                </span>
+            </div>
+            <div class="card">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <form action="{% url 'comments' %} " method="POST">
+                            <div class="row">
+                                <div class="col-9">
+                                    <input type="text" class="form-control" name="contents">
+                                    <input type="hidden" name="csrfmiddlewaretoken"value="{{csrf_token}}">
+                                    <input type="hidden" name="article_id"value="{{tmp.id}}">
+                                   
+                                </div>
+                                <div class="col-3">
+                                    <input type="submit" class="btn btn-primary" value="댓글쓰기">
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+                    {% for com_tmp in tmp.comments %}
+                    <li class="list-group-item ">{{com_tmp.contents}}
+                        <span class="float-right">
+                            <a href="{% url 'edit_com' com_tmp.id %}"class="btn btn-primary text-white"><i class="far fa-edit"></i> </a>
+                            <a href="{% url 'delete_com' com_tmp.id %}" class="btn btn-primary text-white"><i class="far fa-trash-alt"></i></a>
+                        </span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endfor%}
+</div>
+{% endblock %}
