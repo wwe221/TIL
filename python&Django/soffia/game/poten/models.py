@@ -17,6 +17,12 @@ class Player(models.Model):
     position = models.CharField(max_length=50)
     def __str__(self):
         return self.name
+    def getPosition(self):
+        ret = ''
+        posis=self.position.split('/')
+        for tmp in posis:
+            ret+= tmp+" "
+        return ret
 class Comment(models.Model):
     contents = models.TextField()
     target = models.ForeignKey(Player,on_delete=models.CASCADE)
