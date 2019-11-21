@@ -50,7 +50,7 @@ def all(request):
         }
         pos_str=""
         for tmp in posis:
-            pos_str+='/'+tmp            
+            pos_str+='/'+tmp
         print(pos_str)
         print("----------")
         this= Player()
@@ -65,7 +65,7 @@ def all(request):
         this.team=team_name
         this.nation = nation
         this.position = pos_str
-        this.save()       
+        this.save()
     context = {
         'data':player
     }
@@ -138,7 +138,6 @@ def dblist(request):
     context={
         'players': players
     }
-    deleteAll()
     return render(request, 'fifa/sofifaList.html', context)
 
 def deleteAll():
