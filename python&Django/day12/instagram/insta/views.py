@@ -1,11 +1,15 @@
 from django.shortcuts import render , redirect
 import requests
-from .models import Article, Comment
+from .models import Article, Comment , ArticleImages
 def index(request):
     if request.method == 'POST':
         art = Article()
         art.contents = request.POST["contents"]
+        #art.image = request.FILES["image"]
+        #art.image_resized = request.FILES["image"]
         art.save()
+        for image in request.FILES.getlist("image"):
+            ArticleImages.objects.create(article_id=art.id,image=image)
         return redirect('/insta/')
     else:
         articles = Article.objects.all().order_by("create_at").reverse()
