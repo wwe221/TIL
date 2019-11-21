@@ -847,3 +847,94 @@ html
 <a href="{% url 'delete' article.id 2 %}" > 삭제</a>
 ```
 
+## Day13
+
+- Static file
+
+  - ``개발환경`` vs 배포환경
+    - 개발환경에서는 app 에서 관리
+    - setting.py 의 최하단에 STATIC_URL = '/static/' 으로 기본경로를 설정한다.
+    - 
+
+- 이미지 업로드
+
+  ```html
+  <form enctype="multipart/form-data" ></form>
+  ```
+
+  form 태그에 enctype="multipart/form-data" 를 추가 해줘야 파일전송이 가능하다.
+
+  ```python
+  request.FILES["images"]
+  ```
+
+  setting.py 에 추가,  파일을 저장할 경로를 지정한다.
+
+  ```python
+  MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+  #BASE_DIR 은 기본적으로 project 디렉토리를 의미한다.
+  #projcet/media 디렉토리를 저장할 경로로 설정한다는 의미
+  MEDIA_URL = '/media/'
+  #MEDIA_ROOT 의 별명을 주어준것이다.
+  -
+  ```
+
+  project.models.py 에 추가
+
+  ```python
+  from django.conf import settings
+  from django.conf.urls.static import static
+  urlpatterns+= static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+  ```
+
+  - 모델 하나에 직접 입력
+
+  - 이미지 리사이징
+
+    - models.py
+
+    - ```python
+      from imagekit.models import ImageSpecField, ProcessedImageField
+      from imagekit.processors import ResizeToFill
+      image_resized = ProcessedImageField(
+             # source='image',
+              upload_to='insta/images',
+              processors=[ResizeToFill(200,200)],
+              format='JPEG',
+              options={'quality': 90}
+      )
+      ```
+
+    - image_resized.url 로 경로에 접근 할 수 있다.
+
+  - 이미지 썸네일
+    - 
+
+    ```python
+    from imagekit.processors import Thumbnail
+    
+    image_thumbnail = ImageSpecField(
+            source='image',
+            processors=[Thumbnail(200,200)],
+            format='JPEG',
+            options={ 'quality':100 }
+    )
+    #자동으로 MEDIA_ROOT/CACHE 에 원본 이미지의 썸네일을 생성한다.
+    ```
+
+    - html
+
+      ```html
+       <img src="{{tmp.image_thumbnail.url}}" class="card-img-top " alt="Blueming.jpg">
+      ```
+
+      
+
+- Multiple 이미지 업로드
+
+  - 하나의 Article에 여러 이미지 업로드하기
+
+- JS기본
+
+  - 동적인 페이지 만들기
+  - JQuery -> JS프레임워크(X) JS라이브러리(O)
