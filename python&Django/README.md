@@ -938,3 +938,96 @@ html
 
   - 동적인 페이지 만들기
   - JQuery -> JS프레임워크(X) JS라이브러리(O)
+
+
+
+## Day14
+
+jsTest	 ``camel case``
+
+js_test	 ``snake case``
+
+
+
+###### JS
+
+```javascript
+console.log("로그");
+alert("얼럿");
+promtpt("프롬프트");
+confirm("컨풞");
+
+document.getElementById('id');
+document.getElementsByClassName('class'); //배열을 리턴한다.
+documnet.querySelector('.classname');
+documnet.querySelectorAll('.classname'); //
+document.getElementsByTagName('p'); //
+
+```
+
+```javascript
+var pList2 = document.querySelectorAll('p'); 
+// forEach 함수사용을 위해서는 NodeList를 return 하는 querySelecetor 를 써야한다.
+console.log(pList2);
+pList2.forEach(function (element) {                
+    element.addEventListener('click', function () {
+        //element.setAttribute('class', 'p-tag');
+        element.classList.toggle('bgred')
+        // if(confirm("wanna delete this line?")){
+        //     element.setAttribute('style', 'display:none;');
+        // }
+    })
+})
+
+```
+
+event로 li 추가하기
+
+```javascript
+var btn = document.getElementById('submitComment')
+btn.addEventListener('click',function(){
+    txt = document.getElementById('commentForm')
+    target = document.querySelector('.list-group')                
+    var appendingTag= document.createElement('li');
+    appendingTag.classList.add('list-group-item')
+    appendingTag.innerText=txt.value
+    console.dir(appendingTag);
+    target.prepend(appendingTag)
+    txt.value=''
+});
+```
+
+###### JQuery
+
+```javascript
+$(document).on('ready',function(){});
+$(function(){});
+// 두개는 같은 의미이다.
+
+$(function () {
+    $('#submitComment').click(function(){
+        var position = $('ul.list-group');
+        var input= $('#commentForm').val();
+        $('#commentForm').val('')
+        var element = `<li class="list-group-item" id="cmt-1">
+${input}
+<span class="float-right" >
+<button type="button" class="btn btn-warning">수정</button>
+<button type="button" class="btn btn-danger delete-comment" value="1">삭제</button>
+</span>
+</li>`
+        //`` backtip ~룸메, 줄바꿈을 포함한 텍스트를 string으로 묶을 수 있다.
+        position.prepend(element)
+    });
+    $(document).on('click', '.delete-comment', function () {
+        //document에 존재하는 모든 클래스에 onclick 리스너를 달아준다.
+        var comm_id = $(this).attr('value')
+        $(this).parents('.list-group-item').remove();
+        id = '#cmt-'+comm_id
+        // $(id).remove()
+
+    });
+
+});
+```
+

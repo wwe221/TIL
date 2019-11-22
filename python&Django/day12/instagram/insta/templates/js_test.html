@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        .bgred {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="title">오늘은 자바 스 크 립 트 수 업</h1>
+    <h3 id="joke" class="mention">all we fight for remember</h1>
+        <div class="plist">
+            <p class="elements"> here's to the ones that we got</p>
+            <p class="elements"> cheers to the wish you were here but u not</p>
+            <p class="elements"> 'Cause drinks bring back all the memories</p>
+            <p class="elements"> of everything we've been through</p>
+            <p class="elements"> toast to the ones here today</p>
+            <p class="elements"> toast to the ones that we lost one the way</p>
+            <span class="four">memories</span>
+        </div>
+        <form>
+            글쓰기
+            <input type="text" class="form-control" id="articleForm">
+            <button type="button" class="btn btn-primary">글쓰기</button>
+            <div class="pb-5"></div>
+            댓글쓰기
+            <input type="text" class="form-control" id="commentForm">
+            <button type="button" class="btn btn-primary" id="submitComment">댓글쓰기</button>
+        </form>
+        <div class="commentList">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    첫번째 댓글입니다.<button type="button" class="btn btn-warning">수정</button>
+                </li>
+                <li class="list-group-item">
+                    두번째 댓글입니다.<button type="button" class="btn btn-warning">수정</button>
+                </li>
+                <li class="list-group-item">
+                    세번째 댓글입니다.<button type="button" class="btn btn-warning">수정</button>
+                </li>
+                <li class="list-group-item">
+                    네번째 댓글입니다.<button type="button" class="btn btn-warning">수정</button>
+                </li>
+            </ul>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+        </script>
+        <script>
+            console.log("idk y u say goodbye, i said hello")
+            var joke = document.getElementById('joke');
+            // joke.onclick = function(){
+            //     joke.innerHTML='쨔잔2'
+            // }
+            joke.addEventListener('click', function () {
+                joke.innerHTML = 'raise your glass and say';
+            })
+            var pList = document.getElementsByTagName('p');
+            console.log(pList);
+            var pList2 = document.querySelectorAll('p');
+            console.log(pList2);
+            pList2.forEach(function (element) {
+                var txt = element.innerText;
+                element.addEventListener('click', function () {
+                    //element.setAttribute('class', 'p-tag');
+                    element.classList.toggle('alert')
+                    element.classList.toggle('alert-primary')
+                    // if(confirm("wanna delete this line?")){
+                    //     element.setAttribute('style', 'display:none;');
+                    // }
+                })
+            })
+            var btn = document.getElementById('submitComment')
+            btn.addEventListener('click', function () {
+                txt = document.getElementById('commentForm')
+                target = document.querySelector('.list-group')
+                var appendingTag = document.createElement('li');
+                var appendingSpan = document.createElement('span');
+                appendingTag.classList.add('list-group-item');
+                appendingTag.innerText = commentForm.value;
+                appendingSpan.innerHTML = '<button type="button" class="btn btn-warning">수정</button>';
+                appendingTag.innerText = txt.value
+                appendingTag.appendChild(appendingSpan);
+                console.dir(appendingTag);
+                target.prepend(appendingTag)
+                txt.value = ''
+            });
+        </script>
+</body>
+
+</html>

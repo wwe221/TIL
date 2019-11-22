@@ -60,3 +60,10 @@ def edit_art(request,article_id):
             'article':target
         }
         return render(request,'article/edit.html', context)
+
+
+
+def js_test(request):
+    return render(request , 'js_test.html')
+def jq_test(request):
+    return render(request , 'jq_test.html')
