@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
+{% block stylesheet %}
+<style>
+    .comments {
+        display: none;
+    }
+</style>
+{% endblock %}
 {% block content %}
 <table class="table table-striped table-bordered table-hover">
+    {{size}}
     <thead class="thead-light">
         <th scope="col">avatar</th>
         <th scope="col">name</th>
@@ -10,17 +18,18 @@
         <th scope="col">overAll</th>
         <th scope="col">potential</th>
         <th scope="col">team</th>
+        <th scope="col">star</th>
     </thead>
-    <tbody>
-        <tr></tr>
+    <tbody>        
         {% for tmp in players %}
-        <tr onClick="location.href='http://sofifa.com/player/{{tmp.id}}'" class="player">
+        <!-- <tr onClick="location.href='http://sofifa.com/player/{{tmp.id}}'" class="player"> -->
+        <tr onclick="myShowFunction('{{tmp.id}}');" class="player">
             <td>
-                <image src="{{tmp.psa}}">
+                <image src="{{tmp.psa}}" alt="...">
             </td>
-            <td>{{tmp.name}}</td>
+            <td class="playerId">{{tmp.name}}</td>
             <td>{{tmp.nick}}</td>
-            <td>{{tmp.getPosition}} </td>
+            <td> </td>
             <td>{{tmp.age}}</td>
             <td>{{tmp.overAll}}</td>
             <td>{{tmp.potential}}</td>
@@ -31,8 +40,31 @@
                     <path d="M8 0l2.5 5.3 5.5.8-4 4.1.9 5.8L8 13.3 3.1 16l.9-5.8-4-4.1 5.5-.8z" fill-rule="evenodd">
                     </path>
                 </svg></td>
+
+        </tr>
+        <tr class="comments comment{{tmp.id}}">
+            {% for com_tmp in tmp.comments %}
+            <td>
+                {{com_tmp.contents}}
+            </td>
+            {% endfor %}
+            <td colspan="20">
+                <div>
+                    <form action="{% url 'sofifa:comment' %}" method="POST" class="text-right">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
+                        <input type="hidden" name="id" value="{{tmp.name}}">
+                        <textarea class="form-control" name="contents" rows="2"></textarea>
+                        <input type="submit" value="submit">
+                    </form>
+                </div>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+<script>
+    function myShowFunction(id) {
+        $('.comment' + id).toggle('slow', 'swing');
+    }
+</script>
 {% endblock %}

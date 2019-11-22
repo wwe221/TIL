@@ -10,6 +10,8 @@
         <th scope="col">overAll</th>
         <th scope="col">potential</th>
         <th scope="col">team</th>
+        <th scope="col">team</th>
+        <th scope="col">team</th>
     </thead>
     <tbody>
         <tr></tr>
@@ -31,6 +33,14 @@
                     <path d="M8 0l2.5 5.3 5.5.8-4 4.1.9 5.8L8 13.3 3.1 16l.9-5.8-4-4.1 5.5-.8z" fill-rule="evenodd">
                     </path>
                 </svg></td>
+            <td>
+                <div class="comments">
+                    <form action="" method="POST">
+                        <input type="hidden" value="{{tmp.name}}">
+                        <textarea class="form-control" name="contents" rows="5"> hi</textarea>
+                    </form>
+                </div>
+            </td>
         </tr>
         {% endfor %}
     </tbody>

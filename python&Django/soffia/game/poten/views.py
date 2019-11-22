@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 import requests
 from bs4 import BeautifulSoup
-from .models import Player
+from .models import Player,Comment
 import logging
 logger = logging.getLogger(__name__)
 
@@ -51,8 +51,6 @@ def all(request):
         pos_str=""
         for tmp in posis:
             pos_str+='/'+tmp
-        print(pos_str)
-        print("----------")
         this= Player()
         this.psa = pic['data-src']
         this.name = name['title']
@@ -76,13 +74,8 @@ def search(request,position):
     for tmp in all_players:
         posis = tmp.position.split('/')        
         for p_tmp in posis:
-            print(p_tmp)
-            print(position)
-            print("-----")
             if p_tmp == position:
-                print('ohohohoh')
                 targetPlayer.append(tmp)    
-    print(targetPlayer)
     context = {
         'players':targetPlayer
     }    
@@ -94,7 +87,6 @@ def getStat(id):
     html = BeautifulSoup(data,'html.parser')
     special = html.select_one('.bp3-card .teams')
     li = special.select('li')
-    print(li[0])
     # print(li[1])
     # print(li[2])
     # print(li[3])
@@ -105,12 +97,31 @@ def dblist(request):
     players = Player.objects.all()
     # logger.debug(players)
     context={
-        'players': players
+        'players': players,
+        'size':len(players)
     }
     return render(request, 'fifa/sofifaList.html', context)
 
-def deleteAll():
+def player_deleteAll():
     players = Player.objects.all()
     for tmp in players:
         tmp.delete()
     return 
+def comment_deleteAll():
+    comments = Comment.objects.all()
+    for tmp in comments:
+        tmp.delete()
+    return 
+
+def comment(request):
+    print("---------------")
+    id=request.POST['id']
+    txt=request.POST['contents']
+    target_p = Player.objects.get(name=id)
+    comment= Comment()
+    comment.target_id=target_p
+    comment.contents=txt
+    comment.save()
+    print(comment.target_id)
+    return redirect('/sofifa/')
+    

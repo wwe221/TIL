@@ -8,7 +8,11 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
 </head>
+{% block stylesheet %}
+{% endblock %}
 
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
@@ -31,7 +35,7 @@
             </ul>
             <form class="form-inline mt-2 mt-md-0" action="">
                 <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                <select >
+                <select>
                     <option value="GK">GK</option>
                     <option value="CB">CB</option>
                     <option value="LB">LB</option>
