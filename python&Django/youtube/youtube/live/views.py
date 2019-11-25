@@ -7,16 +7,13 @@ def main(request):
     lives= getYoutube()
     context= {
         'lives':lives,
-    }
-    
+    }    
     return render(request, 'main.html',context)
     
 def allHTML(request):    
     html = getTwitch()
-    live = html.select_one('div')
-    print(live)
     context ={
-        'data':html
+        'lives':html
     }
     return render(request, 'twitch.html',context)
 
@@ -49,8 +46,40 @@ def getYoutube():
         }
         lives.append(bang)
     return lives
-def getTwitch():
-    url = 'https://www.twitch.tv/directory/all'
-    data = requests.get(url).text
-    html = BeautifulSoup(data,'html.parser')
-    return html
+def getTwitch():    
+    url = "https://api.twitch.tv/kraken/streams/"
+    params ={
+        'language':'ko',
+        'stream_type':'all',
+        'limit':100,
+    }  
+    headers = {
+        'Accept': 'application/vnd.twitchtv.v5+json',        
+        'Client-ID': ''
+    }
+    data = requests.get(url, params = params , headers= headers)
+    jsons = data.json()['streams']
+    lives= []
+    for tmp in jsons:
+        print(tmp)
+        c = tmp['channel']['display_name']
+        g = tmp['game']
+        name = tmp['channel']['name']
+        logo = tmp['channel']['logo']
+        title = tmp['channel']['status']
+        thumbnail = tmp['preview']['medium']
+        profile_banner = tmp['channel']['profile_banner']
+        u = tmp['channel']['url']
+        total_views = tmp['channel']['views']
+        now_views = tmp['viewers']
+        followers = tmp['channel']['followers']
+        bang = {            
+            'title':title,
+            'embed':u,
+            'link':u,   
+            'channel':c,
+            'viewer':now_views,
+            'img':thumbnail,
+        }
+        lives.append(bang)    
+    return lives
