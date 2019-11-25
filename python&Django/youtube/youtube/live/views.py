@@ -4,6 +4,23 @@ from bs4 import BeautifulSoup
 import json
 # Create your views here.
 def main(request):
+    lives= getYoutube()
+    context= {
+        'lives':lives,
+    }
+    
+    return render(request, 'main.html',context)
+    
+def allHTML(request):    
+    html = getTwitch()
+    live = html.select_one('div')
+    print(live)
+    context ={
+        'data':html
+    }
+    return render(request, 'twitch.html',context)
+
+def getYoutube():
     url = 'https://www.youtube.com/channel/UC4R8DWoMoI7CAwX8_LjQHig'    
     data = requests.get(url).text
     html = BeautifulSoup(data,'html.parser')
@@ -31,17 +48,9 @@ def main(request):
             'img':img
         }
         lives.append(bang)
-    context= {
-        'data':test,
-        'lives':lives,
-    }
-    return render(request, 'main.html',context)
-    
-def allHTML(request):
-    url = 'https://www.youtube.com/channel/UC4R8DWoMoI7CAwX8_LjQHig'    
+    return lives
+def getTwitch():
+    url = 'https://www.twitch.tv/directory/all'
     data = requests.get(url).text
-    html = BeautifulSoup(data,'html.parser')    
-    context ={
-        'data':html
-    }
-    return render(request, 'all.html',context)
+    html = BeautifulSoup(data,'html.parser')
+    return html
