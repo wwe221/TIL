@@ -12,9 +12,9 @@ def main(request):
     # return render(request, 'main.html',context)
     data = getAfreeca()
     context = {
-        'data': data
+        'lives': data
     }
-    return render(request, 'all.html',context)
+    return render(request, 'main.html',context)
 
 def allHTML(request):    
     html = getTwitch()
@@ -88,26 +88,36 @@ def getTwitch():
         lives.append(bang)    
     return lives
 def getAfreeca():
+    path ='Y:/chromedriver'
     url = "http://www.afreecatv.com/"
-    header={
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
-        'Accept-Encoding': 'gzip, deflate',
-        'Accept-Language': 'ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7',
-        'Cache-Control': 'max-age=0',
-        'Connection': 'keep-alive',
-        'Cookie': '_au=0xfb99b58bfed612ba; OAX=3mvuJF3bayQAAuqN; _ga=GA1.2.1925135739.1574660873; _gid=GA1.2.1276319739.1574660873; __gads=ID=cf7905910b6d74ea:T=1574666877:S=ALNI_MZTYZ_jAwx5x2Vwad72QvCIW6Ksuw; bjStationHistory=%0213865507%027301897; _ausb=0x55de367a; AbroadChk=FAIL; AbroadVod=FAIL; _gat=1; _ausa=0x930e0abe',
-        'Host': 'www.afreecatv.com',
-        'Referer': 'http://www.afreecatv.com/?hash=game',
-        'Upgrade-Insecure-Requests': '1',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36'
-    }
-    data = requests.get(url,params=header).text
-    print()
-    html = BeautifulSoup(data,'html.parser')
-    broads= html.select_one('#broadlist_area')    
-    return html
-def seleTest():
-    driver = webdriver.Chrome('C:\chromedriver')
-    url = "http://www.afreecatv.com/"
-    driver.get(url)
-    return
+    options = webdriver.ChromeOptions()
+    options.add_argument('headless')
+    options.add_argument('window-size=1920x1080')
+    options.add_argument("disable-gpu")
+    browser = webdriver.Chrome(path,chrome_options=options)
+    browser.get(url)
+    g = browser.find_elements_by_css_selector('.onAir')
+    html = browser.page_source
+    browser.quit()
+    soup = BeautifulSoup(html,'html.parser')
+    onAir = soup.select_one('.onAir')
+    lists = onAir.select('li')
+    lives=[]
+    for tmp in lists:        
+        title = tmp.select_one('.subject').text
+        v = tmp.select_one('.viewer').text.split(' ')
+        viewer = v[0]
+        thumbnail = tmp.select_one('.thumb img')['src']
+        channel = tmp.select_one('.nick').text
+        link = tmp.select_one('.box_link')['href']
+        print(viewer)
+        bang = {
+            'title':title,
+            'embed':link,
+            'link':link,   
+            'channel':channel,
+            'viewer':viewer,
+            'img':thumbnail,
+        }
+        lives.append(bang)
+    return lives
