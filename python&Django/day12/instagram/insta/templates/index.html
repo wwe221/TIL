@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block stylesheet %}
 <style>
     .container {
@@ -41,7 +40,7 @@
         <div class="card col-12">
             {% if tmp.images %}
             <div id="img{{tmp.id}}" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">                    
+                <div class="carousel-inner">
                     {% for img in tmp.images %}
                     <div class="carousel-item active">
                         <img src="{{img.image_thumbnail.url}}" class="d-block w-100" alt="...">
@@ -67,29 +66,31 @@
             </div>
 
             <div class="card">
-                <ul class="list-group list-group-flush">
+                <ul class="list-group{{tmp.id}} list-group-flush">
                     <li class="list-group-item">
-                        <form action="{% url 'comments' %} " method="POST">
+                        <form action="{% url 'comments' %} " method="POST" id="commentForm" data-id="{{tmp.id}}">
                             <div class="row">
                                 <div class="col-9">
-                                    <input type="text" class="form-control" name="contents">
+                                    <input type="text" class="form-control" name="contents" id="commInput{{tmp.id}}">
                                     <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
                                     <input type="hidden" name="article_id" value="{{tmp.id}}">
 
                                 </div>
                                 <div class="col-3">
-                                    <input type="submit" class="btn btn-primary" value="댓글쓰기">
+                                    <input type="submit" class="btn btn-primary submitComment{{tmp.id}}" id="submitComment{{tmp.id}}" data-id="{{tmp.id}}"
+                                        value="댓글쓰기">
                                 </div>
                             </div>
                         </form>
                     </li>
                     {% for com_tmp in tmp.comments %}
-                    <li class="list-group-item ">{{com_tmp.contents}}
+                    <li class="list-group-item" id="comment-{{com_tmp.id}}">
+                            <span class="boardItem">{{com_tmp.contents}}</span>
                         <span class="float-right">
-                            <a href="{% url 'edit_com' com_tmp.id %}" class="btn btn-primary text-white"><i
-                                    class="far fa-edit"></i> </a>
-                            <a href="{% url 'delete_com' com_tmp.id %}" class="btn btn-primary text-white"><i
-                                    class="far fa-trash-alt"></i></a>
+                            <button type="button"class="btn btn-primary text-white edit_comment editComment" data-target="{{tmp.id}}"data-id="{{com_tmp.id}}">
+                                <i class="far fa-edit"></i> </a></button>
+                            <button type="button"class="btn btn-primary text-white del_comment delComment" data-id="{{com_tmp.id}}">
+                                <i class="far fa-trash-alt"></i></a></button>
                         </span>
                     </li>
                     {% endfor %}
@@ -99,4 +100,88 @@
     </div>
     {% endfor%}
 </div>
+{% endblock %}
+
+{% block script %}
+
+<script>
+    $(function () {
+            $(document).on('click', '.editComment', function () {
+                var id = $(this).data('id');
+                var target = $(this).data('target');
+                console.log("#submitComment"+target)
+                contents = ($('#comment-' + id + ' .boardItem').text());
+                $('#commInput'+target).val(contents); 
+                $('#submitComment'+target).data('method', 'edit');
+                $('#submitComment'+target).data('id', id);
+                console.log($('#submitComment'+target).data());
+            })
+            $(document).on('click', '.delComment', function () {
+                // 해당 줄(list)을 하나 삭제해야함
+                var id = $(this).data('id');                
+                $.ajax({
+                    url: '{% url "delete_comments" %}',
+                    method: 'POST',
+                    data: {
+                        comment_id: id,
+                        csrfmiddlewaretoken: '{{csrf_token}}' // post로 보내주기 때문에 필요해
+                    },
+                    success: function (data) {
+                        alert("삭제 성공");
+                        $('#comment-' + data.board_id).hide();
+                    },
+                    error: function (data) {
+                        alert("삭제 실패");
+                    }
+                })
+            })
+    })
+    $(function () {
+        $(document).on('submit','#commentForm', function (event) { // e : event
+            // 기존 이벤트를 삭제 해주어야 한다
+            target = $(this).data('id')
+            event.preventDefault();
+            var contents = $('#commInput' + target).val();
+            $('#commInput' + target).val('');
+            if ($('#submitComment'+target).data('method') == 'edit') {                
+                var id =$('#submitComment'+target).data('id')
+                    console.log(id)
+                    $.ajax({
+                        url: '{% url "edit_comments" %}',
+                        method: 'POST',
+                        data: {
+                            id: id,
+                            contents: contents,
+                            csrfmiddlewaretoken: '{{csrf_token}}'
+                        },
+                        success: function (data) {
+                            $('#comment-' + id + ' .boardItem').text(contents);
+                            $('#submitComment'+target).removeData('method');
+                            $('#submitComment'+target).removeData('id');
+                        },
+                        error: function (data) {
+                            alert("실패");
+                        }
+                    })
+            } else {
+                $.ajax({
+                    url: '{% url "submit_comments" %}', // ''로 열었으면 "", ""로 열었으면 ''
+                    method: 'POST',
+                    data: {
+                        // key: value
+                        article_id:target,
+                        contents: contents,
+                        csrfmiddlewaretoken: '{{csrf_token}}'
+                    },
+                    success: function (data) {
+                        $('.list-group'+target).append(data); // html data(댓글, empty.html)를 댓글 그룹에 붙여넣기
+                    },
+                    error: function (data) {
+                        alert("실패 작성")
+                    }
+                })
+            }
+        })
+    })
+</script>
 {% endblock %}
