@@ -101,9 +101,7 @@
     {% endfor%}
 </div>
 {% endblock %}
-
 {% block script %}
-
 <script>
     $(function () {
             $(document).on('click', '.editComment', function () {
@@ -118,7 +116,8 @@
             })
             $(document).on('click', '.delComment', function () {
                 // 해당 줄(list)을 하나 삭제해야함
-                var id = $(this).data('id');                
+                var id = $(this).data('id');
+                console.log(id);                
                 $.ajax({
                     url: '{% url "delete_comments" %}',
                     method: 'POST',
@@ -127,7 +126,6 @@
                         csrfmiddlewaretoken: '{{csrf_token}}' // post로 보내주기 때문에 필요해
                     },
                     success: function (data) {
-                        alert("삭제 성공");
                         $('#comment-' + data.board_id).hide();
                     },
                     error: function (data) {
@@ -139,9 +137,10 @@
     $(function () {
         $(document).on('submit','#commentForm', function (event) { // e : event
             // 기존 이벤트를 삭제 해주어야 한다
-            target = $(this).data('id')
             event.preventDefault();
+            target = $(this).data('id')
             var contents = $('#commInput' + target).val();
+            var data = $(this).serialize();
             $('#commInput' + target).val('');
             if ($('#submitComment'+target).data('method') == 'edit') {                
                 var id =$('#submitComment'+target).data('id')

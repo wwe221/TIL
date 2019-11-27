@@ -121,7 +121,8 @@ def jq_comment_edit(request):
         return HttpResponse('', status=204)
 def jq_comment_delete(request):
      if request.method == "POST":
-        id = request.POST["comment_id"]
+        id = int(request.POST["comment_id"])
+        print(id)
         board = Comment.objects.get(id=id)
         board.delete()
         context = {

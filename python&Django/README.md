@@ -1031,3 +1031,227 @@ ${input}
 });
 ```
 
+## Day15
+
+###### JQuery
+
+```javascript
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+```
+
+
+
+###### AJAX (Asynchronous Javascript And XML)
+
+- 비동기JS & XML
+
+- Callback
+
+- ```javascript
+    <script>
+    $(function(){
+        $.ajax({
+            url: '어느 주소로 요청을 보낼지',
+            method: '어떤 request method로 보낼지',
+            data: {
+                key: '어떤 형태로 보낼지'
+            },
+            success: function(data) {
+                '요청이 성공적으로 완료됐을 때'
+            },
+            error: function(data) {
+                '요청이 정상적으로 완료되지 않았을 때'
+            }
+        })
+    })
+    </script>
+  ```
+
+- ```javascript
+   // 삭제 버튼을 눌렀을 때
+  $(document).on('click', '.deleteBoard', function () {
+      // 해당 줄(list)을 하나 삭제해야함
+      var id = $(this).data('value'); // data-value="{{board.id}}"
+      // 실제로 DB에서 삭제하기.
+      $.ajax({
+          url: '{% url "delete_boards" %}',
+          method: 'POST',
+          data: {
+              board_id: id,
+              csrfmiddlewaretoken: '{{csrf_token}}' // post로 보내주기 때문에 필요해
+          },
+          success: function (data) {
+              alert("삭제 성공");
+              $('#board-' + data.board_id).hide();
+          },
+          error: function (data) {
+              alert("삭제 실패");
+          }
+      })
+      // $('#board-' + id).hide(); // 눈에만 안보이게 하는것. 숨긴다. 새로고침하면 다시 생김.
+  })
+  ```
+
+- ```javascript
+  $('.target').data('Attribute_name')
+  ```
+
+- - html 태그의 data- 로 시작하는 속성의 값을 가져올 수 있다.
+
+```python
+def delete_boards(request):
+    if request.method == "POST":
+        id = request.POST["board_id"]
+        board = Board.objects.get(id=id)
+        board.delete()
+        context = {
+            'board_id':id
+        }
+        # 삭제를 하면 network 탭에 delete가 오고 preview로 보면 json형식으로 온것을 확인할 수 있음.
+        return HttpResponse(json.dumps(context), content_type="appication/json")
+   	#json 형식으로 return 해 줄 수 있다.
+```
+
+
+
+
+
+Server 에서 render() 를 return 하고, ajax 의 success() 에서 이를 받아 div에 append를 해준다면
+
+화면내에 다른 화면을 붙여넣기가 가능하다.
+
+server
+
+```python
+def submit_boards(request):
+    if request.method == "POST":
+        contents = request.POST["board"]
+        board = Board.objects.create(contents=contents)
+        context = {
+            'board': board
+        }
+        return render(request, 'empty.html', context)
+```
+
+ajax
+
+```javascript
+$.ajax({
+    url: '{% url "submit_boards" %}',
+    method: 'POST',
+    data: {
+        board: board,
+        csrfmiddlewaretoken: '{{csrf_token}}'
+    },
+    success: function(data) {
+        $('.list-group').prepend(data);
+    },
+    error: function(data) {
+        alert("실패!")
+    }
+})
+```
+
+## Day16
+
+```javascript
+ $(document).on('submit','#commentForm', function (event) { // e : event
+     // 기존 이벤트를 삭제 해주어야 한다
+     event.preventDefault();
+     id = $(this).find('input.articleId').val() //find 로 CSS selector 를 사용하여 안에 있는 녀석들 중 하나를 고를수 있다.
+     var data = $(this).serialize(); // 하위의 모든 값들을 가져올 수 있다!!!
+     $.ajax({
+            url: '{% url "comments" %}',
+            method: 'POST',
+            data: data, // 로 모든 값들을 한번에 보내 줄 수 있다... ㅎㄷㄷ
+         .......
+     })
+     var newDiv = `<li class="list-group-item">${data.comment_id}</li>`
+     //`` 안에서 ${variable} 로 변수에 접근 할 수 있다.
+     
+ })
+```
+
+#### USER
+
+기본적으로 장고에서는 로그인, 로그아웃, 회원가입 등의 모델이 구현되어있기 때문에 새로 만들 필요가 없다.
+
+python manage.py createsuperuser
+
+
+
+
+
+###### cookie , session
+
+http request 의 무상태성(statless) 을 해결하기 위해 구상된 개념.
+
+정보 저장의 주체에 차이가 있다.
+
+- Cookie - 내 Browser
+  - Browser에서 실제 정보 값들을 물고 있다.
+  - Browser 마다 고유하다.
+  - 쉽게 접근 할 수 있기 때문에 보안에 취약하다.
+  - 브라우저가 종료 되어도 날아가지 않는다.
+- Session - Server Computer
+  - 메모리 , DB 등 에 저장하고, 내 컴퓨터는 정보의 위치만 알고 있다.
+  - Browser를 종료하면 정보가 날아간다.
+
+views.py
+
+```python
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm , AuthenticationForm
+from django.contrib.auth import login as auth_login 
+from django.contrib.auth import logout as auth_logout
+
+# Create your views here.
+def login(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, request.POST)
+        ## html의 form 에서는 반드시 email type 의 name="username"과
+        ## password type 의 name="password" 가 필요하다
+        if form.is_valid():            
+            auth_login(request , form.get_user()) #로그인
+            return redirect('/insta/')
+        else:
+            return render(request, 'login.html')
+    else :
+        if request.user.is_authenticated: # 이미 로그인 되어 있다면
+            return redirect('/insta/')
+        else:            
+            return render(request,'login.html')
+def logout(request):
+    auth_logout(request)
+    return redirect('/insta')
+def signup(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        ## html의 form 에서는 반드시 email type 의 name="username"과
+        ## password type 의 name="password1" ,name="password2" 가 필요하다
+        if form.is_valid():
+            print(form.is_valid)
+            print(form.is_valid())
+            user = form.save() #회원가입
+            auth_login(request , user) #로그인
+            return redirect('/insta/')
+        else:
+            return render(request,'signup.html')
+    else:
+        if request.user.is_authenticated:
+            return redirect('/insta/')
+        else:                              
+            return render(request,'signup.html')
+```
+
+base.html
+
+```html
+{% if user.is_authenticated %} <!-- user.is_authenticated 를 통해 유저가 로그인을 했는지 확인 할 수 있다.-->
+        <a class="btn btn-outline-primary" href="/accounts/logout">{{user.username}}</a>
+{% else %}
+        <a class="btn btn-outline-primary" href="/accounts/signup">Sign up</a>
+{% endif %}
+```
+
