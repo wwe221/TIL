@@ -1255,3 +1255,67 @@ base.html
 {% endif %}
 ```
 
+
+
+## Day 17
+
+db와 AUTH_USER 연결하기
+
+models.py
+
+```python
+class Article:
+	user = models.ForeignKey(settings.AUTH_USER_MODEL , on_delete=models.CASCADE)
+```
+
+views.py
+
+```python
+if request.user.is_authenticated:
+    art = Article()
+    art.contents = request.POST["contents"]
+    art.user_id = request.user.id 
+    # request.user.id 로 간단하게 로그인한 user의 id에 접근 할 수 있다.
+    ...
+```
+
+###### 다 대 다 테이블
+
+``좋아요``  기능
+
+```python
+class Article:
+	user_likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="article_likes") 
+# 새로운 테이블이 생성 된다.
+# Article 에서는 .user_like로 접근하고, user 에서는 .article_likes 로 접근한다.
+```
+
+views.py
+
+```python
+def likes(request):
+    if request.user.is_authenticated and request.method =="POST":        
+        article_id =request.POST["article_id"]
+        article = Article.objects.get(id=article_id)
+        if request.user in article.user_likes.all():
+            # in
+            article.user_likes.remove(request.user)
+        else:
+            article.user_likes.add(request.user)
+        likes_count = len(article.user_likes.all())
+        context={
+            'cnt':likes_count
+        }
+        return HttpResponse(json.dumps(context),status=200,content_type='application/json')
+    else:
+        return HttpResponse('',status=403)
+```
+
+
+
+
+
+- Pusher (실시간 기능) - 위부 API
+
+
+

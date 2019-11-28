@@ -19,5 +19,6 @@ urlpatterns = [
     path('jq-test/boards/delete', article_views.delete_boards, name="delete_boards"),
     path('jq-test/boards/edit', article_views.edit_boards, name="edit_boards"),
 
+    path('likes/',article_views.likes, name="likes")
 
 ]

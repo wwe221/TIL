@@ -5,7 +5,6 @@
     .container {
         padding-right: 15rem !important;
         padding-left: 15rem !important;
-
     }
 </style>
 {% endblock %}
@@ -17,6 +16,7 @@
                 <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
                 <h5 class="card-title">What's in yo mind?</h5>
                 <textarea class="form-control" name="contents" rows="5"></textarea>
+                <input type="text" class="form-control mt-3" name="tags" placeholder="#HashTag">
             </div>
             <div class="card-footer text-right">
                 <div class="input-group mb-3 mt-2">
@@ -59,10 +59,25 @@
             {% endif %}
             <div class="card-body" style="min-height: 8rem;">
                 <p class="card-text">{{tmp.contents}}</p>
+                {% for tag in tmp.tags.all %}
+                    <span class="badge badge-pill badge-info">
+                        {{tag.tag}}
+                    </span>
+                    {% endfor %}
+                <div class="text-right">
+                    <p class="text-muted">created by {{tmp.user.username}}</p>
+                </div>
+                {% if user in tmp.user_likes.all %}                                
+                    <button type="button" class="btn btn-danger likes" data-article-id="{{tmp.id}}"><i class="fas fa-heart"></i></button>
+                {% else %}
+                    <button type="button" class="btn btn-secondary likes" data-article-id="{{tmp.id}}"><i class="fas fa-heart"></i></button>
+                {% endif %}
+                {% if tmp.user_id == user.id %}                    
                 <span class="float-right mt-0">
                     <a href="{% url 'edit_art' tmp.id %}" class="btn btn-white "><i class="far fa-edit"></i> </a>
                     <a href="{% url 'delete_art' tmp.id %}" class="btn btn-white "><i class="far fa-trash-alt"></i></a>
                 </span>
+                {% endif %}
             </div>
 
             <div class="card">
@@ -85,13 +100,16 @@
                     </li>
                     {% for com_tmp in tmp.comments %}
                     <li class="list-group-item" id="comment-{{com_tmp.id}}">
+                            <span class="">{{com_tmp.user.username}} -</span>
                             <span class="boardItem">{{com_tmp.contents}}</span>
+                        {% if com_tmp.user_id == user.id %}                            
                         <span class="float-right">
                             <button type="button"class="btn btn-primary text-white edit_comment editComment" data-target="{{tmp.id}}"data-id="{{com_tmp.id}}">
                                 <i class="far fa-edit"></i> </a></button>
                             <button type="button"class="btn btn-primary text-white del_comment delComment" data-id="{{com_tmp.id}}">
                                 <i class="far fa-trash-alt"></i></a></button>
                         </span>
+                        {% endif %}
                     </li>
                     {% endfor %}
                 </ul>
@@ -103,6 +121,28 @@
 {% endblock %}
 {% block script %}
 <script>
+    $(function (){
+        $(document).on('click','.likes', function(){
+            var article_id = $(this).data('article-id')
+            var button = $(this)
+            $.ajax({
+                url:'{% url "likes" %}',
+                method:'POST',
+                data:{
+                    article_id:article_id,
+                    csrfmiddlewaretoken:'{{csrf_token}}',
+                },
+                success: function(data){
+                    button.toggleClass(['btn-secondary','btn-danger'])
+                    console.log(data)
+                },
+                error: function(data){
+                    if(data.status == 403) location.href = "{% url 'accounts:login' %}";
+                    console.log("조아요 실패")
+                }
+            })
+        });
+    })
     $(function () {
             $(document).on('click', '.editComment', function () {
                 var id = $(this).data('id');
@@ -176,7 +216,10 @@
                         $('.list-group'+target).append(data); // html data(댓글, empty.html)를 댓글 그룹에 붙여넣기
                     },
                     error: function (data) {
-                        alert("실패 작성")
+                        console.log(data)
+                        if( data.status == 401)
+                            location.href="{% url 'accounts:login' %}";
+                        
                     }
                 })
             }
