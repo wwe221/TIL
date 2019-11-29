@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <h1>{{room.title}}</h1>
+        <div class="col-12 chat-messages" style="overflow:auto; width: 100%; height: 250px;">
+            {% for tmp in messages %}
+            <p>{{tmp.user.username}} :{{tmp.contents}}</p>
+            {% endfor %}
+        </div>
+    </div>
+    <form action="#" id="chat-form">
+        <div class="row">
+            <div class="col-10">
+                <input id="input" name="input" type="text" class="form-control">
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
+                <input type="hidden" name="user_id" value="{{user.id}}">
+            </div>
+            <div class="col-2 text-center">
+                <button type="submit" class="btn btn-success">확인</button>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <a class="exit" href="{% url 'boards:exit' room.id %}" class="btn btn-warning">나가기</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(function () {
+        $('#chat-form').on('submit', function (e) {
+            e.preventDefault();
+            var room_id = '{{room.id}}';
+            var content = $(this).find('#input').val()
+            console.log(content)
+            $(this).find('#input').val('')
+            $.ajax({
+                url: '{% url "boards:chat" %}',
+                method: 'POST',
+                data: {
+                    room_id: room_id,
+                    text: content,
+                    csrfmiddlewaretoken: '{{csrf_token}}'
+                },
+                success: function (data) {
+                    console.log("success")
+                },
+                error: function (data) {
+
+                }
+            })
+        });
+    })  
+    $('.chat-messages').scrollTop($('.chat-messages')[0].scrollHeight);
+    Pusher.logToConsole = true;
+    var pusher = new Pusher('######', {
+        cluster: 'ap3',
+        forceTLS: true
+    });
+    var channel = pusher.subscribe('{{room.code}}');
+    // 해당 채널을  구독,
+    channel.bind('chat', function (data) {
+        var contents = "";
+        $('.chat-messages').append(`<p>${data.user} : ${data.message}<p>`);
+        $('.chat-messages').scrollTop($('.chat-messages')[0].scrollHeight);
+    });
+</script>
+{% endblock %}

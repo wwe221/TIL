@@ -1319,3 +1319,49 @@ def likes(request):
 
 
 
+## Day18
+
+- 회원가입 -> 유저에게 접근할 수 있는 범위를 지정해줌
+- M:N Field - ManyToManyField
+
+
+
+##### Pusher
+
+pip install pusher
+
+###### setting
+
+```html
+<script src="https://js.pusher.com/5.0/pusher.min.js"></script>
+```
+
+javascript
+
+```javascript
+	Pusher.logToConsole = true; //pusher의 신호가 올때 마다 log 기록 
+    var pusher = new Pusher('###SECRET KEY###', {
+        cluster: 'ap3',
+        forceTLS: true
+    });
+    var channel = pusher.subscribe('{{room.code}}');
+    // 해당 채널을  구독,
+    channel.bind('chat', function (data) {
+        //'chat ' 이벤트 발생시 함수 작동
+        var contents = "";
+        $('.chat-messages').append(`<p>${data.user} : ${data.message}<p>`)
+    });
+```
+
+
+
+python
+
+```python
+context={
+    'user':request.user.username,
+    'message':message.contents,        
+}
+pusher_client.trigger(room.code, 'chat', json.dumps(context))
+```
+

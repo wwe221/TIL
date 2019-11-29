@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h1>bring me PainKiller</h1>
+</div>
+<div class="container">
+    <div class="row">
+        <table class="table table-hover table-dark text-center">
+            <thead>
+                <tr>
+                    <th scope="col" width="5%">#</th>
+                    <th scope="col" width="50%">채팅방</th>
+                    <th scope="col" width="25%">방장</th>
+                    <th scope="col" width="20%">인원</th>
+                </tr>
+            </thead>
+            <tbody class="room-list">
+                {% for room in rooms %}
+                <tr onclick="location.href='/boards/{{room.id}}/';">
+                    <th scope="row">{{room.id}}</th>
+                    <td>{{room.title}}</td>
+                    <td>{{room.master}}</td>
+                    <td><span id="room-{{room.id}}-count">{{room.current_con}} </span>/ {{room.max_connection}}</td>
+                </tr>
+                {% endfor  %}
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#makeNewChat">
+            Make New Chat
+        </button>
+
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="makeNewChat" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">채팅방 만들기</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="create-room-form">
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon3">채팅방 제목</span>
+                        </div>
+                        <input name="room-title" type="text" class="form-control" id="basic-url"
+                            aria-describedby="basic-addon3">
+                    </div>
+                    <div class="input-group">
+                        <input name="room-max-count" type="number" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                    <button id="create-room" type="button" class="btn btn-primary" data-dismiss="modal">채팅방 생성</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+    var pusher = new Pusher('######', {
+        cluster: 'ap3',
+        forceTLS: true
+    });
+
+    var channel = pusher.subscribe('main');
+    // 해당 채널을  구독,
+    channel.bind('room-created', function (data) {
+        // 해당 이벤트가 발생하면 , 작동
+        var room = `<tr onclick="location.href='/boards/${data.id}/';">
+            <th scope="row">${data.id}</th>
+            <td>${data.title}</td>
+            <td>${data.master}</td>
+            <td><span id="room-${data.id}-count">${data.current_con}  </span>/ ${data.max_count}</td>
+            </tr>`
+        $('.room-list').append(room)
+    });
+    channel.bind('room-update', function (data) {
+        $(`#room-${data.room_id}-count`).text(data.current_con)
+    });
+</script>
+<script>
+    $(function () {
+        $('#create-room').on('click', function () {
+            var roomData = $('#create-room-form').serialize();
+            console.log(roomData)
+            $.ajax({
+                url: '{% url "boards:index" %}',
+                method: 'POST',
+                data: roomData,
+                success: function (data) {
+                    console.log(data)
+                },
+                error: function (data) {
+                    console.log(data)
+
+                }
+            })
+        });
+    });
+</script>
+{% endblock %}
