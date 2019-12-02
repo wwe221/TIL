@@ -1,0 +1,10 @@
+{% include 'board/base.html' %}
+
+{% block content %}
+<h1>{{article.title}}</h1>
+<small> {{article.created_at}} || {{article.updated_at}}</small>
+<p>{{article.content}}</p>
+<p>
+{{article.keyword}} || {{article.email}}
+</p>
+{% endblock content %}
