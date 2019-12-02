@@ -1330,7 +1330,7 @@ def likes(request):
 
 pip install pusher
 
-###### setting
+###### setting	
 
 ```html
 <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
@@ -1363,5 +1363,54 @@ context={
     'message':message.contents,        
 }
 pusher_client.trigger(room.code, 'chat', json.dumps(context))
+```
+
+
+
+## Seson 2
+
+
+
+- 프로젝트의 환경을 외부와 독립적이게 설정 하는 것이 좋다.
+  - ex) 프로젝트 내에 library 등을 갖고 있고, 외부에서는 관여하지 못하게
+
+```shell
+python -m venv venv
+## python 의 기본 path 에서 현재 directory 로 복사 한다.
+source venv/Scripts/activate
+## shell의 연결을 global 에서 venv 폴더로 옮기겠다.
+pip freeze > requirements.txt
+## 버전 명시를 담은 파일 생성
+
+git rm -r --cached board/
+## git 에 올라가 있는 폴더를 내린다.
+
+```
+
+
+
+```shell
+pip install django_extensions
+pip install ipython
+```
+
+###### vscode-extensions
+
+- Django
+- SQLite
+- vscode-icons
+
+
+
+404 표현 해주기 
+
+```python
+from django.shortcuts import render , get_object_or_404
+def article_detail(request , article_id):    
+    article= get_object_or_404(Article, id= article_id)
+    context={
+        'article':article
+    }
+    return render(request, 'board/article_detail.html',context)
 ```
 
