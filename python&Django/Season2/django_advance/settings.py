@@ -32,12 +32,14 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'board',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap4',
     'django_extensions',
 ]
 
@@ -56,7 +58,7 @@ ROOT_URLCONF = 'django_advance.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ os.path.join(BASE_DIR,'templates') ], # default : Installed_Apps 의 templates 는 자동으로 지정 되어 있다.
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
