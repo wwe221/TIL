@@ -1414,3 +1414,214 @@ def article_detail(request , article_id):
     return render(request, 'board/article_detail.html',context)
 ```
 
+## Day02
+
+###### Templates 경로 지정
+
+settings.py
+
+```python
+#line 58 TEMPLATES
+        'DIRS': [ os.path.join(BASE_DIR,'templates') ], 
+        # template 를 찾을 때 추가로 검색할 경로를 지정해 준다.
+        # default : Installed_Apps 의 templates 는 자동으로 지정 되어 있다.
+
+```
+
+
+
+###### django Forms 사용, form 개발 간략화
+
+(django- bootstrap4 사용)
+
+```shell
+pip install django-bootstrap4
+```
+
+settings.py
+
+```python
+    INSTALLED_APPS = [
+        ...
+    'bootstrap4', # 추가 
+        ...
+    ]
+
+```
+
+```django
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+<h1>New article!@</h1>
+<form action="{% url 'board:new_article' %}" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}    
+    <input type="submit" value="submit">
+</form>
+{% endblock content %}
+```
+
+forms.py
+
+```python
+from django import forms
+# from django.db import model 와 유사
+from .models import Article, Comment
+
+class ArticleForm(forms.ModelForm):
+    # html 에서 1차적으로 막아주고, 서버 단 작업에서도 is_valis() 를 이용해서 이를 막아 줄 수 있다.
+    title = forms.CharField(min_length=2,strip=True)
+    email = forms.EmailField()
+    keword = forms.CharField(min_length=1,max_length=10)
+    class Meta:
+        model = Article
+        fields = '__all__' # model 에 정의한 field들을 __all__ 이라고 쓴다.
+       #fields = ('title','content') tuple or list 로 쓰고자 하는 field만 정의할 수 있다.
+        exclude = ['datetime']
+        #제외 하고자 하는 field를 설정할수 있다.
+```
+
+
+
+views.py
+
+```python
+from .forms import ArticleForm
+def new_article(request):
+    if request.method == "POST":
+        form = ArticleForm(request.POST)        
+        if form.is_valid() :
+            article = form.save()
+            return redirect('board:article_detail',article.id)
+    else:
+        form = ArticleForm()
+    context={
+        'form':form
+    }
+    return render(request , 'board/article_form.html', context)
+
+def edit_article(request, article_id):
+    article = get_object_or_404(Article, id= article_id)
+    ##
+    if request.method == "POST":
+        form = ArticleForm(request.POST , instance=article)
+        ## instance = article로 받은 데이터를 article로 지정한다.
+        if form.is_valid() :
+            article = form.save()
+            return redirect('board:article_detail',article.id)
+    else:
+        form = ArticleForm(instance=article)
+    context={ 'form':form }
+    return render(request , 'board/article_form.html', context)
+```
+
+
+
+###### 값이 비어 있을 때, blank / null
+
+- blank= True 
+  - is_valid() 에서는 통과할 수 있게 된다. 하지만 null=false 하면 DB 단에 저장할때 error가 발생할 것이다.
+  - 따라서, null=false 인데 blank=True 라면 의미 없는 옵션이 되어버린다.
+- null=True
+  - DB단에 null 값을 수용하겠다.
+
+charField 와 textField 는 빈값도 값으로 처리하기 때문에 blank=True 옵션만 주어도 not null valid error 가 발생하지 않는다.
+
+
+
+
+
+만약 form 에 action 이 정해지지 않았다면 내용을 현재 url로, method 방식으로 보내게 된다.
+
+
+
+
+
+## DAY03
+
+
+
+signup / login / logout
+
+
+
+AbstactUser
+
+
+
+
+
+```python
+rqeust.GET.get('key') # 'key'가 없으면 None 을 return
+rqeust.GET['key'] #'key' 가 없으면 error
+```
+
+
+
+## DAY04
+
+배포 
+
+heroku cli 설치.
+
+
+
+push 만으로 heroku에 배포를 할 수 있다.
+
+heroku 에 git commit 기준으로 배포가 된다.
+
+
+
+settings.py 
+
+```python
+#23 line SECRET_KEY 배포단계에서는 숨겨놔야 한다.
+#28
+ALLOWED_HOSTS = ['127.0.0.1',' ']
+#127
+STATIC_ROOT = os.path.join(BASE_DIR, 'static'),
+#129
+import django_heroku
+django_heroku.settings(locals())
+
+```
+
+project 폴더에 Procfile 파일 생성
+
+```
+web: gunicorn hotplay.wsgi --log-file -
+```
+
+어떤 웹 서버를 사용할지를 설정하는 파일이다. urls.py 를 연결하는 (web server gate interface 를 ) 사용 하겠다.
+
+
+
+project 폴더에 runtime.txt 생성
+
+```
+python-3.8.0
+```
+
+pip freeze > requirements.txt 로 기록.
+
+```shell
+heroku login
+heroku create hotplay
+#url 한개와 git remote repository 받기
+git remote -v #연결 확인
+heroku config:set DEBUG=False
+```
+
+https://devcenter.heroku.com/articles/clock-processes-python
+
+urls.py 에 있는 녀석 frequently 를 cron job 으로, 외부로 넘긴다.
+
+
+
+```shell
+python manage.py dumpdata > hotplay/fixtures/data.json
+python manage.py loaddata data.json
+```
+
+##https://hotplay.herokuapp.com/
