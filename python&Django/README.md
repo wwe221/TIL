@@ -1625,3 +1625,17 @@ python manage.py loaddata data.json
 ```
 
 ##https://hotplay.herokuapp.com/
+
+
+
+## Day X
+
+github action 을 이용한 주기적 요청
+
+redis 는 메모리에 DB를 올린다 말도 안되게 빠르다.
+
+게임 랭크모드 등과 같이 실시간으로 변동이 되야 하는 경우에 사용한다.
+
+스키마 없이, NoSQL 식
+
+휘발성인 메모리에 저장하기 때문에 프로세스가 꺼지면 데이터가 모두 날라간다.
