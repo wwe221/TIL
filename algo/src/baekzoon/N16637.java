@@ -1,4 +1,4 @@
-package algo;
+package baekzoon;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

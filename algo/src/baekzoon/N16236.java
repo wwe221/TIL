@@ -27,6 +27,12 @@ public class N16236 {
 			this.move = move;
 		}
 
+		@Override
+		public String toString() {
+			return "Item [x=" + x + ", y=" + y + ", n=" + n + "]";
+		}
+		
+
 	}
 
 	public static void main(String[] args) {
@@ -78,7 +84,15 @@ public class N16236 {
 				break;
 			} else {
 				if (fish.size() > 1) {
+					for(Item tmp:fish)
+						System.out.println(tmp);
+					System.out.println("@@@@@@@@@@@@@@");
 					Collections.sort(fish, new ySort());
+					for(Item tmp:fish)
+						System.out.println(tmp);
+					System.out.println("--------------");
+					System.out.println("--------------");
+					
 				}
 			}
 			Item fis = fish.get(0);
