@@ -20,7 +20,7 @@ public class N2667 {
 			for(int j=0;j<l;j++) {
 				map[i][j]=a.charAt(j) - '0';
 			}
-		}		
+		}
 		int total=0;
 		PriorityQueue<Integer> pq = new PriorityQueue<>();
 		for(int i=0;i<l;i++) {
