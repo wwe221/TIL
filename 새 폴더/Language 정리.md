@@ -7,7 +7,9 @@
 
 ### **JVM 의 구조**
 
-![img](file:///C:/Users/Heun/AppData/Local/Temp/msohtmlclip1/01/clip_image002.png)
+
+
+### ![image-20180602145758293](https://d2.naver.com/content/images/2015/06/helloworld-1230-1.png)
 
 Class Loader – 생성된 java Class 파일 (Byte Code) 을 읽어 JVM 내의 Runtime Data Area에 배치하는 작업을 수행한다.
 
@@ -25,28 +27,34 @@ Garbage Collector - 생성한 객체들 중 참조되지 않는 객체들을 탐
 
 2)	Method Area의 Byte Code 를 JVM이 Execution Engine에 전달하여 정의된 내용에 따라 수행한다.
 
+
+
 ### **JVM 내의 메모리 구조**
 
-Runtime Data Areas – JVM이 운영체제 위에서 실행되면서 OS로부터 할당 받는 메모리 영역으로, Class Loader 가 데이터들을 보관하는 저장소 이다
+**Runtime Data Areas** – JVM이 운영체제 위에서 실행되면서 OS로부터 할당 받는 메모리 영역으로, Class Loader 가 데이터들을 보관하는 저장소 이다
 
 크게 Method (Static) Area , Heap Area , Stack Area , PC register , Native Method Stack 으로 나뉘어 진다.
 
-1. Method (Static) Area – JVM이 읽어 들인 필드 정보와 메소드 정보, Type 정보 Constant Pool, Static 변수 final변수,멤버 변수 , 클래스 변수 등의 정보를 저장하는 공간이다.
+1. **Method (Static) Area** – JVM이 읽어 들인 필드 정보와 메소드 정보, Type 정보 Constant Pool, Static 변수 final변수,멤버 변수 , 클래스 변수 등의 정보를 저장하는 공간이다.
 
-2. Heap Area – new 키워드로 생성된 객체와 배열이 생성되는 영역이다. 이 영역에서 생성된 객체와 배열은 Stack Area 나 다른 객체의 필드에서 참조한다.
+   모든 스레드가 공유하는 영역
+
+2. **Heap Area** – new 키워드로 생성된 객체와 배열이 생성되는 영역이다. 이 영역에서 생성된 객체와 배열은 Stack Area 나 다른 객체의 필드에서 참조한다.
 
 참조하는 변수나 필드가 없다면 Garbage Collector의 대상이 된다.
 
 Method Area 에 로드 된 클래스만 생성이 가능하다.
 
-3. Stack Area – 각 스레드 마다 하나씩 존재하며 스레드가 시작될 때 할당 된다.
+3. **Stack Area** – 각 스레드 마다 하나씩 존재하며 스레드가 시작될 때 할당 된다.
 
 지역 변수, 파라미터 , 리턴값, 연산에 사용되는 임시 값 등을 저장한다.
 
 Primitive Type 의 변수는 영역 내에 직접 값을 가지고 Reference Type의 변수는 Heap Area 또는 Method Area 의 객체 주소를 가진다.
 
-4. PC register – 현재 수행중인 JVM 명령의 주소를 갖는다. 쓰레드가 생성될 때마다 생성되는 영역으로, 현재 쓰레드가 실행되는 부분의 주소와 명령을 저장하고 있는 영역이다.
-5. Native Method Stack Area – 자바 외 언어로 작성된 네이티브 코드를 저장하기 위한 Stack 으로, JNI(Java Native Interface)를 통해 호출되는 C/C++ 등의 코드를 수행하기 위한 스택
+4. **PC register** – 현재 수행중인 JVM 명령의 주소를 갖는다. 쓰레드가 생성될 때마다 생성되는 영역으로, 현재 쓰레드가 실행되는 부분의 주소와 명령을 저장하고 있는 영역이다.
+5. **Native Method Stack Area** – 자바 외 언어로 작성된 네이티브 코드를 저장하기 위한 Stack 으로, JNI(Java Native Interface)를 통해 호출되는 C/C++ 등의 코드를 수행하기 위한 스택
+
+
 
 ## Collection
 
@@ -59,13 +67,6 @@ Java Collection 에는 `List`, `Map`, `Set` 인터페이스를 기준으로 여�
 
   
 
-- Map
-  대표적인 구현체로 `HashMap`이 존재한다. (밑에서 살펴볼 멀티스레드 환경에서의 개발 부분에서 HashTable 과의 차이점에 대해 살펴본다.) key-value 의 구조로 이루어져 있으며 Map 에 대한 구체적인 내용은 DataStructure 부분의 hashtable 과 일치한다. key 를 기준으로 중복된 값을 저장하지 않으며 순서를 보장하지 않는다. key 에 대해서 순서를 보장하기 위해서는 `LinkedHashMap`을 사용한다.
-
-  <Key , Value> 로 구분, Key는 중복 X
-
-  
-
 - Set
   대표적인 구현체로 `HashSet`이 존재한다. `value`에 대해서 중복된 값을 저장하지 않는다. 사실 Set 자료구조는 Map 의 key-value 구조에서 key 대신에 value 가 들어가 value 를 key 로 하는 자료구조일 뿐이다. 마찬가지로 순서를 보장하지 않으며 순서를 보장해주기 위해서는 `LinkedHashSet`을 사용한다.
 
@@ -73,8 +74,47 @@ Java Collection 에는 `List`, `Map`, `Set` 인터페이스를 기준으로 여�
 
   
 
+- Map
+  대표적인 구현체로 `HashMap`이 존재한다. (밑에서 살펴볼 멀티스레드 환경에서의 개발 부분에서 HashTable 과의 차이점에 대해 살펴본다.) key-value 의 구조로 이루어져 있으며 Map 에 대한 구체적인 내용은 DataStructure 부분의 hashtable 과 일치한다. key 를 기준으로 중복된 값을 저장하지 않으며 순서를 보장하지 않는다. key 에 대해서 순서를 보장하기 위해서는 `LinkedHashMap`을 사용한다.
+
+  <Key , Value> 로 구분, Key는 중복 X
+
+  
+
 - Stack 과 Queue
   `Stack` 객체는 직접 `new` 키워드로 사용할 수 있으며, `Queue` 인터페이스는 JDK 1.5 부터 `LinkedList`에 `new` 키워드를 적용하여 사용할 수 있다. 자세한 부분은 DataStructure 부분의 설명을 참고하면 된다.
+  
+  
+
+## Java Collection Framework
+
+![Pasted Graphic 25.tiff](https://tramyu.github.io/images/etc/image-20180603144347219.png)
+
+Set은 중복을 허용하지 않음, List 는 중복 가능
+
+HashSet은 입력 순서 보장 X LinkedHashSet 입력 순서 보장.
+
+Vector 동기화 지원, ArrayList는 지원하지 않음
+
+![Java Collection interfaces and concrete classes](http://shivasoft.in/blog/wp-content/uploads/2011/04/Java-Collection-interfaces-and-concrete-classes.jpg)
+
+![JAVA Map interface and concrete classes](http://shivasoft.in/blog/wp-content/uploads/2011/04/JAVA-Map-interface-and-concrete-classes.jpg)
+
+HashMap은 내부 hashing된 값에 따라 키 순서가 정해지므로 key는 특정 순서 없이 나온다.
+
+TreeMap은 내부적으로 RedBlack Tree로 저장됨, 키값에 대한 Compartor 구현으로 정렬 순서를 바꿀수 있다. 정렬된 순서로 key 값이 나온다.
+
+LinkedHashMap은 내부적으로 LinkedList, 입력 순서대로 key 값이 나온다.
+
+
+
+## LinkedList와 ArrayList의 차이
+
+ArrayList는 검색에 유리한 구조, 삽입 삭제가 자주 일어나면 LinkedList를 사용하는것이 낫다.
+
+ArrayList는 내부적으로 데이터를 배열에서 관리하며 데이터의 추가, 삭제를 위해 아래와 같이 임시 배열을 생성해 데이터를 복사 하는 방법을 사용 하고 있기 때문에 삽입 삭제시 많은 복사가 일어나기 때문.
+
+![arraylist-internal](https://tramyu.github.io/images/etc/ArrayList.jpg)
 
 
 
@@ -181,7 +221,7 @@ public class ProductDb extends Db<User, Integer> {
 
 
 
-## Wrapper class
+## Wrapper classe
 
 기본 자료형(Primitive data type)에 대한 클래스 표현을 Wrapper class 라고 한다. `Integer`, `Float`, `Boolean` 등이 Wrapper class 의 예이다. int 를 Integer 라는 객체로 감싸서 저장해야 하는 이유가 있을까? 일단 컬렉션에서 제네릭을 사용하기 위해서는 Wrapper class 를 사용해줘야 한다. 또한 `null` 값을 반환해야만 하는 경우에는 return type 을 Wrapper class 로 지정하여 `null`을 반환하도록 할 수 있다. 하지만 이러한 상황을 제외하고 일반적인 상황에서 Wrapper class 를 사용해야 하는 이유는 객체지향적인 프로그래밍을 위한 프로그래밍이 아니고서야 없다. 일단 해당 값을 비교할 때, Primitive data type 인 경우에는 `==`로 바로 비교해줄 수 있다. 하지만 Wrapper class 인 경우에는 `.intValue()` 메소드를 통해 해당 Wrapper class 의 값을 가져와 비교해줘야 한다.
 
@@ -198,6 +238,14 @@ lists.add(1);
 
 
 
+## 프로세스와 스레드의 차이
+
+자바에서 예를 들면, 실행중인 프로그램을 종종 프로세스라고 한다. 스레드는 그 프로세스 내에서 실행될 수 있는 여러개의 경량화된 프로세스의 개념이다. 한 프로세스 내 여러 스레드는 프로세스 내의 주소 공간이나 자원들을 대부분 공유하면서 실행된다.
+
+프로세스를 여러개 생성하기 보다는 멀티 스레드를 이용하는것이 효율적이다.
+
+우선 컨텍스트 스위칭 비용이 적어진다. 프로세스 간 통신보다는 스레드 간 통신이 훨씬 비용이 적다. 물론 스레드 간 데이터 공유에 따른 동기화 문제를 해결하기 어렵고 그에 따라 디버깅이 어려워지는 단점도 존재한다.
+
 
 
 ## Multi-Thread 환경에서의 개발
@@ -207,8 +255,6 @@ lists.add(1);
 ### Field member
 
 `필드(field)`란 클래스에 변수를 정의하는 공간을 의미한다. 이곳에 변수를 만들어두면 메소드 끼리 변수를 주고 받는 데 있어서 참조하기 쉬우므로 정말 편리한 공간 중 하나이다. 하지만 객체가 여러 스레드가 접근하는 싱글톤 객체라면 field 에서 상태값을 갖고 있으면 안된다. 모든 변수를 parameter 로 넘겨받고 return 하는 방식으로 코드를 구성해야 한다.
-
-
 
 ### 동기화(Synchronized)
 
@@ -227,12 +273,213 @@ lists.add(1);
 *ThreadLocal 을 사용하는 방법은 간단하다.*
 
 1. ThreadLocal 객체를 생성한다.
+
 2. ThreadLocal.set() 메서드를 이용해서 현재 스레드의 로컬 변수에 값을 저장한다.
+
 3. ThreadLocal.get() 메서드를 이용해서 현재 스레드의 로컬 변수 값을 읽어온다.
+
 4. ThreadLocal.remove() 메서드를 이용해서 현재 스레드의 로컬 변수 값을 삭제한다.
 
+   
 
+## Java의 접근 제어자
+
+**public** : 접근 제한이 없다.
+
+**protected :** 클래스가 정의되어 있는 해당 패키지 내 그리고 해당 클래스를 상속받은 외부 패키지의 클래스에서 접근이 가능
+
+**default :** 아무런 접근 제한자를 명시하지 않으면 default 값이 되며, 동일한 패키지 내에서만 접근이 가능
+
+**private :** 자기 자신, 클래스 내부에서만 접근이 가능
+
+
+
+## String, StringBuilder, StringBuffer
+
+- ### String
+
+String 클래스는 Immutable(불변) 객체이기 때문에 + 등 concat 연산 시 원본을 변경하지 않고 새로운 String 인스턴스를 생성해야 하는 단점이 존재한다. 
+
+  String 객체는 한번 생성되면 할당된 메모리 공간이 변하지 않는다. + 연산 또는 concat 메서드를 통해 기존에 생성된 String 클래스 객체 문자열에 다른 문자열을 붙여도 기존 문자열에 새로운 문자열을 붙이는 것이 아니라,  새로운 String 객체를 만든 후, 새 String 객체에 연결된 문자열을 저장하고, 그 객체를 참조하도록 한다. (즉, String 클래스 객체는 Heap 메모리 영역(가비지 컬렉션이 동작하는 영역)에 생성. 한번 생성된 객체의 내부 내용을 변화시킬 수 없다. 기존 객체가 제거되면 Java의 가비지 컬렉션이 회수합니다.)
+
+때문에 연산이 많을 경우 성능이 좋지 않다.
+
+하지만 Immutable한 객체는 간단하게 사용 가능하고, 동기화에 대해 신경쓰지 않아도 되기 때문에(thread-safe) 내부 데이터를 자유롭게 공유 가능하다.
+
+
+
+- ### StringBuilder , StringBuffer
+
+문자열 연산 등으로 기존 객체의 공간이 부족하게 되는 경우, 기존의 버퍼 크기를 늘리며 유연하게 동작한다. StringBuffer와 StringBuilder 클래스가 제공하는 메서드는 서로 동일.
+
+- **그럼 두 클래스의 차이점은 무엇일까요? 바로 동기화 여부입니다.**
+
+  \- **StringBuffer**는 각 메서드별로 Synchronized Keyword가 존재하여, 멀티스레드 환경에서도 동기화를 지원.
+
+  \- 반면, **StringBuilder**는 동기화를 보장하지 않음.
+
+  
+
+  그렇기때문에 **멀티스레드 환경**이라면 값 동기화 보장을 위해 **StringBuffer**를 사용
+
+  **단일스레드 환경**이라면 **StringBuilder**를 사용하는 것이 좋습니다. 단일 스레드환경에서 StringBuffer를 사용한다고 문제가 되는 것은 아니지만, 동기화 관련 처리로 인해 StringBuilder에 비해 성능이 좋지 않다.
+
+**String은 짧은 문자열을 더할 경우 사용.**
+
+**StringBuffer는 스레드에 안전한 프로그램이 필요할 때나, 개발 중인 시스템의 부분이 스레드에 안전한지 모를 경우 사용다.**
+
+**StringBuilder는 스레드에 안전한지 여부가 전혀 관계 없는 프로그램을 개발할 때 사용.**
+
+
+
+## Comparable, Comparator
+
+정렬을 위해서 사용하는 인터페이스들인데 
+
+**Comparable** 인터페이스는 정렬 기준을 설정할 클래스가 직접 상속해 compareTo 메소드를 오버라이딩 해야 하며, 
+
+**Comparator**는 직접 구현해서 Arrays.sort 같은 정렬 메소드에 인자로 넘겨 정렬 기준을 직접 설정해 줄 수 있다.
+
+> Comparable
+
+```java
+public class Example implements Comparable<Example> { 
+    private int age;    
+    @Override    
+    public int compareTo(Example o) {
+        return this.age - o.age;    
+    }
+}
+```
+
+> Comparator
+
+```java
+Integer a[] = {1, 5, 6, 8, 9};
+Arrays.sort(a, (a1, a2) -> a2 - a1); //FunctionalInterface로 Comparator 구현
+```
+
+기본 sort는 오름차순이지만, 위처럼 Comparator를 구현해서 파라미터로 넘겨주면 내림차순으로 정렬이 가능.
+
+
+
+
+
+## Abstract Class, Interface 차이점
+
+추상 클래스는 상속을 통해 부모 클래스의 기능을 이용, 확장하기 위해 제공되며 다중 상속이 불가능하다.
+
+인터페이스는 빈 껍데기 형태로 구현할 메소드를 정의하고, 강제해서 서브클래스들에 같은 동작을 보장하기 위해 제공되며 다중 상속이 가능하다. 자바 8 부터 인터페이스에도 default 메소드 구현이 가능하다.
+
+> Abstract Class
+
+abstract 키워드가 붙거나 클래스 내 추상 메소드가 하나 이상 포함되는 클래스
+
+만약 추상 클래스를 상속한다면, 추상 클래스에 존재하는 추상 메소드를 반드시 구현해주어야 하며 `extends`키워드를 사용한다.
+
+```java
+public abstract class Greeting {    
+    public String defaultGreeting() {        
+        return "hello";    
+    }
+}
+public abstract class Greeting {    
+    public void hi() {        
+        System.out.println("hi");    
+    }    
+    public abstract String defaultGreeting();
+}//아래 greeting 메소드를 구현 안 해주면 에러가 발생
+public class AmericanGreeting extends Greeting {    
+    @Override    
+    public String greeting() {        
+        return "american hello";    
+    }
+}
+```
+
+> Interface
+
+추상 메소드만을 가지며, 메소드의 껍데기만 존재한다. 서브클래스는 무조건 모든 메소드들을 구현해야하며 `implements` 키워드를 사용한다.
+
+```java
+public interface Greeting {    
+    String hello();    
+    String bye();
+}
+public class KoreanGreeting implements Greeting {    
+    @Override    
+    public String hello() {        
+        return null;    
+    }    
+    @Override    
+    public String bye() { 
+        return null;    
+    }
+}
+```
 
 
 
 # Spring Framework
+
+자바플랫폼을 위한 오픈소스 애플리케이션 프레임워크.
+
+자바 SE 로 된 자바객체 POJO를 자바 EE에 의존적이지 않게 연결해주는 역할.
+
+크기와 부하 측면에서 경량시킨 것, IOC 기술로 애플리케이션의 느슨한 결합을 도모시킨것.
+
+##### MVC패턴
+
+코드의 재사용에 유용, 사용자 인터페이스와 응용프로그램 개발에 소요되는 시간을 줄여주는 효과적인 설계 방식.
+
+Model, View, Controller로 구성.
+
+Mode : 핵심적인 비즈니스 로직을 담당, 데이터베이스를 관리하는 부분
+
+View : 사용자에게 보여주는 화면
+
+Controller : 모델과 뷰 사이에서 정보를 교환할 수 있도록 연결시켜주는 역할
+
+
+
+##### AOP
+
+관점 지향 프로그래밍.
+
+기존 OOP 에서 기능별로 클래스를 분리 했음에도 불구, 여전히 로그나 트랜잭션, 자원해제, 성능테스트 메서트처럼 공통적으로 반복되는 중복코드를 해결할수 있도록. 
+
+개발코드에서는 비즈니스 로직에 집중, 실행 시 비즈니스 로직의 앞과 뒤에서 원하는 지점에 해당 공통 관심사를 수행할 수 있게 하면서, 중복코드를 줄일 수 있는 방식.
+
+##### DI
+
+의존성 주입.
+
+객체들 간의 의존성을 줄이기 위해 사용되는 스프링의 IOC 컨테이너의 구체적 구현 방식.
+
+개발코드부분에서 객체를 생성하는 것이 아니라, 데이터 주입만 담당하는 별도의 공간에서 객체를 생성, 데이터 간의 의존성을 주입해 개발코드에서 가져다 쓰면서 의존성을 줄이는 방식.
+
+##### IOC
+
+인스턴스의 생성부터 소멸까지 개발자 대신 관리해주는 컨테이너.
+
+인스턴스 생성의 제어를 서블릿과 같은 bean을 관리해주는 컨테이너가 관리.
+
+
+
+
+
+
+
+## Spring 구동 방식
+
+스프링에 들어온 요청을 스프링이 어떻게 처리해줄까.
+
+## 요청에 따른 응답
+
+우선 필터를 거치고, DispatcherServlet에서 스프링에 들어온 모든 요청을 받게 된다. DispatcherServlet에서 클라이언트의 요청에 해당하는 컨트롤러를 탐색한다. `@RestController` 나 `@Controller`로 매핑된 컨트롤러들의 하위에 있는 `@GetMapping, @PostMapping ...` 등이 스캔의 대상이 된다. 적절한 컨트롤러를 찾은 뒤에는 `HttpServletRequest` 를 전달해 준 뒤 ViewResolver가 `ModelAndView` 를 리턴해주며 이때 `@ResponseBody`나 `@RestController`가 붙은 경우에는 MessageConverter가 HTTP Body에 적절한 내용을 기록해서 응답을 하게 된다.
+
+## Bean 생성 원리
+
+스프링 부트에서는 `@SpringBootApplication` 어노테이션을 SpringBootApplication.run을 하는 메인 메소드가 있는 클래스 위에 붙이면 그 하위 패키지를 스캔한다. `@SpringBootApplication` 의 내부를 보면 `@ComponentScan, @SpringBootConfiguration, @EnableAutoConfiguration` 등의 어노테이션이 붙어있고 `@ComponentScan` 을 통해서 메인 메소드가 있는 클래스의 하위 패키지를 스캔하게 된다.
+
+메인 메소드가 있는 클래스 하위의 `@Bean, @Service, @Component, @Repo, @Controller...` 등의 어노테이션이 붙은 클래스들을 빈 형태로 만들어서 빈 팩토리에서 관리하게 된다. 그리고 빈을 생성할 때 해당 빈 내부에 다른 주입이 필요한 빈이 있다면, 재귀적으로 하위에 있는 빈들을 처리하고 나서 빈을 생성후 관리하게 된다.
