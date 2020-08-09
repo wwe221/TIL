@@ -474,7 +474,7 @@ Controller : 모델과 뷰 사이에서 정보를 교환할 수 있도록 연결
 
 
 
-④ 애플리케이션 객체의 생명 주기와 설정을 포함하고 관리한다는 점에서 일종의 **"****컨테이너"**(Container)라고 할 수 있다.
+④ 애플리케이션 객체의 생명 주기와 설정을 포함하고 관리한다는 점에서 일종의 **컨테이너(Container)**라고 할 수 있다.
 
  \- iBatis, myBatis나 Hibernate 등 완성도가 높은 데이터베이스처리 라이브러리와 연결할 수 있는 인터페이스를 제공한다.
 
@@ -530,7 +530,49 @@ https://goddaehee.tistory.com/156
 
 
 
+**Spring Freamwork 특징**
 
+
+
+**1. 컨테이너 역할**
+
+Spring 컨테이너는 Java 객체의 LifeCycle을 관리하며, Spring 컨테이너로부터 필요한 객체를 가져와
+
+사용할 수 있다.
+
+
+
+**2. DI(Dependency Injection) 지원**
+
+Spring은 설정파일이나 어노테이션을 통해서 객체 간의 의존관계를 설정할 수 있도록 하고 있다.
+
+
+
+**3. AOP(Aspect Oriented Programming) 지원**
+
+Spring은 트랜젝션이나 로깅, 보안과 같이 공통적으로 필요로 하는 모듈들을 실제 핵심 모듈에서 분리해서
+
+적용 할 수 있다.
+
+
+
+**4. POJO(Plain Old Java Object) 지원**
+
+Spring 컨테이너에 저장되는 Java객체는 특정한 인터페이스를 구현하거나, 특정클래스를 상속받지 않아도 된다.
+
+
+
+**5. 트랜젝션 처리를 위한 일관된 방법을 지원**
+
+JDBC, JTA 등 어떤 트랜젝션을 사용하던 설정을 통해 정보를 관리하므로 트랜젝션 구현에 상관없이 동일한 코드 사용가능
+
+
+
+**6. 영속성과 관련된 다양한 API 지원**
+
+Spring은 Mybatis, Hibernate 등 데이터베이스 처리를 위한 ORM(Object Relational Mapping)
+
+프레임워크들과의 연동 지원
 
 
 
@@ -540,7 +582,15 @@ https://goddaehee.tistory.com/156
 
 ## 요청에 따른 응답
 
-우선 필터를 거치고, DispatcherServlet에서 스프링에 들어온 모든 요청을 받게 된다. DispatcherServlet에서 클라이언트의 요청에 해당하는 컨트롤러를 탐색한다. `@RestController` 나 `@Controller`로 매핑된 컨트롤러들의 하위에 있는 `@GetMapping, @PostMapping ...` 등이 스캔의 대상이 된다. 적절한 컨트롤러를 찾은 뒤에는 `HttpServletRequest` 를 전달해 준 뒤 ViewResolver가 `ModelAndView` 를 리턴해주며 이때 `@ResponseBody`나 `@RestController`가 붙은 경우에는 MessageConverter가 HTTP Body에 적절한 내용을 기록해서 응답을 하게 된다.
+우선 필터를 거치고, DispatcherServlet에서 스프링에 들어온 모든 요청을 받게 된다. 
+
+DispatcherServlet에서 클라이언트의 요청에 해당하는 컨트롤러를 탐색한다. 
+
+`@RestController` 나 `@Controller`로 매핑된 컨트롤러들의 하위에 있는 `@GetMapping, @PostMapping ...` 등이 스캔의 대상이 된다. 
+
+적절한 컨트롤러를 찾은 뒤에는 `HttpServletRequest` 를 전달해 준 뒤 ViewResolver가 `ModelAndView` 를 리턴해주며 이때 `@ResponseBody`나 `@RestController`가 붙은 경우에는 MessageConverter가 HTTP Body에 적절한 내용을 기록해서 응답을 하게 된다.
+
+
 
 ## Bean 생성 원리
 
