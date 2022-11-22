@@ -11,7 +11,7 @@ django-imagekit==4.0.2
 gunicorn==20.0.4
 idna==2.8
 pilkit==2.0
-Pillow==6.2.1
+Pillow==9.3.0
 psycopg2==2.8.4
 pytz==2019.3
 requests==2.22.0
